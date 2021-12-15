@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccessLayer
 {
-    public class Orderposition
+    public class OrderPositionDTO
     {
     }
 }

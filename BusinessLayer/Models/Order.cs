@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DataAccessLayer
+namespace BusinessLayer
 {
-    public class Customer
+    public class Order
     {
-        private int Id;
     }
 }
