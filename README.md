@@ -1,8 +1,8 @@
 # ZbW.DbAdv.Projektarbeit
 
-new diagram (drawio)
-*[Diagrams](https://app.diagrams.net/#G1GT2RS8TQN9hldJ3JVkAbapVrslOVwISu)
-*!! Wichtig !! Man muss glaube ich manuell speichern?
+# new diagram (drawio)
+* [Diagrams](https://app.diagrams.net/#G1GT2RS8TQN9hldJ3JVkAbapVrslOVwISu)
+* !! Wichtig !! Man muss glaube ich manuell speichern?
 
 old lucidchart references
 DbAdv Projektarbeit
