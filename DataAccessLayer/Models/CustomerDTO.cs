@@ -7,6 +7,6 @@ namespace DataAccessLayer
 {
     public class CustomerDTO
     {
-        private int Id;
+        public int Id { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using DataAccessLayer;
 
 namespace BusinessLayer
 {
@@ -13,7 +14,7 @@ namespace BusinessLayer
         public string Firstname { get; set; }
         public string FullName
         {
-            get => Firstname + Lastname;
+            get => Firstname + " " + Lastname;
         }
         public Address Address { get; set; }
         public string EMail { get; set; }
@@ -22,9 +23,9 @@ namespace BusinessLayer
         //to be defined exactly how passwords are handled
         public HashCode Password { get; set; }
 
-        public Customer()
+        public Customer(CustomerDTO customerDTO)
         {
-
+            Id = customerDTO.Id;
         }
     }
 }
