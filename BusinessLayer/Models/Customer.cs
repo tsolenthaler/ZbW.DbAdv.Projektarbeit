@@ -23,9 +23,9 @@ namespace BusinessLayer
         //to be defined exactly how passwords are handled
         public HashCode Password { get; set; }
 
-        public Customer(CustomerDTO customerDTO)
+        public Customer(CustomerDTO customerDto)
         {
-            Id = customerDTO.Id;
+            //implement assignment after DTO is defined
         }
     }
 }
