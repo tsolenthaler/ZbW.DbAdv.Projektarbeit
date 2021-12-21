@@ -4,6 +4,9 @@ new diagram (drawio)
 * [Diagrams](https://app.diagrams.net/#G1GT2RS8TQN9hldJ3JVkAbapVrslOVwISu)
 * !! Wichtig !! Man muss glaube ich manuell speichern?
 
+Arbeitsjournal
+* [Arbeitsjournal (Google Tabelle)](https://docs.google.com/spreadsheets/d/1qFB4jnwHBaJTzRITUQM5Yf46yaIUyNb5hPTvtonPae4/edit#gid=0)
+
 old lucidchart references
 DbAdv Projektarbeit
 
