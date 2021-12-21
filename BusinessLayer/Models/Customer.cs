@@ -4,8 +4,6 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 
-using 
-
 namespace BusinessLayer
 {
     public class Customer
