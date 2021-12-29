@@ -7,9 +7,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer
 {
-    internal class DataAccessManager : DbContext
+    public class DataAccessManager
     {
+        static void Main()
+        {
+            using var context = new SetupDB();
 
+            context.Database.Migrate();
 
+            // Test Kunde Hinzufügen
+            var customer1 = new CustomerDTO()
+            {
+                Firstname = "Stefan",
+                Lastname = "Müller",
+                Address = new AddressDTO(),
+                EMail = "smueller@company.com",
+                Website = "https://company.com",
+                Password = new HashCode()
+            };
+
+            context.Customer.Add(customer1);
+            context.SaveChanges();
+        }
     }
 }
