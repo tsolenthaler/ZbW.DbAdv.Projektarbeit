@@ -7,5 +7,8 @@ namespace DataAccessLayer
 {
     public class OrderDTO
     {
+        public int Id { get; set; }
+        public DateTime? Date { get; set; }
+        public virtual CustomerDTO Customer { get; set; }
     }
 }
