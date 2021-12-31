@@ -6,7 +6,15 @@
         xmlns:local="clr-namespace:PresentationLayer"
         mc:Ignorable="d"
         Title="CustomerWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Width="800" Height="450">
+        <TextBox Margin="438,30,150,0" TextWrapping="Wrap" Text="Search Customer" VerticalAlignment="Top" FontSize="16" BorderThickness="0,0,0,1"/>
+        <Button Content="Search" HorizontalAlignment="Left" Margin="671,30,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
     </Grid>
 </Window>

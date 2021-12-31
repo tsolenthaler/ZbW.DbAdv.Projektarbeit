@@ -6,7 +6,35 @@
         xmlns:local="clr-namespace:ZbW.DbAdv.Projektarbeit"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Width="800" Height="450">
+        <Button Content="Customer" HorizontalAlignment="Stretch" Margin="0,50,0,0" VerticalAlignment="Top" Width="150" Height="50" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" Click="Button_Click" BorderBrush="White" Foreground="Black" BorderThickness="0,0,0,0">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Content="Orders" Margin="325,135,325,0" VerticalAlignment="Top" Width="150" Height="50" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Content="Article" Margin="325,220,325,180" Width="150" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button Content="Articlegroup" Margin="325,305,325,0" VerticalAlignment="Top" Width="150" Height="50" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" HorizontalAlignment="Center" BorderThickness="0,0,0,0">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
     </Grid>
 </Window>
