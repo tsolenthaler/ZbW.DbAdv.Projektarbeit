@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 //using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer
@@ -20,7 +21,11 @@ namespace DataAccessLayer
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;");
+            }
+            
 
             optionsBuilder.UseLazyLoadingProxies();
 
@@ -33,6 +38,15 @@ namespace DataAccessLayer
             //optionsBuilder.UseSqlServer(configuration.GetConnectionString("Auftragsverwaltung"));
 
             optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
+        }
+
+        // Load Config.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllersWithViews();
+            services.AddDbContext<AppDbContext>
+           (o => o.UseSqlServer(Configuration.
+            GetConnectionString("MyNewDatabase")));
         }
     }
 }
