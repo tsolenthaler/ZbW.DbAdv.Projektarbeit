@@ -10,7 +10,7 @@ namespace BusinessLayer
     {
         private List<Customer> customerList;
         private List<Article> articleList;
-        private List<ArticelGroup> articelGroupList;
+        private List<ArticleGroup> articelGroupList;
         private List<Order> orderList;
     }
 }

@@ -9,7 +9,7 @@ namespace BusinessLayer
     public class Article
     {
         public int Id { get; set; }
-        public ArticelGroup ArticelGroup { get; set; }
+        public ArticleGroup ArticelGroup { get; set; }
         public decimal Price { get; set; }
         public string Name { get; set; }
 

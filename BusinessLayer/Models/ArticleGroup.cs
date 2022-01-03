@@ -6,12 +6,12 @@ using DataAccessLayer;
 
 namespace BusinessLayer
 {
-    public class ArticelGroup
+    public class ArticleGroup
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public ArticelGroup(ArticleGroupDTO articleGroupDto)
+        public ArticleGroup(ArticleGroupDTO articleGroupDto)
         {
             //implement assignment after DTO is defined
         }
