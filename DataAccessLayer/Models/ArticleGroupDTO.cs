@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataAccessLayer.Models
 {
-    public class ArticelGroupDTO
+    public class ArticleGroupDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }   
