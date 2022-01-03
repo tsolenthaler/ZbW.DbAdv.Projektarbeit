@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.DependencyInjection;
 //using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer
 {
-    internal class SetupDB : DbContext
+    public class SetupDB : DbContext
     {
         public DbSet<AddressDTO> Address { get; set; }
         public DbSet<ArticelGroupDTO> ArticelGroup { get; set; }
@@ -23,11 +24,9 @@ namespace DataAccessLayer
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;");
+                string connection = "Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
+                optionsBuilder.UseSqlServer(connection);
             }
-            
-
-            optionsBuilder.UseLazyLoadingProxies();
 
             // install-package Microsoft.Extensions.Configuration.Json
 
@@ -37,16 +36,16 @@ namespace DataAccessLayer
             //    .Build();
             //optionsBuilder.UseSqlServer(configuration.GetConnectionString("Auftragsverwaltung"));
 
-            optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
+            //optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
         }
 
-        // Load Config.
-        public void ConfigureServices(IServiceCollection services)
+        // Spezifikationen via FluentaAPI und Create Testdaten (Seed)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            services.AddControllersWithViews();
-            services.AddDbContext<AppDbContext>
-           (o => o.UseSqlServer(Configuration.
-            GetConnectionString("MyNewDatabase")));
+            var customer = modelBuilder.Entity<CustomerDTO>();
+            customer.HasKey(x => x.Id);
+            customer.Property(x => x.Firstname).IsRequired(); //Pflichtfeld
+            customer.Property(x => x.Lastname).IsRequired(); //Pflichtfeld
         }
     }
 }
