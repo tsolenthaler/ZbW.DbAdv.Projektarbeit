@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Models
 {
     public class DataAccessManager
     {
