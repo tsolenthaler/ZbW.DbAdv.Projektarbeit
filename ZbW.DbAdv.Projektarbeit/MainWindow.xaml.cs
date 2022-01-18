@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PresentationLayer;
 
 namespace ZbW.DbAdv.Projektarbeit
 {
@@ -25,5 +26,11 @@ namespace ZbW.DbAdv.Projektarbeit
             InitializeComponent();
         }
 
+        private void Cmd_OrdersWindow_Click(object sender, RoutedEventArgs e)
+        {
+            OrderWindow orderWindow = new OrderWindow(this);
+            orderWindow.Show();
+            this.Hide();
+        }
     }
 }
