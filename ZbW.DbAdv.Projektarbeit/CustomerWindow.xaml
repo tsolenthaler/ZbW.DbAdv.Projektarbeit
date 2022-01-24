@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationLayer"
         mc:Ignorable="d"
-        Title="CustomerWindow" Height="450" Width="800">
-    <Grid Width="800" Height="450">
-        <TextBox x:Name="Txt_SearchCustomer" Margin="438,30,150,0" TextWrapping="Wrap" Text="Search Customer" VerticalAlignment="Top" FontSize="16" BorderThickness="0,0,0,1"/>
-        <Button x:Name="Cmd_SearchCustomers" Content="Search" HorizontalAlignment="Left" Margin="671,30,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        Title="CustomerWindow" Height="1080" Width="1920">
+    <Grid Width="1920" Height="1080">
+        <TextBox x:Name="Txt_SearchCustomer" Margin="1455,30,150,0" TextWrapping="Wrap" Text="Search Customer" VerticalAlignment="Top" FontSize="16" BorderThickness="0,0,0,1"/>
+        <Button x:Name="Cmd_SearchCustomers" Content="Search" HorizontalAlignment="Left" Margin="1812,29,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
