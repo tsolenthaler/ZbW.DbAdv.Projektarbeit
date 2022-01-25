@@ -4,12 +4,17 @@ using System.Linq;
 using System.Text;
 using DataAccessLayer.Models;
 
-namespace BusinessLayer
+namespace BusinessLayer.Models
 {
     public class ArticleGroup
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public ArticleGroup()
+        {
+
+        }
 
         public ArticleGroup(ArticleGroupDTO articleGroupDto)
         {

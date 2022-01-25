@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using DataAccessLayer.Models;
 
-namespace BusinessLayer
+namespace BusinessLayer.Models
 {
     public class Address
     {
@@ -14,6 +14,10 @@ namespace BusinessLayer
         public string City { get; set; }
         public string Plz { get; set; }
 
+        public Address()
+        {
+
+        }
         public Address(AddressDTO addressDto)
         {
             //implement assignment after DTO is defined

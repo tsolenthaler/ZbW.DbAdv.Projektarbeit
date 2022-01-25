@@ -4,13 +4,57 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationLayer"
+        d:DataContext="{d:DesignInstance local:CustomerWindow}"
         mc:Ignorable="d"
-        Title="CustomerWindow" Height="1080" Width="1920">
+        Title="CustomerWindow" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid Width="1920" Height="1080">
         <TextBox x:Name="Txt_SearchCustomer" Margin="1455,30,150,0" TextWrapping="Wrap" Text="Search Customer" VerticalAlignment="Top" FontSize="16" BorderThickness="0,0,0,1"/>
         <Button x:Name="Cmd_SearchCustomers" Content="Search" HorizontalAlignment="Left" Margin="1812,29,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
             <Button.Resources>
                 <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <DataGrid x:Name="CustomerDataGrid" Margin="41,100,282,133" BorderThickness="0,0,0,0" ItemsSource="{Binding Path=Customers}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding Path=LastName}"/>
+                <DataGridTextColumn Header="Street" Binding="{Binding Path=Address.Street}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="Cmd_AddOrder" Content="Add" HorizontalAlignment="Left" Margin="1812,124,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" >
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="Cmd_SaveOrder" Content="Save" HorizontalAlignment="Left" Margin="1812,164,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="Cmd_ModifyOrder" Content="Modify" HorizontalAlignment="Left" Margin="1812,204,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="Cmd_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="1812,286,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="Cmd_Delete" Content="Delete" HorizontalAlignment="Left" Margin="1812,244,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>

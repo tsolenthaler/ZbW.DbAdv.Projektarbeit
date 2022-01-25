@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920">
     <Grid Width="1920" Height="1080">
-        <Button x:Name="Cmd_CustomerWindow" Content="Customer" Margin="543,275,543,0" VerticalAlignment="Top" Height="97" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" BorderThickness="0,0,0,0">
+        <Button x:Name="Cmd_CustomerWindow" Content="Customer" Margin="543,275,543,0" VerticalAlignment="Top" Height="97" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" BorderThickness="0,0,0,0" Click="Cmd_CustomerWindow_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>

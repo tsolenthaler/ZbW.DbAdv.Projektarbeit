@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BusinessLayer;
 using PresentationLayer;
 
 namespace ZbW.DbAdv.Projektarbeit
@@ -21,6 +22,7 @@ namespace ZbW.DbAdv.Projektarbeit
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
@@ -30,6 +32,13 @@ namespace ZbW.DbAdv.Projektarbeit
         {
             OrderWindow orderWindow = new OrderWindow(this);
             orderWindow.Show();
+            this.Hide();
+        }
+
+        private void Cmd_CustomerWindow_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerWindow customerWindow = new CustomerWindow(this);
+            customerWindow.Show();
             this.Hide();
         }
     }
