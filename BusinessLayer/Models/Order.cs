@@ -12,6 +12,11 @@ namespace BusinessLayer
         public DateTime? Date { get; set; }
         public Customer Customer { get; set; }
 
+        public Order()
+        {
+
+        }
+
         public Order(OrderDTO orderDto)
         {
             //implement assignment after DTO is defined

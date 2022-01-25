@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace PresentationLayer
         private static readonly SolidColorBrush modifiableFieldColor = new SolidColorBrush(Colors.White);
         public DataGridCell? SelectedCell { get; set; }
 
-        public DataGridChef(DataGrid dataGrid, List<int> comboBoxColumnIndices, List<int> datePickerColumnIndices)
+        public DataGridChef(DataGrid dataGrid, DataTable dataTable, List<int> comboBoxColumnIndices, List<int> datePickerColumnIndices)
         {
             this.dataGrid = dataGrid;
             this.comboBoxColumnIndices = comboBoxColumnIndices;
@@ -35,6 +36,7 @@ namespace PresentationLayer
         public void InitialTableDefinition()
         {
             dataGrid.Background = readOnlyFieldColor;
+            FillDataTable();
 
             var rows = GetDataGridRows(dataGrid);
 
@@ -48,6 +50,11 @@ namespace PresentationLayer
             DataGrid.AllowUserToAddRows = false;
             PreventSortingOfAllColumns();
             */
+        }
+
+        public void FillDataTable()
+        {
+
         }
 
         public IEnumerable<DataGridRow> GetDataGridRows(DataGrid grid)
