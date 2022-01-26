@@ -23,8 +23,10 @@ namespace PresentationLayer
     public partial class CustomerWindow : Window
     {
         private readonly DataGridChef _dataGridChef;
-        private readonly List<int> _comboBoxColumnIndices = new List<int>() { 1, 2 };
-        private readonly List<int> _datePickerColumnIndices = new List<int>() { 1, 2 };
+
+        //no ComboBox or DatePicker necessary for Customer Window
+        private readonly List<int> _comboBoxColumnIndices = new List<int>() {};
+        private readonly List<int> _datePickerColumnIndices = new List<int>() {};
 
         public ObservableCollection<Customer> Customers { get; set; } = new ObservableCollection<Customer>();
 
@@ -53,6 +55,7 @@ namespace PresentationLayer
             customer.LastName = "Muster";
             customer.Address = new Address();
             customer.Address.Street = "Musterstrasse";
+            customer.ReadOnly = true;
 
             Customers.Add(customer);
 
@@ -62,6 +65,7 @@ namespace PresentationLayer
             customer2.LastName = "Gluggeri";
             customer2.Address = new Address();
             customer2.Address.Street = "Teststrasse";
+            customer2.ReadOnly = false;
 
             Customers.Add(customer2);
         }
@@ -69,6 +73,16 @@ namespace PresentationLayer
         private void Window_Closed(object sender, EventArgs e)
         {
             mainWindow.Show();
+        }
+
+        private void Cmd_AddOrder_Click(object sender, RoutedEventArgs e)
+        {
+            Customers[0].ReadOnly = false;
+        }
+
+        private void CustomerDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            _dataGridChef.BlockReadOnlyRows(e);
         }
     }
 }

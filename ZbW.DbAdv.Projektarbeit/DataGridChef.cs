@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLayer.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -18,10 +19,10 @@ namespace PresentationLayer
         private readonly List<int> _comboBoxColumnIndices;
         private readonly List<int> _datePickerColumnIndices;
         
-        private static readonly SolidColorBrush _readOnlyFieldColor = new SolidColorBrush(Colors.LightGray);
-        private static readonly SolidColorBrush _mandatoryFieldColor = new SolidColorBrush(Colors.Thistle);
-        private static readonly SolidColorBrush _modifiableFieldColor = new SolidColorBrush(Colors.White);
-        public DataGridCell? SelectedCell { get; set; }
+        //private static readonly SolidColorBrush _readOnlyFieldColor = new SolidColorBrush(Colors.LightGray);
+        //private static readonly SolidColorBrush _mandatoryFieldColor = new SolidColorBrush(Colors.Thistle);
+        //private static readonly SolidColorBrush _modifiableFieldColor = new SolidColorBrush(Colors.White);
+        //public DataGridCell? SelectedCell { get; set; }
 
         public DataGridChef(DataGrid dataGrid, List<int> comboBoxColumnIndices, List<int> datePickerColumnIndices)
         {
@@ -35,34 +36,16 @@ namespace PresentationLayer
         ///</summary>
         public void InitialTableDefinition()
         {
-            _dataGrid.Background = _readOnlyFieldColor;
 
-            /*
-            var rows = GetDataGridRows(_dataGrid);
-
-            for (int i = 0; i < rows.Count(); i++)
-            {
-                _dataGrid.Cells
-                
-                _dataGrid.Rows[i].ReadOnly = true;
-                MyDataGridView.Rows[i].DefaultCellStyle.BackColor = readOnlyFieldColor;
-            }
-
-            DataGrid.AllowUserToAddRows = false;
-            PreventSortingOfAllColumns();
-            */
         }
 
-
-        public IEnumerable<DataGridRow> GetDataGridRows(DataGrid grid)
+        public void BlockReadOnlyRows(DataGridBeginningEditEventArgs e)
         {
-            var itemsSource = grid.ItemsSource as IEnumerable;
-            if (null == itemsSource) yield return null;
-            foreach (var item in itemsSource)
+            if (((Customer)e.Row.Item).ReadOnly)
             {
-                var row = grid.ItemContainerGenerator.ContainerFromItem(item) as DataGridRow;
-                if (null != row) yield return row;
+                e.Cancel = true;
             }
         }
+
     }
 }
