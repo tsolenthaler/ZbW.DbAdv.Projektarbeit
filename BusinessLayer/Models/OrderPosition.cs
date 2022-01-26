@@ -6,10 +6,8 @@ using DataAccessLayer.Models;
 
 namespace BusinessLayer.Models
 {
-    public class OrderPosition
+    public class OrderPosition : BusinessModelBase
     {
-        public int Id { get; set; }
-
         public int PosNo { get; set; }
 
         public Article Article { get; set; }

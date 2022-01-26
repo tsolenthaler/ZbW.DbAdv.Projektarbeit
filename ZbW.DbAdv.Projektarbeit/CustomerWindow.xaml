@@ -7,6 +7,9 @@
         d:DataContext="{d:DesignInstance local:CustomerWindow}"
         mc:Ignorable="d"
         Title="CustomerWindow" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Window.Resources>
+        <SolidColorBrush x:Key="readOnlyColor"/>
+    </Window.Resources>
     <Grid Width="1920" Height="1080">
         <TextBox x:Name="Txt_SearchCustomer" Margin="1455,30,150,0" TextWrapping="Wrap" Text="Search Customer" VerticalAlignment="Top" FontSize="16" BorderThickness="0,0,0,1"/>
         <Button x:Name="Cmd_SearchCustomers" Content="Search" HorizontalAlignment="Left" Margin="1812,29,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
@@ -23,24 +26,33 @@
                   AutoGenerateColumns="False" 
                   BeginningEdit="CustomerDataGrid_BeginningEdit"
                   CanUserSortColumns="False"
+                  CanUserAddRows="False"
                   >
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding ReadOnly}" Value="True">
-                            <Setter Property="Background" Value="LightGray"/>
+                            <Setter Property="Background" Value="{DynamicResource readOnlyColor}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                Value="{DynamicResource readOnlyColor}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
                 <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
                 <DataGridTextColumn Header="Last Name" Binding="{Binding Path=LastName}"/>
                 <DataGridTextColumn Header="Street" Binding="{Binding Path=Address.Street}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="Cmd_AddOrder" Content="Add" HorizontalAlignment="Left" Margin="1812,124,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Click="Cmd_AddOrder_Click" >
+        <Button x:Name="Cmd_AddCustomer" Content="Add" HorizontalAlignment="Left" Margin="1812,124,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Click="Cmd_AddCustomer_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -61,7 +73,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="Cmd_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="1812,286,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        <Button x:Name="Cmd_Cancel" Content="Cancel" HorizontalAlignment="Left" Margin="1812,286,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Click="Cmd_Cancel_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>

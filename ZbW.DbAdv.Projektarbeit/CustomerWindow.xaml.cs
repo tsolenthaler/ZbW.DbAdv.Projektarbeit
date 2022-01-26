@@ -1,8 +1,11 @@
-﻿using BusinessLayer.Models;
+﻿using BusinessLayer;
+using BusinessLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,46 +31,27 @@ namespace PresentationLayer
         private readonly List<int> _comboBoxColumnIndices = new List<int>() {};
         private readonly List<int> _datePickerColumnIndices = new List<int>() {};
 
-        public ObservableCollection<Customer> Customers { get; set; } = new ObservableCollection<Customer>();
+        public ObservableCollection<Customer> Customers { get => mainWindow.BusinessManager.Customers; }
 
-        private readonly MainWindow mainWindow;
+        public readonly MainWindow mainWindow;
+
+        public BusinessManager BusinessManager { get => mainWindow.BusinessManager; }
         
 
         public CustomerWindow(MainWindow mainWindow)
         {
             DataContext = this;
-            InitializeComponent();
             this.mainWindow = mainWindow;
 
+            InitializeComponent();
+            
             _dataGridChef = new DataGridChef(CustomerDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
+            Resources["readOnlyColor"] = _dataGridChef.ReadOnlyFieldColor;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            GenerateSampleData();
-        }
 
-        private void GenerateSampleData()
-        {
-            Customer customer = new Customer();
-            customer.Id = 1;
-            customer.FirstName = "Hans";
-            customer.LastName = "Muster";
-            customer.Address = new Address();
-            customer.Address.Street = "Musterstrasse";
-            customer.ReadOnly = true;
-
-            Customers.Add(customer);
-
-            Customer customer2 = new Customer();
-            customer2.Id = 2;
-            customer2.FirstName = "Franz";
-            customer2.LastName = "Gluggeri";
-            customer2.Address = new Address();
-            customer2.Address.Street = "Teststrasse";
-            customer2.ReadOnly = false;
-
-            Customers.Add(customer2);
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -75,14 +59,47 @@ namespace PresentationLayer
             mainWindow.Show();
         }
 
-        private void Cmd_AddOrder_Click(object sender, RoutedEventArgs e)
-        {
-            Customers[0].ReadOnly = false;
-        }
-
         private void CustomerDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
             _dataGridChef.BlockReadOnlyRows(e);
         }
+
+        private void Cmd_AddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            BusinessManager.CreateLocalCustomer();
+            SetGUIToFullViewMode();
+
+        }
+
+        private void Cmd_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            BusinessManager.CancelModification(Customers);
+            SetGUIToViewMode();
+        }
+
+        ///<summary>
+        ///Activates and deactives buttons and textfields for GUI "modify mode"
+        ///</summary>
+        private void SetGUIToModifyMode()
+        {
+            //enable / disable buttons
+        }
+
+        ///<summary>
+        ///Activates and deactives buttons and textfields for GUI "view mode"
+        ///</summary>
+        private void SetGUIToViewMode()
+        {
+            //enable / disable buttons
+        }
+
+        ///<summary>
+        ///Deactivates buttons and textfields for GUI "full view mode", applicable when searching content
+        ///</summary>
+        private void SetGUIToFullViewMode()
+        {
+            //enable / disable buttons
+        }
+
     }
 }

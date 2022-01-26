@@ -9,14 +9,15 @@ using DataAccessLayer.Models;
 
 namespace BusinessLayer.Models
 {
-    public class Customer : INotifyPropertyChanged
+    public class Customer : BusinessModelBase
     {
-        public int Id { get; set; }
         public string LastName { get; set; }
-        public string FirstName { get; set; }
-        public string FullName
+
+        private string firstName;
+        public string FirstName
         {
-            get => FirstName + " " + LastName;
+            get => firstName;
+            set => Set(ref firstName, value);
         }
         public Address Address { get; set; }
         public string EMail { get; set; }
@@ -25,30 +26,13 @@ namespace BusinessLayer.Models
         //to be defined exactly how passwords are handled
         public HashCode Password { get; set; }
 
-        private bool readOnly;
-
-        //used to color / block rows in WPF DataGrid
-        public bool ReadOnly
-        {
-            get { return readOnly; }
-            set { readOnly = value; NotifyPropertyChanged(); }
-        }
-
         public Customer()
         {
-            ReadOnly = true;
+
         }
         public Customer(CustomerDTO customerDto)
         {
             //implement assignment after DTO is defined
-            ReadOnly = true;
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public override string ToString()

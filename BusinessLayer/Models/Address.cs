@@ -6,9 +6,8 @@ using DataAccessLayer.Models;
 
 namespace BusinessLayer.Models
 {
-    public class Address
+    public class Address : BusinessModelBase
     {
-        public int Id { get; set; }
         public string Street { get; set; }
         public int StreetNo { get; set; }
         public string City { get; set; }

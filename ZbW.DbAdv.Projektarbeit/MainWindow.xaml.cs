@@ -22,6 +22,7 @@ namespace ZbW.DbAdv.Projektarbeit
     /// </summary>
     public partial class MainWindow : Window
     {
+        public BusinessManager BusinessManager { get; } = new BusinessManager();
 
         public MainWindow()
         {

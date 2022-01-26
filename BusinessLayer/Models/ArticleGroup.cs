@@ -6,9 +6,8 @@ using DataAccessLayer.Models;
 
 namespace BusinessLayer.Models
 {
-    public class ArticleGroup
+    public class ArticleGroup : BusinessModelBase
     {
-        public int Id { get; set; }
         public string Name { get; set; }
 
         public ArticleGroup()

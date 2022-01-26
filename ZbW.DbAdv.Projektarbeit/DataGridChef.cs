@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace PresentationLayer
         private readonly List<int> _comboBoxColumnIndices;
         private readonly List<int> _datePickerColumnIndices;
         
-        //private static readonly SolidColorBrush _readOnlyFieldColor = new SolidColorBrush(Colors.LightGray);
+        public SolidColorBrush ReadOnlyFieldColor = new SolidColorBrush(Colors.LightGray);
         //private static readonly SolidColorBrush _mandatoryFieldColor = new SolidColorBrush(Colors.Thistle);
         //private static readonly SolidColorBrush _modifiableFieldColor = new SolidColorBrush(Colors.White);
         //public DataGridCell? SelectedCell { get; set; }
@@ -31,14 +32,6 @@ namespace PresentationLayer
             _datePickerColumnIndices = datePickerColumnIndices;
         }
 
-        ///<summary>
-        ///Initial Definition of the tables, set all to read-only and set corresponding colors
-        ///</summary>
-        public void InitialTableDefinition()
-        {
-
-        }
-
         public void BlockReadOnlyRows(DataGridBeginningEditEventArgs e)
         {
             if (((Customer)e.Row.Item).ReadOnly)
@@ -46,6 +39,8 @@ namespace PresentationLayer
                 e.Cancel = true;
             }
         }
+
+
 
     }
 }
