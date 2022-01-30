@@ -9,7 +9,7 @@ namespace BusinessLayer.Models
     public class Address : BusinessModelBase
     {
         public string Street { get; set; }
-        public int StreetNo { get; set; }
+        public string StreetNo { get; set; }
         public string City { get; set; }
         public string Plz { get; set; }
 

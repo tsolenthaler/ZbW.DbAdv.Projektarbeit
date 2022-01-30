@@ -12,7 +12,7 @@
     </Window.Resources>
     <Grid Width="1920" Height="1080">
         <TextBox x:Name="Txt_SearchCustomer" Margin="1455,30,150,0" TextWrapping="Wrap" Text="Search Customer" VerticalAlignment="Top" FontSize="16" BorderThickness="0,0,0,1"/>
-        <Button x:Name="Cmd_SearchCustomers" Content="Search" HorizontalAlignment="Left" Margin="1812,29,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        <Button x:Name="Cmd_SearchCustomers" Content="Search" HorizontalAlignment="Left" Margin="1812,29,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Click="Cmd_SearchCustomers_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -26,28 +26,36 @@
                   AutoGenerateColumns="False" 
                   BeginningEdit="CustomerDataGrid_BeginningEdit"
                   CanUserSortColumns="False"
-                  CanUserAddRows="False"
-                  >
-            <DataGrid.RowStyle>
+                  CanUserAddRows="False" 
+                  SelectionMode="Single"
+        >
+            <!--<DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding ReadOnly}" Value="True">
+                        <DataTrigger Binding="{Binding Path=ReadOnly}" Value="True">
                             <Setter Property="Background" Value="{DynamicResource readOnlyColor}"/>
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </DataGrid.RowStyle>
+            </DataGrid.RowStyle>-->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True">
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell">
                             <Setter Property="Background" 
-                                Value="{DynamicResource readOnlyColor}" />
+                                    Value="{DynamicResource readOnlyColor}" />
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-
-                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Read-Only" Binding="{Binding Path=ReadOnly}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="{DynamicResource readOnlyColor}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="First Name" Binding="{Binding Path=FirstName}"/>
                 <DataGridTextColumn Header="Last Name" Binding="{Binding Path=LastName}"/>
                 <DataGridTextColumn Header="Street" Binding="{Binding Path=Address.Street}"/>
             </DataGrid.Columns>
@@ -59,14 +67,14 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="Cmd_SaveOrder" Content="Save" HorizontalAlignment="Left" Margin="1812,164,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        <Button x:Name="Cmd_SaveCustomer" Content="Save" HorizontalAlignment="Left" Margin="1812,164,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Click="Cmd_SaveCustomer_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="Cmd_ModifyOrder" Content="Modify" HorizontalAlignment="Left" Margin="1812,204,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        <Button x:Name="Cmd_ModifyCustomer" Content="Modify" HorizontalAlignment="Left" Margin="1812,204,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Click="Cmd_ModifyCustomer_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -80,7 +88,7 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="Cmd_Delete" Content="Delete" HorizontalAlignment="Left" Margin="1812,244,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        <Button x:Name="Cmd_DeleteCustomer" Content="Delete" HorizontalAlignment="Left" Margin="1812,244,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Click="Cmd_DeleteCustomer_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>

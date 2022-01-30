@@ -9,6 +9,7 @@ namespace BusinessLayer.Models
     public class ArticleGroup : BusinessModelBase
     {
         public string Name { get; set; }
+        public ArticleGroup ParentArticleGroup { get; set; }
 
         public ArticleGroup()
         {

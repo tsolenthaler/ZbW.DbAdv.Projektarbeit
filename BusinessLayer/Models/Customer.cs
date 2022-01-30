@@ -24,7 +24,7 @@ namespace BusinessLayer.Models
         public string Website { get; set; }
         
         //to be defined exactly how passwords are handled
-        public HashCode Password { get; set; }
+        public string Password { get; set; }
 
         public Customer()
         {

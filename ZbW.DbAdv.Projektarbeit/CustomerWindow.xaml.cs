@@ -68,7 +68,6 @@ namespace PresentationLayer
         {
             BusinessManager.CreateLocalCustomer();
             SetGUIToFullViewMode();
-
         }
 
         private void Cmd_Cancel_Click(object sender, RoutedEventArgs e)
@@ -101,5 +100,33 @@ namespace PresentationLayer
             //enable / disable buttons
         }
 
+        private void Cmd_ModifyCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            int index = CustomerDataGrid.SelectedIndex;
+            BusinessManager.ModifySelected(Customers, index);
+            SetGUIToModifyMode();
+        }
+
+        private void Cmd_SaveCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            BusinessManager.SaveModified(Customers);
+            SetGUIToViewMode();
+        }
+
+        private void Cmd_DeleteCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            int index = CustomerDataGrid.SelectedIndex;
+            BusinessManager.DeleteSelected(Customers, index);
+        }
+
+        private void Cmd_SearchCustomers_Click(object sender, RoutedEventArgs e)
+        {
+            string searchText = Txt_SearchCustomer.Text;
+
+            if (searchText != String.Empty)
+            {
+                //update customer list based on search result
+            }
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace DataAccessLayer.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }   
+
+        public int ParentArticleGroupId { get; set; }
     }
 }

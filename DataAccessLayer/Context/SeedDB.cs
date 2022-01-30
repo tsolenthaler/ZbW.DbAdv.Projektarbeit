@@ -7,8 +7,8 @@ using DataAccessLayer.Models;
 
 namespace DataAccessLayer.Context
 {
-    public class SeedDB : DbContext
-    {
+//    public class SeedDB : DbContext
+//    {
 
-    }
+//    }
 }

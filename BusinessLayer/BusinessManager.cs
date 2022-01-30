@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
+using DataAccessLayer.Models;
 
 namespace BusinessLayer
 {
@@ -18,9 +19,12 @@ namespace BusinessLayer
         private List<ArticleGroup>? articelGroupList;
         private List<Order>? orderList;
 
+        public DataAccessManager DataAccessManager { get; set; } = new DataAccessManager();
+
         public BusinessManager()
         {
             GenerateSampleData();
+            //DataAccessManager.Main();
         }
         private void GenerateSampleData()
         {
@@ -68,7 +72,48 @@ namespace BusinessLayer
                 else
                 {
                     //Item known by database
-                    //To be implemented
+                    itemList[index].ReadOnly = true;
+
+                    //implement reload customer from database
+                }
+            }
+        }
+
+        public void ModifySelected<T>(ObservableCollection<T> itemList, int index) where T : BusinessModelBase
+        {
+            if (index == -1)
+            {
+                //Item not found
+                return;
+            }
+            else
+            {
+                itemList[index].ReadOnly = false;
+            }
+        }
+
+        public void SaveModified<T>(ObservableCollection<T> itemList) where T : BusinessModelBase
+        {
+            int index = GetIndexOfModifiableDataGridChild(itemList);
+
+            if (index == -1)
+            {
+                //Item not found
+                return;
+            }
+            else
+            {
+                if (itemList[index].Id == 0)
+                {
+                    //Item not known by database yet
+                    //Implement saving onto database
+                }
+                else
+                {
+                    //Item known by database
+                    itemList[index].ReadOnly = true;
+
+                    //Implement saving onto database
                 }
             }
         }
@@ -85,7 +130,31 @@ namespace BusinessLayer
             return -1;
         }
 
+        public void DeleteSelected<T>(ObservableCollection<T> itemList, int index) where T : BusinessModelBase
+        {
+            if (index == -1)
+            {
+                //Item not found
+                return;
+            }
+            else
+            {
+                if (itemList[index].Id == 0)
+                {
+                    //Item not known by database yet
+                    CancelModification(itemList);
+                }
+                else
+                {
+                    //Item known by database
 
+                    //Implement deleting from database
+
+                    itemList.RemoveAt(index);
+                    
+                }
+            }
+        }
 
 
     }

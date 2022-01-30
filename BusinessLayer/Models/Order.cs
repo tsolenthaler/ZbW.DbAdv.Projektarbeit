@@ -11,7 +11,7 @@ namespace BusinessLayer.Models
         public int Id { get; set; }
         public DateTime? Date { get; set; }
         public Customer Customer { get; set; }
-        public List<OrderPosition> Positions { get; set; } = new List<OrderPosition>();
+        public ICollection<OrderPosition> OrderPositions { get; set; } = new List<OrderPosition>();
 
         public Order()
         {
