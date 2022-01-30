@@ -42,5 +42,19 @@ namespace ZbW.DbAdv.Projektarbeit
             customerWindow.Show();
             this.Hide();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            
+            try
+            {
+                BusinessManager.DataAccessManager.MigrateDatabase();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Not able to migrate database - maybe you haven't configured the connection string yet? \r\n \r\nConfigure it in file DataAccessLayer/Context/SetupDB.cs \r\n \r\nError Message: \r\n" + ex.Message);
+            }
+            
+        }
     }
 }

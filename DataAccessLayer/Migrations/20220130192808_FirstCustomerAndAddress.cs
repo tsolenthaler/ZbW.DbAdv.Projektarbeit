@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DataAccessLayer.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class FirstCustomerAndAddress : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -110,24 +110,40 @@ namespace DataAccessLayer.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ArticleId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    OrderDTOId = table.Column<int>(type: "int", nullable: true)
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderPositions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderPositions_Articles_ArticleId",
-                        column: x => x.ArticleId,
-                        principalTable: "Articles",
+                        name: "FK_OrderPositions_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderPositions_Orders_OrderDTOId",
-                        column: x => x.OrderDTOId,
-                        principalTable: "Orders",
-                        principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Addresses",
+                columns: new[] { "Id", "City", "Plz", "Street", "StreetNo" },
+                values: new object[,]
+                {
+                    { 1, null, null, "Schibistrasse", null },
+                    { 2, null, null, "Bahnhofstrasse", null },
+                    { 3, null, null, "Wiesenstrasse", null },
+                    { 4, null, null, "Rorschacherstrasse", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Customers",
+                columns: new[] { "Id", "AddressId", "EMail", "Firstname", "Lastname", "Password", "Website" },
+                values: new object[,]
+                {
+                    { 1, 1, null, "Hans", "Muster", null, null },
+                    { 2, 2, null, "Kurt", "Lörrer", null, null },
+                    { 3, 2, null, "Simone", "Stadler", null, null },
+                    { 4, 2, null, "Peeetraa", "Sturzenegger", null, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -141,14 +157,9 @@ namespace DataAccessLayer.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderPositions_ArticleId",
+                name: "IX_OrderPositions_OrderId",
                 table: "OrderPositions",
-                column: "ArticleId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderPositions_OrderDTOId",
-                table: "OrderPositions",
-                column: "OrderDTOId");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
@@ -159,16 +170,16 @@ namespace DataAccessLayer.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "OrderPositions");
-
-            migrationBuilder.DropTable(
                 name: "Articles");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "OrderPositions");
 
             migrationBuilder.DropTable(
                 name: "ArticelGroups");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Customers");

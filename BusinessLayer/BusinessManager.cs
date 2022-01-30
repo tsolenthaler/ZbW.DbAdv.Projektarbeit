@@ -21,33 +21,17 @@ namespace BusinessLayer
 
         public DataAccessManager DataAccessManager { get; set; } = new DataAccessManager();
 
-        public BusinessManager()
+        public void LoadAllCustomersFromDb()
         {
-            GenerateSampleData();
-            //DataAccessManager.Main();
+            var customerDTOs = DataAccessManager.GetAllCustomers();
+
+            foreach (var customerDTO in customerDTOs)
+            {
+                Customer customer = new Customer(customerDTO);
+                Customers.Add(customer);
+            }
         }
-        private void GenerateSampleData()
-        {
-            Customer customer = new Customer();
-            customer.Id = 1;
-            customer.FirstName = "Hans";
-            customer.LastName = "Muster";
-            customer.Address = new Address();
-            customer.Address.Street = "Musterstrasse";
-            customer.ReadOnly = true;
-
-            Customers.Add(customer);
-
-            Customer customer2 = new Customer();
-            customer2.Id = 2;
-            customer2.FirstName = "Franz";
-            customer2.LastName = "Gluggeri";
-            customer2.Address = new Address();
-            customer2.Address.Street = "Teststrasse";
-            customer2.ReadOnly = true;
-
-            Customers.Add(customer2);
-        }
+        
 
         public void CreateLocalCustomer()
         {

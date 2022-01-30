@@ -10,7 +10,5 @@ namespace DataAccessLayer.Models
         public int Id { get; set; }
         public DateTime? Date { get; set; }
         public virtual CustomerDTO Customer { get; set; }
-
-        public virtual ICollection<OrderPositionDTO> OrderPositions { get; set; }
     }
 }

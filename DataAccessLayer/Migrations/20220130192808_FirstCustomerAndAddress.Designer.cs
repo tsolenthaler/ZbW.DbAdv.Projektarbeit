@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayer.Migrations
 {
     [DbContext(typeof(SetupDB))]
-    [Migration("20220130152441_InitialCreate2")]
-    partial class InitialCreate2
+    [Migration("20220130192808_FirstCustomerAndAddress")]
+    partial class FirstCustomerAndAddress
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -48,6 +48,28 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Street = "Schibistrasse"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Street = "Bahnhofstrasse"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Street = "Wiesenstrasse"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Street = "Rorschacherstrasse"
+                        });
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.ArticleDTO", b =>
@@ -128,6 +150,36 @@ namespace DataAccessLayer.Migrations
                     b.HasIndex("AddressId");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddressId = 1,
+                            Firstname = "Hans",
+                            Lastname = "Muster"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddressId = 2,
+                            Firstname = "Kurt",
+                            Lastname = "Lörrer"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AddressId = 2,
+                            Firstname = "Simone",
+                            Lastname = "Stadler"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddressId = 2,
+                            Firstname = "Peeetraa",
+                            Lastname = "Sturzenegger"
+                        });
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.OrderDTO", b =>
@@ -160,10 +212,7 @@ namespace DataAccessLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OrderDTOId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -171,9 +220,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArticleId");
-
-                    b.HasIndex("OrderDTOId");
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderPositions");
                 });
@@ -213,22 +260,13 @@ namespace DataAccessLayer.Migrations
 
             modelBuilder.Entity("DataAccessLayer.Models.OrderPositionDTO", b =>
                 {
-                    b.HasOne("DataAccessLayer.Models.ArticleDTO", "Article")
+                    b.HasOne("DataAccessLayer.Models.OrderDTO", "Order")
                         .WithMany()
-                        .HasForeignKey("ArticleId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DataAccessLayer.Models.OrderDTO", null)
-                        .WithMany("OrderPositions")
-                        .HasForeignKey("OrderDTOId");
-
-                    b.Navigation("Article");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.OrderDTO", b =>
-                {
-                    b.Navigation("OrderPositions");
+                    b.Navigation("Order");
                 });
 #pragma warning restore 612, 618
         }

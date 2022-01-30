@@ -13,13 +13,18 @@ namespace BusinessLayer.Models
         public string City { get; set; }
         public string Plz { get; set; }
 
+        public Address(AddressDTO addressDto)
+        {
+            Id = addressDto.Id;
+            Street = addressDto.Street;
+            StreetNo = addressDto.StreetNo;
+            City = addressDto.City;
+            Plz = addressDto.Plz;
+        }
+
         public Address()
         {
 
-        }
-        public Address(AddressDTO addressDto)
-        {
-            //implement assignment after DTO is defined
         }
     }
 }

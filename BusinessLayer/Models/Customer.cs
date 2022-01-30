@@ -32,7 +32,14 @@ namespace BusinessLayer.Models
         }
         public Customer(CustomerDTO customerDto)
         {
-            //implement assignment after DTO is defined
+            Id = customerDto.Id;
+            FirstName = customerDto.Firstname;
+            LastName = customerDto.Lastname;
+            EMail = customerDto.EMail;
+            Website = customerDto.Website;
+            Password = customerDto.Password;
+
+            Address = new Address(customerDto.Address);
         }
 
         public override string ToString()

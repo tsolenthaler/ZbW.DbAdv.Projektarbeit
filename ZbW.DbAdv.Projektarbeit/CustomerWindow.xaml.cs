@@ -47,6 +47,8 @@ namespace PresentationLayer
             
             _dataGridChef = new DataGridChef(CustomerDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
             Resources["readOnlyColor"] = _dataGridChef.ReadOnlyFieldColor;
+
+            BusinessManager.LoadAllCustomersFromDb();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
