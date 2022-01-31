@@ -9,8 +9,8 @@ namespace DataAccessLayer.Models
 {
     public class AddressDTO
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Street { get; set; }
         public string StreetNo { get; set; }

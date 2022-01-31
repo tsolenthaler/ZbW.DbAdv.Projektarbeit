@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataAccessLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
@@ -17,6 +18,24 @@ namespace DataAccessLayer.Models
             using var context = new SetupDB();
 
             context.Database.Migrate();
+
+            // ADD INITIAL DATA 
+            SeedingDatabase();
+        }
+
+        public void SeedingDatabase()
+        {
+            using var context = new SetupDB();
+            var seedDb = new SeedDB();
+
+            context.Addresses.AddRange(seedDb.GenerateAddressDTOs());
+            context.Customers.AddRange(seedDb.GenerateCustomerDTOs());
+            //context.Articles.AddRange(seedDb.GenerateArticleDTOs());
+            context.ArticelGroups.AddRange(seedDb.GenerateArticleGroupDTOs());
+            //context.Orders.AddRange(seedDb.GenerateOrderDTOs());
+            //context.OrderPositions.AddRange(seedDb.GenerateOrderPositionDTOs());
+
+            context.SaveChanges();
         }
 
         public CustomerDTO[] GetAllCustomers()

@@ -24,11 +24,11 @@ namespace DataAccessLayer
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //string Thomas: "Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
+                //string Thomas: @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
                 //string Angelo: @"Server=KOLLEG-MPC\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;";
                 //string Corina:
 
-                string connection = @"Server=\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;";
+                string connection = @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
                 optionsBuilder.UseSqlServer(connection);
                 optionsBuilder.LogTo(Console.WriteLine);
             }
@@ -57,7 +57,7 @@ namespace DataAccessLayer
             customer.HasOne(x => x.Address); // Kunde kann nur eine Adresse haben.
                      //.WithMany(x => x.Customer); // Eine Adresse kann mehrere Kunden haben.
 
-                     var address = modelBuilder.Entity<AddressDTO>();
+            var address = modelBuilder.Entity<AddressDTO>();
             address.HasKey(x => x.Id);
             address.Property(x => x.Street).IsRequired(true);
             address.Property(x => x.StreetNo).IsRequired(false);
@@ -85,100 +85,7 @@ namespace DataAccessLayer
             orderposition.Property(x => x.Quantity).IsRequired();
             orderposition.HasOne(x=>x.Order); // Eine Position hat nur einen Artikel
 
-            //ADD INITIAL DATA
-
-            //Addresses
-            address.HasData(GenerateAddressDTOs());
-
-            //Customers
-            customer.HasData(GenerateCustomerDTOs());
-
-            //ArticleGroups
-
-
-            //Articles
-
-
-            //OrderPositions
-
-
-            //Orders
-
-        }
-
-        private AddressDTO[] GenerateAddressDTOs()
-        {
-            AddressDTO[] addresses = new AddressDTO[4];
-
-            addresses[0] = new AddressDTO()
-            {
-                Id = 1,
-                Street = "Schibistrasse",
-
-            };
-
-            addresses[1] = new AddressDTO()
-            {
-                Id = 2,
-                Street = "Bahnhofstrasse",
-
-            };
-
-            addresses[2] = new AddressDTO()
-            {
-                Id = 3,
-                Street = "Wiesenstrasse",
-
-            };
-
-            addresses[3] = new AddressDTO()
-            {
-                Id = 4,
-                Street = "Rorschacherstrasse",
-
-            };
-
-            return addresses;
-        }
-
-
-        private CustomerDTO[] GenerateCustomerDTOs()
-        {
-            CustomerDTO[] customers = new CustomerDTO[4];
-
-            customers[0] = new CustomerDTO()
-            {
-                Id = 1,
-                Firstname = "Hans",
-                Lastname = "Muster",
-                AddressId = 1
-            };
-
-            customers[1] = new CustomerDTO()
-            {
-                Id = 2,
-                Firstname = "Kurt",
-                Lastname = "Lörrer",
-                AddressId = 2
-            };
-
-            customers[2] = new CustomerDTO()
-            {
-                Id = 3,
-                Firstname = "Simone",
-                Lastname = "Stadler",
-                AddressId = 2
-            };
-
-            customers[3] = new CustomerDTO()
-            {
-                Id = 4,
-                Firstname = "Peeetraa",
-                Lastname = "Sturzenegger",
-                AddressId = 2
-            };
-
-            return customers;
+            //ADD INITIAL DATA --> DataAccessManager.SeedingDatabase
         }
     }
 }

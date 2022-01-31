@@ -8,8 +8,7 @@ namespace DataAccessLayer.Models
     public class ArticleGroupDTO
     {
         public int Id { get; set; }
-        public string Name { get; set; }   
-
+        public string Name { get; set; }
         public int ParentArticleGroupId { get; set; }
     }
 }
