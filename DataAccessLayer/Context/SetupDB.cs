@@ -29,6 +29,7 @@ namespace DataAccessLayer
                 //string Corina:
 
                 string connection = @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
+                // https://docs.microsoft.com/de-de/ef/core/miscellaneous/connection-strings#winforms--wpf-applications
                 optionsBuilder.UseSqlServer(connection);
                 optionsBuilder.LogTo(Console.WriteLine);
             }
