@@ -35,8 +35,33 @@ namespace DataAccessLayer.Context
 
             return addresses;
         }
+        public CustomerDTO[] TestSeeding()
+        {
+            CustomerDTO[] customers = new CustomerDTO[4];
+            customers[0] = new CustomerDTO()
+            {
+                Id = 1,
+                Firstname = "Hans",
+                Lastname = "Muster",
+                AddressId = 1
+                //Address = address
+            };
+
+            customers[1] = new CustomerDTO()
+            {
+                Id = 2,
+                Firstname = "Kurt",
+                Lastname = "Lörrer",
+                AddressId = 1
+                //Address = address
+            };
+
+            return customers;
+        }
+
         public CustomerDTO[] GenerateCustomerDTOs()
         {
+            //AddressDTO[] addresses = new AddressDTO[4];
             var address = new AddressDTO()
             {
                 Street = "Rorschacherstrasse",
@@ -44,34 +69,36 @@ namespace DataAccessLayer.Context
                 Plz = "9000",
                 City = "St.Gallen"
             };
+
             CustomerDTO[] customers = new CustomerDTO[4];
 
             customers[0] = new CustomerDTO()
             {
                 Firstname = "Hans",
                 Lastname = "Muster",
-                AddressId = 1
+                AddressId = 1,
+                Address = address
             };
 
             customers[1] = new CustomerDTO()
             {
                 Firstname = "Kurt",
                 Lastname = "Lörrer",
-                AddressId = 2
+                //AddressId = 2
             };
 
             customers[2] = new CustomerDTO()
             {
                 Firstname = "Simone",
                 Lastname = "Stadler",
-                AddressId = 3,
+                //AddressId = 3,
             };
 
             customers[3] = new CustomerDTO()
             {
                 Firstname = "Peeetraa",
                 Lastname = "Sturzenegger",
-                AddressId = 4
+                //AddressId = 4
             };
 
             return customers;
