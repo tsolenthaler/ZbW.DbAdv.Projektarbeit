@@ -35,29 +35,6 @@ namespace DataAccessLayer.Context
 
             return addresses;
         }
-        public CustomerDTO[] TestSeeding()
-        {
-            CustomerDTO[] customers = new CustomerDTO[4];
-            customers[0] = new CustomerDTO()
-            {
-                Id = 1,
-                Firstname = "Hans",
-                Lastname = "Muster",
-                AddressId = 1
-                //Address = address
-            };
-
-            customers[1] = new CustomerDTO()
-            {
-                Id = 2,
-                Firstname = "Kurt",
-                Lastname = "Lörrer",
-                AddressId = 1
-                //Address = address
-            };
-
-            return customers;
-        }
 
         public CustomerDTO[] GenerateCustomerDTOs()
         {
