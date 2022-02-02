@@ -21,6 +21,17 @@ namespace DataAccessLayer.Models
 
             // ADD INITIAL DATA 
             SeedingDatabase();
+            /*if (context.Customers.Any(o => o.Id == 1))
+            {
+                // No INITAL DATA Customer with 1 exist
+            }
+            else
+            {
+                SeedingDatabase();
+            }*/
+
+            //context.ChangeTracker.DetectChanges();
+            //Console.WriteLine(context.ChangeTracker.DebugView.ShortView);
         }
 
         public void SeedingDatabase()
@@ -28,10 +39,12 @@ namespace DataAccessLayer.Models
             using var context = new SetupDB();
             var seedDb = new SeedDB();
 
-            context.Addresses.AddRange(seedDb.GenerateAddressDTOs());
+            //context.Addresses.AddRange(seedDb.GenerateAddressDTOs());
+
+            //context.Customers.AddRange(seedDb.TestSeeding());
             context.Customers.AddRange(seedDb.GenerateCustomerDTOs());
             //context.Articles.AddRange(seedDb.GenerateArticleDTOs());
-            context.ArticelGroups.AddRange(seedDb.GenerateArticleGroupDTOs());
+            //context.ArticelGroups.AddRange(seedDb.GenerateArticleGroupDTOs());
             //context.Orders.AddRange(seedDb.GenerateOrderDTOs());
             //context.OrderPositions.AddRange(seedDb.GenerateOrderPositionDTOs());
 
@@ -51,7 +64,7 @@ namespace DataAccessLayer.Models
         //    return (await Context.SaveChangesAsync()) > 0;
         //}
 
-        public CustomerDTO GetCustomerFromId(int id)
+        public CustomerDTO GetCustomerById(int id)
         {
             using var context = new SetupDB();
             var customer = context.Customers
@@ -59,6 +72,24 @@ namespace DataAccessLayer.Models
                 .Where(c => c.Id == id).ToArray();
 
             return customer[0];
+        }
+
+        public CustomerDTO SaveCustomer()
+        {
+            return new CustomerDTO();
+        }
+
+        public void DeleteCustomerById(int id)
+        {
+            using var context = new SetupDB();
+            //var customer = context.Customers.Find(id);
+            var customer = context.Customers
+                .Include(a => a.Address)
+                .Single(a => a.Id == id);
+            
+            context.Addresses.RemoveRange(customer.Address); // Löscht auch die Adresse
+            context.Customers.Remove(customer);
+            context.SaveChanges();
         }
 
         //public ObservableCollection<CustomerDTO> GetAllCustomers()
