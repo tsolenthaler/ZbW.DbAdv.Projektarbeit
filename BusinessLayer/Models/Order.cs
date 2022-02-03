@@ -40,12 +40,7 @@ namespace BusinessLayer.Models
             //implement assignment after DTO is defined
             Id = orderDto.Id;
             Date = orderDto.Date;
-            Customer = orderDto.Customer;
+            Customer = new Customer(orderDto.Customer);
         }
     }
 }
-
-//public int Id { get; set; }
-//public DateTime? Date { get; set; }
-//public virtual CustomerDTO Customer { get; set; }
-//public int CustomerId { get; set; }

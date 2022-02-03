@@ -44,16 +44,11 @@ namespace BusinessLayer.Models
         public OrderPosition(OrderPositionDTO orderPositionDto)
         {
             Id = orderPositionDto.Id;
-            PosNo = orderPositionDto.PosNo;
-            Article = orderPositionDto.Article;
+            //PosNo = orderPositionDto.PosNo;
+            //Article = orderPositionDto.Article;
             Quantity = orderPositionDto.Quantity;
-            Order = orderPositionDto.Order;
+            Order = new Order(orderPositionDto.Order);
         }
 
     }
 }
-
-//public int Id { get; set; }
-//public int OrderId { get; set; }
-//public virtual OrderDTO Order { get; set; }
-//public int Quantity { get; set; }

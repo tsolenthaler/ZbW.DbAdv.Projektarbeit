@@ -49,6 +49,8 @@ namespace BusinessLayer.Models
 
         //to be defined exactly how passwords are handled
         private string password;
+        private Customer? customerDTO;
+
         public string Password 
         {
             get => password;
@@ -69,6 +71,10 @@ namespace BusinessLayer.Models
             Password = customerDto.Password;
 
             Address = new Address(customerDto.Address);
+        }
+
+        public Customer(Customer? customerDTO) {
+            this.customerDTO = customerDTO;
         }
 
         public override string ToString()

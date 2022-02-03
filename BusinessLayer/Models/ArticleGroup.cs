@@ -32,11 +32,7 @@ namespace BusinessLayer.Models
             //implement assignment after DTO is defined
             Id = articleGroupDto.Id;
             Name = articleGroupDto.Name;
-            ParentArticleGroup = articleGroupDto.ParentArticleGroup;
+            // ParentArticleGroup = articleGroupDto.ParentArticleGroup;
         }
     }
 }
-
-//public int Id { get; set; }
-//public string Name { get; set; }
-//public int ParentArticleGroupId { get; set; }
