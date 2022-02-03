@@ -8,8 +8,19 @@ namespace BusinessLayer.Models
 {
     public class ArticleGroup : BusinessModelBase
     {
-        public string Name { get; set; }
-        public ArticleGroup ParentArticleGroup { get; set; }
+        private string name;
+        public string Name
+        {
+            get => name;
+            set => Set(ref name, value);
+        }
+
+        private ArticleGroup parentArticleGroup;
+        public ArticleGroup ParentArticleGroup
+        {
+            get => parentArticleGroup; 
+            set => Set(ref parentArticleGroup, value);
+        }
 
         public ArticleGroup()
         {
@@ -19,6 +30,13 @@ namespace BusinessLayer.Models
         public ArticleGroup(ArticleGroupDTO articleGroupDto)
         {
             //implement assignment after DTO is defined
+            Id = articleGroupDto.Id;
+            Name = articleGroupDto.Name;
+            ParentArticleGroup = articleGroupDto.ParentArticleGroup;
         }
     }
 }
+
+//public int Id { get; set; }
+//public string Name { get; set; }
+//public int ParentArticleGroupId { get; set; }

@@ -6,12 +6,18 @@ using System.Net.Mail;
 using System.Runtime.CompilerServices;
 using System.Text;
 using DataAccessLayer.Models;
+using Microsoft.Extensions.Primitives;
 
 namespace BusinessLayer.Models
 {
     public class Customer : BusinessModelBase
     {
-        public string LastName { get; set; }
+        private string lastName;
+        public string LastName
+        {
+            get => lastName;
+            set => Set(ref lastName, value);
+        }
 
         private string firstName;
         public string FirstName
@@ -19,12 +25,35 @@ namespace BusinessLayer.Models
             get => firstName;
             set => Set(ref firstName, value);
         }
-        public Address Address { get; set; }
-        public string EMail { get; set; }
-        public string Website { get; set; }
-        
+
+        private Address address;
+        public Address Address
+        {
+            get => address;
+            set => Set(ref address, value);
+        }
+
+        private string email;
+        public string EMail 
+        {
+            get => email;
+            set => Set(ref email, value);
+        }
+
+        private string website;
+        public string Website 
+        {
+            get => website;
+            set => Set(ref website, value);
+        }
+
         //to be defined exactly how passwords are handled
-        public string Password { get; set; }
+        private string password;
+        public string Password 
+        {
+            get => password;
+            set => Set(ref password, value);
+        }
 
         public Customer()
         {
