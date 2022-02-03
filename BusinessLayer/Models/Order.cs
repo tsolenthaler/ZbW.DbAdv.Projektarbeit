@@ -28,8 +28,6 @@ namespace BusinessLayer.Models
             set => Set(ref customer, value);
         }
 
-        public ICollection<OrderPosition> OrderPositions { get; set; } = new List<OrderPosition>();
-
         public Order()
         {
 
@@ -37,7 +35,6 @@ namespace BusinessLayer.Models
 
         public Order(OrderDTO orderDto)
         {
-            //implement assignment after DTO is defined
             Id = orderDto.Id;
             Date = orderDto.Date;
             Customer = new Customer(orderDto.Customer);

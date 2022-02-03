@@ -39,9 +39,9 @@ namespace PresentationLayer
             Orders.Add(new Order { Id = 2 });
             Orders.Add(new Order { Id = 3 });     
 
-            OrderPositions.Add(new OrderPosition{ PosNo = 10 });
-            OrderPositions.Add(new OrderPosition{ PosNo = 20 });
-            OrderPositions.Add(new OrderPosition{ PosNo = 30 });
+            OrderPositions.Add(new OrderPosition{ Id = 10 });
+            OrderPositions.Add(new OrderPosition{ Id = 20 });
+            OrderPositions.Add(new OrderPosition{ Id = 30 });
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -58,7 +58,15 @@ namespace BusinessLayer
                     //Item known by database
                     itemList[index].ReadOnly = true;
 
-                    //implement reload customer from database
+                    if (itemList[index] is Customer)
+                    {
+                        //var customer = itemList[index] as Customer;
+
+
+                        //customer = new Customer(DataAccessManager.GetCustomerById(itemList[index].Id));
+                        //itemList.Add(customer);
+                    }
+ 
                 }
             }
         }

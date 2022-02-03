@@ -41,16 +41,9 @@ namespace BusinessLayer.Models
 
         public Article(ArticleDTO articleDto)
         {
-            //implement assignment after DTO is defined
             Id = articleDto.Id;
             Name = articleDto.Name;
             Price = articleDto.Price;
         }
     }
 }
-
-//public int Id { get; set; }
-//public virtual ArticleGroupDTO ArticleGroup { get; set; }
-//public int ArticleGroupId { get; set; }
-//public decimal Price { get; set; }
-//public string Name { get; set; }

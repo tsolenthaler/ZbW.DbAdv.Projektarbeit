@@ -58,11 +58,6 @@ namespace DataAccessLayer.Models
             return customers;
         }
 
-        //public async Task<bool> Update(MyObject item)
-        //{
-        //    Context.Entry(await Context.MyDbSet.FirstOrDefaultAsync(x => x.Id == item.Id)).CurrentValues.SetValues(item);
-        //    return (await Context.SaveChangesAsync()) > 0;
-        //}
 
         public CustomerDTO GetCustomerById(int id)
         {
@@ -74,9 +69,16 @@ namespace DataAccessLayer.Models
             return customer[0];
         }
 
-        public CustomerDTO SaveCustomer()
+        public void UpdateCustomer(CustomerDTO customerDto)
         {
-            return new CustomerDTO();
+            //only for debugging, delete when method is implemented
+            Console.WriteLine("Customer updated"); 
+        }
+
+        public void NewCustomer(CustomerDTO customerDto)
+        {
+            //only for debugging, delete when method is implemented
+            Console.WriteLine("Customer created");
         }
 
         public void DeleteCustomerById(int id)
@@ -91,6 +93,17 @@ namespace DataAccessLayer.Models
             context.Customers.Remove(customer);
             context.SaveChanges();
         }
+
+        public ArticleGroupDTO GetArticleGroupById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        //public async Task<bool> Update(MyObject item)
+        //{
+        //    Context.Entry(await Context.MyDbSet.FirstOrDefaultAsync(x => x.Id == item.Id)).CurrentValues.SetValues(item);
+        //    return (await Context.SaveChangesAsync()) > 0;
+        //}
 
         //public ObservableCollection<CustomerDTO> GetAllCustomers()
         //{

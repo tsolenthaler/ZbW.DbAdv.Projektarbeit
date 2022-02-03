@@ -8,14 +8,14 @@ namespace BusinessLayer.Models
 {
     public class ArticleGroup : BusinessModelBase
     {
-        private string name;
+        private string? name;
         public string Name
         {
             get => name;
             set => Set(ref name, value);
         }
 
-        private ArticleGroup parentArticleGroup;
+        private ArticleGroup? parentArticleGroup;
         public ArticleGroup ParentArticleGroup
         {
             get => parentArticleGroup; 
@@ -27,12 +27,11 @@ namespace BusinessLayer.Models
 
         }
 
-        public ArticleGroup(ArticleGroupDTO articleGroupDto)
+        public ArticleGroup(ArticleGroupDTO articleGroupDto, DataAccessManager dataAccessManager)
         {
-            //implement assignment after DTO is defined
             Id = articleGroupDto.Id;
             Name = articleGroupDto.Name;
-            // ParentArticleGroup = articleGroupDto.ParentArticleGroup;
+            ParentArticleGroup = new ArticleGroup(dataAccessManager.GetArticleGroupById(articleGroupDto.Id), dataAccessManager);
         }
     }
 }

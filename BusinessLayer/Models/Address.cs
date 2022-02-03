@@ -49,5 +49,16 @@ namespace BusinessLayer.Models
         {
 
         }
+
+        public AddressDTO ToAddressDto()
+        {
+            AddressDTO addressDto = new AddressDTO();
+            addressDto.Id = Id;
+            addressDto.Street = Street;
+            addressDto.StreetNo = StreetNo;
+            addressDto.City = City;
+            addressDto.Plz = Plz;
+            return addressDto;
+        }
     }
 }

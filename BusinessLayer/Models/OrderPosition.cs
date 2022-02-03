@@ -8,12 +8,6 @@ namespace BusinessLayer.Models
 {
     public class OrderPosition : BusinessModelBase
     {
-        private int posNo;
-        public int PosNo
-        {
-            get => posNo;
-            set => Set(ref posNo, value);
-        }
 
         private Article article;
         public Article Article
@@ -44,8 +38,7 @@ namespace BusinessLayer.Models
         public OrderPosition(OrderPositionDTO orderPositionDto)
         {
             Id = orderPositionDto.Id;
-            //PosNo = orderPositionDto.PosNo;
-            //Article = orderPositionDto.Article;
+            Article = new Article(orderPositionDto.Article);
             Quantity = orderPositionDto.Quantity;
             Order = new Order(orderPositionDto.Order);
         }

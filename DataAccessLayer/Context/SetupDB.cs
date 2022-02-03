@@ -91,8 +91,7 @@ namespace DataAccessLayer
             //orderposition.Property(x => x.Id).ValueGeneratedOnAdd();
             orderposition.Property(x => x.Quantity).IsRequired();
             orderposition.HasOne(x=>x.Order); // Eine Position hat nur einen Artikel
-
-            //ADD INITIAL DATA --> DataAccessManager.SeedingDatabase
+            orderposition.HasOne(x => x.Article);
         }
     }
 }
