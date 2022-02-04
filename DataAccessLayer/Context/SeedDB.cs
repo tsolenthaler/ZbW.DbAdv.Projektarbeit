@@ -9,154 +9,99 @@ namespace DataAccessLayer.Context
 {
     public class SeedDB 
     {
-        public AddressDTO[] GenerateAddressDTOs()
+        public List<CustomerDTO> GenerateCustomerDTOs()
         {
-            AddressDTO[] addresses = new AddressDTO[4];
-
-            addresses[0] = new AddressDTO()
-            {
-                Street = "Schibistrasse",
+            var customers = new List<CustomerDTO>{
+                new CustomerDTO
+                {
+                    Firstname = "Hans",
+                    Lastname = "Muster",
+                    AddressId = 1,
+                    Address = new AddressDTO
+                    {
+                        Street = "Rorschacherstrasse",
+                        StreetNo = "11",
+                        Plz = "9000",
+                        City = "St.Gallen"
+                    }
+                },
+                new CustomerDTO{
+                    Firstname = "Kurt",
+                    Lastname = "Lörrer",
+                    Address = new AddressDTO
+                    {
+                        Street = "Bahnhofstrasse",
+                        StreetNo = "5",
+                        Plz = "8000",
+                        City = "Zürich"
+                    }
+                },
+                new CustomerDTO{
+                    Firstname = "Simone",
+                    Lastname = "Stadler",
+                    Address = new AddressDTO
+                    {
+                        Street = "Wiesenstrasse",
+                        StreetNo = "21",
+                        Plz = "3000",
+                        City = "Bern"
+                    }
+                },
+                new CustomerDTO{
+                    Firstname = "Peeetraa",
+                    Lastname = "Sturzenegger",
+                    Address = new AddressDTO
+                    {
+                        Street = "Hauptstrasse",
+                        StreetNo = "1",
+                        Plz = "9500",
+                        City = "Wil"
+                    }
+                },
             };
-
-            addresses[1] = new AddressDTO()
-            {
-                Street = "Bahnhofstrasse",
-            };
-
-            addresses[2] = new AddressDTO()
-            {
-                Street = "Wiesenstrasse",
-            };
-
-            addresses[3] = new AddressDTO()
-            {
-                Street = "Rorschacherstrasse",
-            };
-
-            return addresses;
-        }
-
-        public CustomerDTO[] GenerateCustomerDTOs()
-        {
-            //AddressDTO[] addresses = new AddressDTO[4];
-            var address = new AddressDTO()
-            {
-                Street = "Rorschacherstrasse",
-                StreetNo = "11",
-                Plz = "9000",
-                City = "St.Gallen"
-            };
-
-            CustomerDTO[] customers = new CustomerDTO[4];
-
-            customers[0] = new CustomerDTO()
-            {
-                Firstname = "Hans",
-                Lastname = "Muster",
-                AddressId = 1,
-                Address = address
-            };
-
-            customers[1] = new CustomerDTO()
-            {
-                Firstname = "Kurt",
-                Lastname = "Lörrer",
-                //AddressId = 2
-            };
-
-            customers[2] = new CustomerDTO()
-            {
-                Firstname = "Simone",
-                Lastname = "Stadler",
-                //AddressId = 3,
-            };
-
-            customers[3] = new CustomerDTO()
-            {
-                Firstname = "Peeetraa",
-                Lastname = "Sturzenegger",
-                //AddressId = 4
-            };
-
             return customers;
         }
-        public ArticleGroupDTO[] GenerateArticleGroupDTOs()
+        public List<ArticleGroupDTO> GenerateArticleGroupDTOs()
         {
-            ArticleGroupDTO[] articleGroup = new ArticleGroupDTO[3];
-
-            articleGroup[0] = new ArticleGroupDTO()
+            var articleGroup = new List<ArticleGroupDTO>
             {
-                Name = "Kleider",
-                ParentArticleGroupId = 0
+                new ArticleGroupDTO(){ Name = "Kleider", ParentArticleGroupId = 0},
+                new ArticleGroupDTO(){ Name = "T-Shirt", ParentArticleGroupId = 1},
+                new ArticleGroupDTO(){ Name = "Hosen", ParentArticleGroupId = 1}
             };
-            articleGroup[1] = new ArticleGroupDTO()
-            {
-                Name = "T-Shirt",
-                ParentArticleGroupId = 1
-            };
-            articleGroup[2] = new ArticleGroupDTO()
-            {
-                Name = "Hosen",
-                ParentArticleGroupId = 1
-            };
-
             return articleGroup;
         }
 
-        public ArticleDTO[] GenerateArticleDTOs()
+        public List<ArticleDTO> GenerateArticleDTOs()
         {
-            ArticleGroupDTO[] articleGroup = new ArticleGroupDTO[3];
-
-            articleGroup[0] = new ArticleGroupDTO()
+            var article = new List<ArticleDTO>()
             {
-                Name = "Kleider",
-                ParentArticleGroupId = 0
+                new ArticleDTO() { Name = "Sonnen T-Shirt", Price = (decimal)14.50, ArticleGroupId = 2 },
+                new ArticleDTO() { Name = "Mond T-Shirt", Price = (decimal)19.50, ArticleGroupId = 2 },
+                new ArticleDTO() { Name = "Sterne T-Shirt", Price = (decimal)9.50, ArticleGroupId = 2 }
             };
-            articleGroup[1] = new ArticleGroupDTO()
-            {
-                Name = "T-Shirt",
-                ParentArticleGroupId = 1
-            };
-            articleGroup[2] = new ArticleGroupDTO()
-            {
-                Name = "Hosen",
-                ParentArticleGroupId = 1
-            };
-
-            ArticleDTO[] article = new ArticleDTO[3];
-
-            article[0] = new ArticleDTO() { Name = "Sonnen T-Shirt", Price = (decimal)14.50, ArticleGroupId = 1 };
-            article[1] = new ArticleDTO() { Name = "Mond T-Shirt", Price = (decimal)19.50, ArticleGroupId = 1 };
-            article[2] = new ArticleDTO() { Name = "Sterne T-Shirt", Price = (decimal)9.50, ArticleGroupId = 1 };
-
             return article;
         }
 
-        public OrderPositionDTO[] GenerateOrderPositionDTOs()
+        public List<OrderPositionDTO> GenerateOrderPositionDTOs()
         {
-            OrderPositionDTO[] orderposition = new OrderPositionDTO[3];
-
-            orderposition[0] = new OrderPositionDTO() { Quantity = 5 };
-            orderposition[1] = new OrderPositionDTO() { Quantity = 5 };
-            orderposition[2] = new OrderPositionDTO() { Quantity = 5 };
-
+            var orderposition = new List<OrderPositionDTO>
+            {
+                new OrderPositionDTO() { Quantity = 5, ArticleId = 1, OrderId = 1},
+                new OrderPositionDTO() { Quantity = 2, ArticleId = 2, OrderId = 1 },
+                new OrderPositionDTO() { Quantity = 11, ArticleId = 3,  OrderId = 1 }
+            };
             return orderposition;
         }
 
-        public OrderDTO[] GenerateOrderDTOs()
+        public List<OrderDTO> GenerateOrderDTOs()
         {
-            OrderDTO[] order = new OrderDTO[3];
-
-            order[0] = new OrderDTO { Date = new DateTime(2021, 3, 15), };
-            order[1] = new OrderDTO { Date = new DateTime(2022, 1, 15), };
-            order[2] = new OrderDTO { Date = new DateTime(2022, 1, 30), };
-
-            OrderPositionDTO[] orderposition = new OrderPositionDTO[3];
-
-            orderposition[0] = new OrderPositionDTO() { Quantity = 5, Order = order[0] };
-            orderposition[1] = new OrderPositionDTO() { Quantity = 5, Order = order[1] };
-            orderposition[2] = new OrderPositionDTO() { Quantity = 5, Order = order[2] };
-
+            var order = new List<OrderDTO>
+            {
+                new OrderDTO { Date = new DateTime(2021, 3, 15), CustomerId = 1 },
+                new OrderDTO { Date = new DateTime(2022, 1, 15), CustomerId = 2},
+                new OrderDTO { Date = new DateTime(2022, 1, 30), CustomerId = 3}
+            };
             return order;
         }
     }
