@@ -50,7 +50,6 @@ namespace DataAccessLayer
         {
             var customer = modelBuilder.Entity<CustomerDTO>();
             customer.HasKey(x => x.Id); // Id hinterlegen
-            //customer.Property(x => x.Id).ValueGeneratedOnAdd(); // Generiert eine ID bei einem Insert => Annotations [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             customer.Property(x => x.Firstname).IsRequired(true); //Pflichtfeld
             customer.Property(x => x.Lastname).IsRequired(true); //Pflichtfeld
             customer.Property(x => x.EMail).IsRequired(false); 
@@ -61,7 +60,6 @@ namespace DataAccessLayer
 
             var address = modelBuilder.Entity<AddressDTO>();
             address.HasKey(x => x.Id);
-            //address.Property(x => x.Id).ValueGeneratedOnAdd();
             address.Property(x => x.Street).IsRequired(true);
             address.Property(x => x.StreetNo).IsRequired(false);
             address.Property(x => x.City).IsRequired(false);
@@ -69,28 +67,24 @@ namespace DataAccessLayer
 
             var article = modelBuilder.Entity<ArticleDTO>();
             article.HasKey(x => x.Id);
-            //article.Property(x => x.Id).ValueGeneratedOnAdd();
             article.Property(x => x.Name).IsRequired(true);
             article.Property(x => x.Price).IsRequired(true);   
             article.HasOne(x => x.ArticleGroup); // Artikel hat eine Artikelgruppe
 
             var articlegroup = modelBuilder.Entity<ArticleGroupDTO>();
             articlegroup.HasKey(x => x.Id);
-            //articlegroup.Property(x => x.Id).ValueGeneratedOnAdd();
             articlegroup.Property(x => x.Name).IsRequired(true);
             articlegroup.Property(x => x.ParentArticleGroupId).IsRequired(true);
 
             var order = modelBuilder.Entity<OrderDTO>();
             order.HasKey(x => x.Id); // Auftragsnummer
-            //order.Property(x => x.Id).ValueGeneratedOnAdd();
             order.Property(x => x.Date).IsRequired(true);
             order.HasOne(x => x.Customer); // Eine Bestellung hat immer einen Kunden
 
             var orderposition = modelBuilder.Entity<OrderPositionDTO>();
-            orderposition.HasKey(x => x.Id);
-            //orderposition.Property(x => x.Id).ValueGeneratedOnAdd();
+            orderposition.HasKey(x => x.Id);;
             orderposition.Property(x => x.Quantity).IsRequired();
-            orderposition.HasOne(x=>x.Order); // Eine Position hat nur einen Artikel
+            orderposition.HasOne(x => x.Order); // Eine Position hat nur einen Artikel
             orderposition.HasOne(x => x.Article);
         }
     }
