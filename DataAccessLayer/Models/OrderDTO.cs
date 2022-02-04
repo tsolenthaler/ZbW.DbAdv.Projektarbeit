@@ -9,7 +9,8 @@ namespace DataAccessLayer.Models
     {
         public int Id { get; set; }
         public DateTime? Date { get; set; }
-        public virtual CustomerDTO Customer { get; set; }
         public int CustomerId { get; set; }
+        public virtual CustomerDTO Customer { get; set; }
+        
     }
 }

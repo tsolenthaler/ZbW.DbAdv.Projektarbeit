@@ -9,13 +9,10 @@ namespace DataAccessLayer.Models
     {
 
         public int Id { get; set; }
-
-        public int OrderId { get; set; }
-        public virtual OrderDTO Order { get; set; }
-
         public int ArticleId { get; set; }
         public virtual ArticleDTO Article { get; set; }
         public int Quantity { get; set; }
-
+        public int OrderId { get; set; }
+        public virtual OrderDTO Order { get; set; }
     }
 }
