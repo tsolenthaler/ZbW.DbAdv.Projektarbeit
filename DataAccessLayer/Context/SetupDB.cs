@@ -56,6 +56,7 @@ namespace DataAccessLayer
             customer.Property(x => x.Website).IsRequired(false); 
             customer.Property(x => x.Password).IsRequired(false); 
             customer.HasOne(x => x.Address); // Kunde kann nur eine Adresse haben.
+            //customer.HasOne(x => x.Order); // Hat keine oder mehrere Bestellungen
                      //.WithMany(x => x.Customer); // Eine Adresse kann mehrere Kunden haben.
 
             var address = modelBuilder.Entity<AddressDTO>();
@@ -79,13 +80,13 @@ namespace DataAccessLayer
             var order = modelBuilder.Entity<OrderDTO>();
             order.HasKey(x => x.Id); // Auftragsnummer
             order.Property(x => x.Date).IsRequired(true);
-            order.HasOne(x => x.Customer); // Eine Bestellung hat immer einen Kunden
+            order.HasOne(x => x.Customer); // Eine Bestellung hat immer nur einen Kunden
 
             var orderposition = modelBuilder.Entity<OrderPositionDTO>();
-            orderposition.HasKey(x => x.Id);;
-            orderposition.Property(x => x.Quantity).IsRequired();
-            orderposition.HasOne(x => x.Order); // Eine Position hat nur einen Artikel
-            orderposition.HasOne(x => x.Article);
+            orderposition.HasKey(x => x.Id);
+            orderposition.Property(x => x.Quantity).IsRequired(true);
+            orderposition.HasOne(x => x.Order).WithMany().HasForeignKey(x => x.OrderId); // Eine Position hat nur eine Order
+            orderposition.HasOne(x => x.Article).WithMany().HasForeignKey(x => x.ArticleId); // Eine Position hat nur einen Artikel
         }
     }
 }
