@@ -20,7 +20,6 @@ namespace DataAccessLayer.Models
             context.Database.Migrate();
 
             // ADD INITIAL DATA 
-            //SeedingDatabase();
             if (context.Customers.Any(o => o.Id == 1))
             {
                 // No INITAL DATA Customer with 1 exist
@@ -31,23 +30,25 @@ namespace DataAccessLayer.Models
             }
         }
 
+        /// <summary>
+        ///  INITAL DATA / Seed Data / Testdata to Database
+        /// </summary>
         public void SeedingDatabase()
         {
             using var context = new SetupDB();
             var seedDb = new SeedDB();
 
             context.AddRange(seedDb.GenerateCustomerDTOs());
-            context.SaveChanges();
             context.AddRange(seedDb.GenerateArticleGroupDTOs());
-            context.SaveChanges();
             context.AddRange(seedDb.GenerateArticleDTOs());
-            context.SaveChanges();
             context.AddRange(seedDb.GenerateOrderDTOs());
-            context.SaveChanges();
             context.AddRange(seedDb.GenerateOrderPositionDTOs());
             context.SaveChanges();
         }
 
+        /// <summary>
+        ///  READ all Customers
+        /// </summary>
         public CustomerDTO[] GetAllCustomers()
         {
             using var context = new SetupDB();
@@ -55,10 +56,13 @@ namespace DataAccessLayer.Models
             return customers;
         }
 
-
+        /// <summary>
+        ///  READ Customer by ID
+        /// </summary>
         public CustomerDTO GetCustomerById(int id)
         {
             using var context = new SetupDB();
+            //var customer = context.Customers.Find(id);
             var customer = context.Customers
                 .Include(c => c.Address)
                 .Where(c => c.Id == id).ToArray();
@@ -66,22 +70,33 @@ namespace DataAccessLayer.Models
             return customer[0];
         }
 
+        /// <summary>
+        ///  UPDATE Customer without Address!! --> need Testing
+        /// </summary>
         public void UpdateCustomer(CustomerDTO customerDto)
         {
-            //only for debugging, delete when method is implemented
-            Console.WriteLine("Customer updated"); 
+            using var context = new SetupDB();
+            var customer = context.Customers.Find(customerDto.Id);
+            customer = customerDto;
+            context.SaveChanges();
         }
 
+        /// <summary>
+        ///  CREATE Customer without Address!!
+        /// </summary>
         public void NewCustomer(CustomerDTO customerDto)
         {
-            //only for debugging, delete when method is implemented
-            Console.WriteLine("Customer created");
+            using var context = new SetupDB();
+            context.Customers.Add(customerDto);
+            context.SaveChanges();
         }
 
+        /// <summary>
+        ///  DELETE Customer with Address
+        /// </summary>
         public void DeleteCustomerById(int id)
         {
             using var context = new SetupDB();
-            //var customer = context.Customers.Find(id);
             var customer = context.Customers
                 .Include(a => a.Address)
                 .Single(a => a.Id == id);
@@ -91,58 +106,238 @@ namespace DataAccessLayer.Models
             context.SaveChanges();
         }
 
-        public ArticleGroupDTO GetArticleGroupById(int id)
+        /// <summary>
+        ///  CREATE new Address
+        /// </summary>
+        public void NewAddress(AddressDTO addressDto)
         {
-            throw new NotImplementedException();
+            using var context = new SetupDB();
+            context.Addresses.Add(addressDto);
+            context.SaveChanges();
         }
 
-        //public async Task<bool> Update(MyObject item)
-        //{
-        //    Context.Entry(await Context.MyDbSet.FirstOrDefaultAsync(x => x.Id == item.Id)).CurrentValues.SetValues(item);
-        //    return (await Context.SaveChangesAsync()) > 0;
-        //}
+        /// <summary>
+        ///  READ Address by ID
+        /// </summary>
+        public AddressDTO GetAddressById(int id)
+        {
+            using var context = new SetupDB();
+            var address = context.Addresses.Find(id);
+            return address;
+        }
 
-        //public ObservableCollection<CustomerDTO> GetAllCustomers()
-        //{
-        //    ObservableCollection<CustomerDTO> customers = new ObservableCollection<CustomerDTO>();
+        /// <summary>
+        ///  UPDATE Address - Testing!
+        /// </summary>
+        public void UpdateAddress(AddressDTO addressDto)
+        {
+            using var context = new SetupDB();
+            var address = context.Addresses.Find(addressDto.Id);
+            address = addressDto;
+            context.SaveChanges();
+        }
 
-        //    using var context = new SetupDB();
+        /// <summary>
+        ///  DELETE Address by ID
+        /// </summary>
+        public void DeleteAddressByID(int id)
+        {
+            using var context = new SetupDB();
+            var address = context.Addresses.Find(id);
+            context.Addresses.Remove(address);
+            context.SaveChanges();
+        }
 
-        //    var query =
-        //        from c in context.Customers
-        //        join a in context.Addresses on c.AddressId equals a.Id
-        //        select c;
+        /// <summary>
+        ///  READ - Get all Article Group
+        /// </summary>
+        public ArticleGroupDTO[] GetAllArticleGroup()
+        {
+            using var context = new SetupDB();
+            return context.ArticelGroups.ToArray();
+        }
 
-        //    foreach (CustomerDTO c in query)
-        //    {
-        //        customers.Add(c);
-        //    }
+        /// <summary>
+        ///  READ - Get Article Group by ID
+        /// </summary>
+        public ArticleGroupDTO GetArticleGroupById(int id)
+        {
+            using var context = new SetupDB();
+            var articleGroup = context.ArticelGroups.Find(id);
+            return articleGroup;
+        }
 
-        //    return customers;
-        //}
+        /// <summary>
+        ///  CREATE Article Group
+        /// </summary>
+        public void NewArticleGroup(ArticleGroupDTO articleGroupDTO)
+        {
+            using var context = new SetupDB();
+            context.ArticelGroups.Add(articleGroupDTO);
+            context.SaveChanges();
+        }
 
-        //public void Main()
-        //{
-        //    using var context = new SetupDB();
+        /// <summary>
+        ///  UPDATE Article Group
+        /// </summary>
+        public void UpdateArticleGroup(ArticleGroupDTO articleGroupDTO)
+        {
+            using var context = new SetupDB();
+            var articleGroup = context.ArticelGroups.Find(articleGroupDTO.Id);
+            articleGroup = articleGroupDTO;
+            context.SaveChanges();
+        }
 
-        //    context.Database.Migrate();
+        /// <summary>
+        ///  DELETE Article Group by ID
+        /// </summary>
+        public void DeleteArticleGroup(int id)
+        {
+            using var context = new SetupDB();
+            var articleGroup = context.ArticelGroups.Find(id);
+            context.ArticelGroups.Remove(articleGroup);
+            context.SaveChanges();
+        }
 
-        //    // Test Kunde Hinzufügen
-        //    var customer1 = new CustomerDTO()
-        //    {
-        //        Firstname = "Stefan",
-        //        Lastname = "Müller",
-        //        Address = new AddressDTO(),
-        //        EMail = "smueller@company.com",
-        //        Website = "https://company.com",
-        //        Password = "test"
-        //    };
+        /// <summary>
+        ///  CREATE Article
+        /// </summary>
+        public void NewArticle(ArticleDTO articleDTO)
+        {
+            using var context = new SetupDB();
+            context.Articles.Add(articleDTO);
+            context.SaveChanges();
+        }
 
-        //    context.Customers.Add(customer1);
-        //    context.SaveChanges();
-        //}
+        /// <summary>
+        ///  READ all Article
+        /// </summary>
+        public ArticleDTO[] GetAllArticle()
+        {
+            using var context = new SetupDB();
+            return context.Articles.ToArray();
+        }
 
+        /// <summary>
+        ///  READ Article by ID
+        /// </summary>
+        public ArticleDTO GetArticleById(int id)
+        {
+            using var context = new SetupDB();
+            return context.Articles.Find(id);
+        }
+
+        /// <summary>
+        ///  UPDATE Article
+        /// </summary>
+        public void UpdateArticle(ArticleDTO articleDTO)
+        {
+            using var context = new SetupDB();
+            var article = context.Articles.Find(articleDTO.Id);
+            article = articleDTO;
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        ///  DELETE Article by ID
+        /// </summary>
+        public void DeleteArticleById(int id)
+        {
+            using var context = new SetupDB();
+            var article = context.Articles.Find(id);
+            context.Articles.Remove(article);
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        ///  CREATE Order
+        /// </summary>
+        public void NewOrder(OrderDTO orderDTO)
+        {
+            using var context = new SetupDB();
+            context.Orders.Add(orderDTO);
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        ///  READ all Orders
+        /// </summary>
+        public OrderDTO[] GetAllOrders()
+        {
+            using var context = new SetupDB();
+            return context.Orders.ToArray();
+        }
+
+        /// <summary>
+        ///  READ Order by ID
+        /// </summary>
+        public OrderDTO GetOrderByID(int id)
+        {
+            using var context = new SetupDB();
+            return context.Orders.Find(id);
+        }
+
+        /// <summary>
+        ///  UPDATE Order
+        /// </summary>
+        public void UpdateOrder(OrderDTO orderDTO)
+        {
+            using var context = new SetupDB();
+            var order = context.Orders.Find(orderDTO.Id);
+            order = orderDTO;
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        ///  DELETE Order by ID
+        /// </summary>
+        public void DeleteOrderById(int id)
+        {
+            using var context = new SetupDB();
+            var order = context.Orders.Find(id);
+            context.Orders.Remove(order);
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        ///  CREATE OrderPosition
+        /// </summary>
+        public void NewOrderPosition(OrderPositionDTO orderPositionDTO)
+        {
+            using var context = new SetupDB();
+            context.OrderPositions.Add(orderPositionDTO);
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        ///  READ all Orderposition by OrderID
+        /// </summary>
+        public OrderPositionDTO[] GetOrderPositionByOrderID(int id)
+        {
+            using var context = new SetupDB();
+            return context.OrderPositions.Where(x => x.OrderId == id).ToArray();
+        }
+
+        /// <summary>
+        ///  UPDATE OrderPosition
+        /// </summary>
+        public void UpdateOrderPosition(OrderPositionDTO orderPositionDTO)
+        {
+            using var context = new SetupDB();
+            var orderPosition = context.OrderPositions.Find(orderPositionDTO.Id);
+            orderPosition = orderPositionDTO;
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        ///  DELETE Orderpostion by ID
+        /// </summary>
+        public void DeleteOrderPositionById(int id)
+        {
+            using var context = new SetupDB();
+            var orderPosition = context.OrderPositions.Find(id);
+            context.OrderPositions.Remove(orderPosition);
+            context.SaveChanges();
+        }
     }
-
-
 }
