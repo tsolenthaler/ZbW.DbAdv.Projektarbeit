@@ -45,5 +45,16 @@ namespace BusinessLayer.Models
             Name = articleDto.Name;
             Price = articleDto.Price;
         }
+
+        public ArticleDTO ToArticleDto()
+        {
+            var articleDto = new ArticleDTO();
+            articleDto.Id = Id;
+            articleDto.Name = Name;
+            articleDto.Price = Price;
+            articleDto.ArticleGroup = ArticleGroup.ToArticleGroupDto();
+            articleDto.ArticleGroupId = ArticleGroup.Id;
+            return articleDto;
+        }
     }
 }

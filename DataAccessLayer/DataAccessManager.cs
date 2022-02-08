@@ -318,6 +318,13 @@ namespace DataAccessLayer.Models
             return context.OrderPositions.Where(x => x.OrderId == id).ToArray();
         }
 
+        public OrderPositionDTO GetOrderPositionByID(int id)
+        {
+            using var context = new SetupDB();
+            var orderPosition = context.OrderPositions.Find(id);
+            return orderPosition;
+        }
+
         /// <summary>
         ///  UPDATE OrderPosition
         /// </summary>
@@ -339,5 +346,6 @@ namespace DataAccessLayer.Models
             context.OrderPositions.Remove(orderPosition);
             context.SaveChanges();
         }
+
     }
 }

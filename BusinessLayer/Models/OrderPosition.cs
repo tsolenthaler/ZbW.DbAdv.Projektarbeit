@@ -43,5 +43,16 @@ namespace BusinessLayer.Models
             Order = new Order(orderPositionDto.Order);
         }
 
+        public OrderPositionDTO ToOrderPositionDto()
+        {
+            var orderPositionDto = new OrderPositionDTO();
+            orderPositionDto.Id = Id;
+            orderPositionDto.Order = Order.ToOrderDto();
+            orderPositionDto.OrderId = Order.Id;
+            orderPositionDto.Quantity = Quantity;
+            orderPositionDto.Article = Article.ToArticleDto();
+            orderPositionDto.ArticleId = Article.Id;
+            return orderPositionDto;
+        }
     }
 }

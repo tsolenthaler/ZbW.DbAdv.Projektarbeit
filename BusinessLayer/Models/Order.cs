@@ -39,5 +39,15 @@ namespace BusinessLayer.Models
             Date = orderDto.Date;
             Customer = new Customer(orderDto.Customer);
         }
+
+        public OrderDTO ToOrderDto()
+        {
+            var orderDto = new OrderDTO();
+            orderDto.Id = Id;
+            orderDto.CustomerId = Customer.Id;
+            orderDto.Customer = Customer.ToCustomerDto();
+            orderDto.Date = Date;
+            return orderDto;
+        }
     }
 }

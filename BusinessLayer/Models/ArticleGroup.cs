@@ -33,5 +33,14 @@ namespace BusinessLayer.Models
             Name = articleGroupDto.Name;
             ParentArticleGroup = new ArticleGroup(dataAccessManager.GetArticleGroupById(articleGroupDto.Id), dataAccessManager);
         }
+
+        public ArticleGroupDTO ToArticleGroupDto()
+        {
+            var articleGroupDto = new ArticleGroupDTO();
+            articleGroupDto.Id = Id;
+            articleGroupDto.Name = Name;
+            articleGroupDto.ParentArticleGroupId = ParentArticleGroup.Id;
+            return articleGroupDto;
+        }
     }
 }

@@ -48,7 +48,14 @@ namespace PresentationLayer
             _dataGridChef = new DataGridChef(CustomerDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
             Resources["readOnlyColor"] = _dataGridChef.ReadOnlyFieldColor;
 
-            BusinessManager.LoadAllCustomersFromDb();
+            try
+            {
+                BusinessManager.LoadAllCustomersFromDb();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }     
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -59,23 +66,6 @@ namespace PresentationLayer
         private void Window_Closed(object sender, EventArgs e)
         {
             mainWindow.Show();
-        }
-
-        private void CustomerDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
-        {
-            _dataGridChef.BlockReadOnlyRows(e);
-        }
-
-        private void Cmd_AddCustomer_Click(object sender, RoutedEventArgs e)
-        {
-            BusinessManager.CreateLocalCustomer();
-            SetGUIToFullViewMode();
-        }
-
-        private void Cmd_Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            BusinessManager.CancelModification(Customers);
-            SetGUIToViewMode();
         }
 
         ///<summary>
@@ -102,23 +92,84 @@ namespace PresentationLayer
             //enable / disable buttons
         }
 
+        private void CustomerDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            _dataGridChef.BlockReadOnlyRows(e);
+        }
+
+        private void Cmd_AddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BusinessManager.CreateLocalCustomer();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+            SetGUIToFullViewMode();
+        }
+
+        private void Cmd_Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BusinessManager.CancelModificationCustomer(Customers);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+          
+            SetGUIToViewMode();
+        }
+
+
+
         private void Cmd_ModifyCustomer_Click(object sender, RoutedEventArgs e)
         {
             int index = CustomerDataGrid.SelectedIndex;
-            BusinessManager.ModifySelected(Customers, index);
+
+            try
+            {
+                BusinessManager.ModifySelected(Customers, index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
             SetGUIToModifyMode();
         }
 
         private void Cmd_SaveCustomer_Click(object sender, RoutedEventArgs e)
         {
-            BusinessManager.SaveModified(Customers);
+            try
+            {
+                BusinessManager.SaveModifiedCustomer(Customers);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
             SetGUIToViewMode();
         }
 
         private void Cmd_DeleteCustomer_Click(object sender, RoutedEventArgs e)
         {
             int index = CustomerDataGrid.SelectedIndex;
-            BusinessManager.DeleteSelected(Customers, index);
+
+            try
+            {
+                BusinessManager.DeleteSelectedCustomer(index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void Cmd_SearchCustomers_Click(object sender, RoutedEventArgs e)
@@ -127,7 +178,30 @@ namespace PresentationLayer
 
             if (searchText != String.Empty)
             {
-                //update customer list based on search result
+                SetGUIToFullViewMode();
+
+                try
+                {
+                    BusinessManager.FilterCustomers(searchText);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }               
+            }
+            else
+            {
+                SetGUIToViewMode();
+
+                try
+                {
+                    BusinessManager.LoadAllCustomersFromDb();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                
             }
         }
     }
