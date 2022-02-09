@@ -44,6 +44,36 @@ namespace PresentationLayer
             OrderPositions.Add(new OrderPosition{ Id = 30 });
         }
 
+        private void SetGUIToModifyMode() {
+            Cmd_AddOrder.IsEnabled = false;
+            Cmd_ModifyOrder.IsEnabled = false;
+            Cmd_Delete.IsEnabled = false;
+            Cmd_SaveOrder.IsEnabled = true;
+            Cmd_Cancel.IsEnabled = true;
+        }
+
+        ///<summary>
+        ///Activates and deactives buttons and textfields for GUI "view mode"
+        ///</summary>
+        private void SetGUIToViewMode() {
+            Cmd_AddOrder.IsEnabled = true;
+            Cmd_ModifyOrder.IsEnabled = true;
+            Cmd_Delete.IsEnabled = true;
+            Cmd_SaveOrder.IsEnabled = false;
+            Cmd_Cancel.IsEnabled = false;
+        }
+
+        ///<summary>
+        ///Deactivates buttons and textfields for GUI "full view mode", applicable when searching content
+        ///</summary>
+        private void SetGUIToFullViewMode() {
+            Cmd_AddOrder.IsEnabled = false;
+            Cmd_ModifyOrder.IsEnabled = false;
+            Cmd_Delete.IsEnabled = false;
+            Cmd_SaveOrder.IsEnabled = false;
+            Cmd_Cancel.IsEnabled = false;
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ExampleOrders();
@@ -54,5 +84,41 @@ namespace PresentationLayer
             mainWindow.Show();
         }
 
+        private void Cmd_AddOrder_Click(object sender, RoutedEventArgs e) {
+
+
+            SetGUIToModifyMode();
+        }
+
+        private void Cmd_SaveOrder_Click(object sender, RoutedEventArgs e) {
+
+
+            SetGUIToViewMode();
+        }
+
+        private void Cmd_ModifyOrder_Click(object sender, RoutedEventArgs e) {
+
+
+            SetGUIToModifyMode();
+        }
+
+        private void Cmd_Delete_Click(object sender, RoutedEventArgs e) {
+
+        }
+
+        private void Cmd_Cancel_Click(object sender, RoutedEventArgs e) {
+
+
+            SetGUIToViewMode();
+        }
+
+        private void Cmd_SearchOrders_Click(object sender, RoutedEventArgs e) {
+            
+            // if
+            SetGUIToFullViewMode();
+
+            // else
+            SetGUIToViewMode();
+        }
     }
 }

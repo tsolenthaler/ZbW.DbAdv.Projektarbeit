@@ -73,7 +73,11 @@ namespace PresentationLayer
         ///</summary>
         private void SetGUIToModifyMode()
         {
-            //enable / disable buttons
+            Cmd_AddCustomer.IsEnabled = false;
+            Cmd_ModifyCustomer.IsEnabled = false;
+            Cmd_DeleteCustomer.IsEnabled = false;
+            Cmd_SaveCustomer.IsEnabled = true;
+            Cmd_Cancel.IsEnabled = true;
         }
 
         ///<summary>
@@ -81,7 +85,11 @@ namespace PresentationLayer
         ///</summary>
         private void SetGUIToViewMode()
         {
-            //enable / disable buttons
+            Cmd_AddCustomer.IsEnabled = true;
+            Cmd_ModifyCustomer.IsEnabled = true;
+            Cmd_DeleteCustomer.IsEnabled = true;
+            Cmd_SaveCustomer.IsEnabled = false;
+            Cmd_Cancel.IsEnabled = false;
         }
 
         ///<summary>
@@ -89,7 +97,11 @@ namespace PresentationLayer
         ///</summary>
         private void SetGUIToFullViewMode()
         {
-            //enable / disable buttons
+            Cmd_AddCustomer.IsEnabled = false;
+            Cmd_ModifyCustomer.IsEnabled = false;
+            Cmd_DeleteCustomer.IsEnabled = false;
+            Cmd_SaveCustomer.IsEnabled = false;
+            Cmd_Cancel.IsEnabled = false;
         }
 
         private void CustomerDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
@@ -107,8 +119,10 @@ namespace PresentationLayer
             {
                 MessageBox.Show(ex.Message);
             }
-            
-            SetGUIToFullViewMode();
+
+            SetGUIToModifyMode();
+
+            //SetGUIToFullViewMode();
         }
 
         private void Cmd_Cancel_Click(object sender, RoutedEventArgs e)
