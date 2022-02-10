@@ -39,9 +39,13 @@ namespace DataAccessLayer.Models
             var seedDb = new SeedDB();
 
             context.AddRange(seedDb.GenerateCustomerDTOs());
+            context.SaveChanges();
             context.AddRange(seedDb.GenerateArticleGroupDTOs());
+            context.SaveChanges();
             context.AddRange(seedDb.GenerateArticleDTOs());
+            context.SaveChanges();
             context.AddRange(seedDb.GenerateOrderDTOs());
+            context.SaveChanges();
             context.AddRange(seedDb.GenerateOrderPositionDTOs());
             context.SaveChanges();
         }
