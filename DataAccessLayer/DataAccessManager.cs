@@ -17,7 +17,7 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
 
-            context.Database.Migrate();
+            //context.Database.Migrate();
 
             // ADD INITIAL DATA 
             if (context.Customers.Any(o => o.Id == 1))
@@ -148,7 +148,13 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
             var address = context.Addresses.Find(addressDto.Id);
-            address = addressDto;
+            if (address != null)
+            {
+                address.Street = addressDto.Street;
+                address.StreetNo = addressDto.StreetNo;
+                address.Plz = addressDto.Plz;
+                address.City = addressDto.City;
+            }
             context.SaveChanges();
         }
 
@@ -200,6 +206,11 @@ namespace DataAccessLayer.Models
             using var context = new SetupDB();
             var articleGroup = context.ArticelGroups.Find(articleGroupDTO.Id);
             articleGroup = articleGroupDTO;
+            if (articleGroup != null)
+            {
+                articleGroup.Name = articleGroupDTO.Name;
+                articleGroup.ParentArticleGroupId = articleGroupDTO.ParentArticleGroupId;
+            }
             context.SaveChanges();
         }
 
@@ -223,14 +234,14 @@ namespace DataAccessLayer.Models
             context.Articles.Add(articleDTO);
             context.SaveChanges();
         }
-
+                                                                                                            
         /// <summary>
         ///  READ all Article
         /// </summary>
         public ArticleDTO[] GetAllArticle()
         {
             using var context = new SetupDB();
-            return context.Articles.ToArray();
+            return context.Articles.Include(c => c.ArticleGroup).ToArray();
         }
 
         /// <summary>
@@ -239,7 +250,7 @@ namespace DataAccessLayer.Models
         public ArticleDTO GetArticleById(int id)
         {
             using var context = new SetupDB();
-            return context.Articles.Find(id);
+            return context.Articles.Include(c => c.ArticleGroup).Where(c => c.Id == id).ToArray()[0];                                                                                                                                                                                                                      
         }
 
         /// <summary>
@@ -250,6 +261,12 @@ namespace DataAccessLayer.Models
             using var context = new SetupDB();
             var article = context.Articles.Find(articleDTO.Id);
             article = articleDTO;
+            if (article != null)
+            {
+                article.Name = articleDTO.Name;
+                article.ArticleGroupId = articleDTO.ArticleGroupId;
+                article.Price = articleDTO.Price;
+            }
             context.SaveChanges();
         }
 
@@ -280,7 +297,7 @@ namespace DataAccessLayer.Models
         public OrderDTO[] GetAllOrders()
         {
             using var context = new SetupDB();
-            return context.Orders.ToArray();
+            return context.Orders.Include(c => c.Customer).ToArray();
         }
 
         /// <summary>
@@ -289,7 +306,7 @@ namespace DataAccessLayer.Models
         public OrderDTO GetOrderByID(int id)
         {
             using var context = new SetupDB();
-            return context.Orders.Find(id);
+            return context.Orders.Include(c => c.Customer).Where(c => c.Id == id).ToArray()[0];
         }
 
         /// <summary>
@@ -299,7 +316,11 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
             var order = context.Orders.Find(orderDTO.Id);
-            order = orderDTO;
+            if (order != null)
+            {
+                order.CustomerId = orderDTO.CustomerId;
+                order.Date = orderDTO.Date;
+            }
             context.SaveChanges();
         }
 
@@ -330,14 +351,13 @@ namespace DataAccessLayer.Models
         public OrderPositionDTO[] GetOrderPositionByOrderID(int id)
         {
             using var context = new SetupDB();
-            return context.OrderPositions.Where(x => x.OrderId == id).ToArray();
+            return context.OrderPositions.Include(c => c.Article).Where(x => x.OrderId == id).ToArray();
         }
 
         public OrderPositionDTO GetOrderPositionByID(int id)
         {
             using var context = new SetupDB();
-            var orderPosition = context.OrderPositions.Find(id);
-            return orderPosition;
+            return context.OrderPositions.Include(c => c.Article).Where(x => x.Id == id).ToArray()[0];
         }
 
         /// <summary>
@@ -347,7 +367,12 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
             var orderPosition = context.OrderPositions.Find(orderPositionDTO.Id);
-            orderPosition = orderPositionDTO;
+            if (orderPosition != null)
+            {
+                orderPosition.ArticleId = orderPositionDTO.ArticleId;
+                orderPosition.Quantity = orderPositionDTO.Quantity;
+                orderPosition.OrderId = orderPositionDTO.OrderId;
+            }
             context.SaveChanges();
         }
 
