@@ -16,32 +16,42 @@ namespace PresentationLayer
     /// </summary>
     public partial class OrderWindow : Window
     {
-        private DataGridChef dataGridChef;
-        private readonly List<int> comboBoxColumnIndices = new List<int>() {1, 2};
-        private readonly List<int> datePickerColumnIndices = new List<int>() { 1, 2 };
 
         private MainWindow mainWindow;
-        
 
-        public ObservableCollection<Order> Orders { get; set; } = new ObservableCollection<Order>();
-        public ObservableCollection<OrderPosition> OrderPositions { get; set; } = new ObservableCollection<OrderPosition>();
+        private readonly DataGridChef _orderDataGridChef;
+        private readonly DataGridChef _orderPositionDataGridChef;
+
+        //no ComboBox or DatePicker necessary for Customer Window
+        private readonly List<int> _comboBoxColumnIndices = new List<int>() { };
+        private readonly List<int> _datePickerColumnIndices = new List<int>() { };
+
+        public ObservableCollection<Customer> Customers { get => mainWindow.BusinessManager.Customers; }
+
+        public ObservableCollection<Order> Orders { get => mainWindow.BusinessManager.Orders; }
+        public ObservableCollection<OrderPosition> OrderPositions { get => mainWindow.BusinessManager.OrderPositions; }
+
+        public BusinessManager BusinessManager { get => mainWindow.BusinessManager; }
 
         public OrderWindow(MainWindow mainWindow)
         {
             DataContext = this;
-            InitializeComponent();
             this.mainWindow = mainWindow;
-        }
 
-        private void ExampleOrders()
-        {
-            Orders.Add(new Order { Id = 1 });
-            Orders.Add(new Order { Id = 2 });
-            Orders.Add(new Order { Id = 3 });     
+            InitializeComponent();
 
-            OrderPositions.Add(new OrderPosition{ Id = 10 });
-            OrderPositions.Add(new OrderPosition{ Id = 20 });
-            OrderPositions.Add(new OrderPosition{ Id = 30 });
+            _orderDataGridChef = new DataGridChef(OrderDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
+            _orderPositionDataGridChef = new DataGridChef(OrderPositionDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
+            Resources["readOnlyColor"] = _orderDataGridChef.ReadOnlyFieldColor;
+
+            try
+            {
+                //BusinessManager.LoadAllOrdersFromDb();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+            }
         }
 
         private void SetGUIToModifyMode() {
@@ -76,7 +86,7 @@ namespace PresentationLayer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            ExampleOrders();
+            SetGUIToViewMode();
         }
 
         private void Window_Closed(object sender, System.EventArgs e)
@@ -124,6 +134,16 @@ namespace PresentationLayer
         private void Cmd_SaveOrder_Copy_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void OrderDataGrid_BeginningEdit(object sender, System.Windows.Controls.DataGridBeginningEditEventArgs e)
+        {
+            _orderDataGridChef.BlockReadOnlyRows(e);
+        }
+
+        private void OrderPositionDataGrid_BeginningEdit(object sender, System.Windows.Controls.DataGridBeginningEditEventArgs e)
+        {
+            _orderPositionDataGridChef.BlockReadOnlyRows(e);
         }
     }
 }

@@ -8,14 +8,14 @@ namespace BusinessLayer.Models
 {
     public class ArticleGroup : BusinessModelBase
     {
-        private string name = String.Empty;
+        private string name;
         public string Name
         {
             get => name;
             set => Set(ref name, value);
         }
 
-        private ArticleGroup parentArticleGroup = new ArticleGroup();
+        private ArticleGroup parentArticleGroup;
         public ArticleGroup ParentArticleGroup
         {
             get => parentArticleGroup; 
@@ -31,7 +31,7 @@ namespace BusinessLayer.Models
         {
             Id = articleGroupDto.Id;
             Name = articleGroupDto.Name;
-            ParentArticleGroup = new ArticleGroup(dataAccessManager.GetArticleGroupById(articleGroupDto.Id), dataAccessManager);
+            //ParentArticleGroup = new ArticleGroup(dataAccessManager.GetArticleGroupById(articleGroupDto.Id), dataAccessManager);
         }
 
         public ArticleGroupDTO ToArticleGroupDto()
@@ -41,6 +41,11 @@ namespace BusinessLayer.Models
             articleGroupDto.Name = Name;
             articleGroupDto.ParentArticleGroupId = ParentArticleGroup.Id;
             return articleGroupDto;
+        }
+
+        public override string ToString()
+        {
+            return Id + "| " + Name;
         }
     }
 }

@@ -12,8 +12,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BusinessLayer;
 using BusinessLayer.Models;
 using Microsoft.EntityFrameworkCore.Design;
+using ZbW.DbAdv.Projektarbeit;
 
 namespace PresentationLayer
 {
@@ -22,14 +24,40 @@ namespace PresentationLayer
     /// </summary>
     public partial class ArticleWindow : Window
     {
-        public ObservableCollection<Article> Articles { get; set; } = new ObservableCollection<Article>();
+        private readonly DataGridChef _articleDataGridChef;
+        private readonly DataGridChef _articleGroupDataGridChef;
 
-        public ObservableCollection<ArticleGroup> ArticleGroups { get; set; } =
-            new ObservableCollection<ArticleGroup>();
+        //no ComboBox or DatePicker necessary for Customer Window
+        private readonly List<int> _comboBoxColumnIndices = new List<int>() { };
+        private readonly List<int> _datePickerColumnIndices = new List<int>() { };
 
-        public ArticleWindow()
+        public ObservableCollection<Article> Articles { get => mainWindow.BusinessManager.Articles; }
+        public ObservableCollection<ArticleGroup> ArticleGroups { get => mainWindow.BusinessManager.ArticleGroups; }
+
+        public readonly MainWindow mainWindow;
+
+        public BusinessManager BusinessManager { get => mainWindow.BusinessManager; }
+
+        public ArticleWindow(MainWindow mainWindow)
         {
+            DataContext = this;
+            this.mainWindow = mainWindow;
+
             InitializeComponent();
+
+            _articleDataGridChef = new DataGridChef(ArticleDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
+            _articleGroupDataGridChef = new DataGridChef(ArticleGroupDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
+            Resources["readOnlyColor"] = _articleDataGridChef.ReadOnlyFieldColor;
+
+            try
+            {
+                BusinessManager.LoadAllArticlesFromDb();
+                BusinessManager.LoadAllArticleGroupsFromDb();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+            }
         }
 
         private void SetGUIToModifyMode() {
@@ -37,7 +65,7 @@ namespace PresentationLayer
             Cmd_ModifyArticle.IsEnabled = false;
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveArticle.IsEnabled = true;
-            Cmd_Cancel.IsEnabled = true;
+            Cmd_CancelArticle.IsEnabled = true;
         }
 
         ///<summary>
@@ -48,7 +76,7 @@ namespace PresentationLayer
             Cmd_ModifyArticle.IsEnabled = true;
             Cmd_Delete.IsEnabled = true;
             Cmd_SaveArticle.IsEnabled = false;
-            Cmd_Cancel.IsEnabled = false;
+            Cmd_CancelArticle.IsEnabled = false;
         }
 
         ///<summary>
@@ -59,7 +87,7 @@ namespace PresentationLayer
             Cmd_ModifyArticle.IsEnabled = false;
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveArticle.IsEnabled = false;
-            Cmd_Cancel.IsEnabled = false;
+            Cmd_CancelArticle.IsEnabled = false;
         }
 
         private void Cmd_AddArticle_Click(object sender, RoutedEventArgs e) {
@@ -97,6 +125,26 @@ namespace PresentationLayer
 
             // else
             SetGUIToViewMode();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetGUIToViewMode();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            mainWindow.Show();
+        }
+
+        private void ArticleDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            _articleDataGridChef.BlockReadOnlyRows(e);
+        }
+
+        private void ArticleGroupDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            _articleGroupDataGridChef.BlockReadOnlyRows(e);
         }
     }
 }

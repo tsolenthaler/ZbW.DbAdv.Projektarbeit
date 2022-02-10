@@ -45,7 +45,12 @@
                   Margin="41,100,1474,133" 
                   BorderThickness="0,0,0,0" 
                   ItemsSource="{Binding Path=Orders}" 
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  BeginningEdit="OrderDataGrid_BeginningEdit"
+                  CanUserSortColumns="False"
+                  CanUserAddRows="False" 
+                  SelectionMode="Single">
+            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id"  Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="Customer"  Binding="{Binding Path=Customer}"/>
@@ -168,7 +173,11 @@
                   Margin="668,89,170,133"
                   BorderThickness="0,0,0,0" 
                   ItemsSource="{Binding Path=OrderPositions}" 
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  BeginningEdit="OrderPositionDataGrid_BeginningEdit"
+                  CanUserSortColumns="False"
+                  CanUserAddRows="False" 
+                  SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Pos."  Binding="{Binding Path=PosNo}"/>
                 <DataGridTextColumn Header="Article"  Binding="{Binding Path=Article}"/>

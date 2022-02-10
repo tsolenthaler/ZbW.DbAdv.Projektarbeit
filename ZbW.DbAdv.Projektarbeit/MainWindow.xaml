@@ -18,21 +18,14 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="Cmd_OrdersWindow" Content="Orders" Margin="543,407,543,0" VerticalAlignment="Top" Height="98" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" Click="Cmd_OrdersWindow_Click" Grid.ColumnSpan="2">
+        <Button x:Name="Cmd_OrdersWindow" Content="Orders" Margin="543,668,543,0" VerticalAlignment="Top" Height="98" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" Click="Cmd_OrdersWindow_Click" Grid.ColumnSpan="2">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="Cmd_ArticleWindow" Content="Article" Margin="543,673,543,310" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" Grid.ColumnSpan="2">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
-                </Style>
-            </Button.Resources>
-        </Button>
-        <Button x:Name="Cmd_ArticlegroupWindow" Content="Articlegroup" Margin="543,540,0,0" VerticalAlignment="Top" Width="834" Height="98" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" HorizontalAlignment="Left" BorderThickness="0,0,0,0" Grid.ColumnSpan="2">
+        <Button x:Name="Cmd_ArticleWindow" Content="Article" Margin="543,510,543,473" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" Grid.ColumnSpan="2" Click="Cmd_ArticleWindow_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>

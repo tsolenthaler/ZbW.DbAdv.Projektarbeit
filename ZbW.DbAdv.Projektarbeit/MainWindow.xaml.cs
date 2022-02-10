@@ -56,5 +56,12 @@ namespace ZbW.DbAdv.Projektarbeit
             }
             
         }
+
+        private void Cmd_ArticleWindow_Click(object sender, RoutedEventArgs e)
+        {
+            ArticleWindow articleWindow = new ArticleWindow(this);
+            articleWindow.Show();
+            this.Hide();
+        }
     }
 }
