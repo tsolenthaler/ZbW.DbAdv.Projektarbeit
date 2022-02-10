@@ -135,19 +135,19 @@ namespace BusinessLayer
             //Refresh list prior to filtering
             LoadAllCustomersFromDb();
 
-            for(int i=0; i<Customers.Count(); i++)
+            for(int i= Customers.Count()-1; i>0; i--)
             {
                 var customer = Customers[i];
 
                 if (customer.Id.ToString().Contains(searchText)
-                    || customer.FirstName.Contains(searchText)
-                    || customer.LastName.Contains(searchText)
-                    || customer.EMail.Contains(searchText)
-                    || customer.Website.Contains(searchText)
-                    || customer.Address.Street.Contains(searchText)
-                    || customer.Address.StreetNo.Contains(searchText)
-                    || customer.Address.City.Contains(searchText)
-                    || customer.Address.Plz.Contains(searchText)
+                    || customer.FirstName != null && customer.FirstName.Contains(searchText)
+                    || customer.LastName != null && customer.LastName.Contains(searchText)
+                    || customer.EMail != null && customer.EMail.Contains(searchText)
+                    || customer.Website != null && customer.Website.Contains(searchText)
+                    || customer.Address.Street != null && customer.Address.Street.Contains(searchText)
+                    || customer.Address.StreetNo != null && customer.Address.StreetNo.Contains(searchText)
+                    || customer.Address.City != null && customer.Address.City.Contains(searchText)
+                    || customer.Address.Plz != null && customer.Address.Plz.Contains(searchText)
                     )
                 {
                     //if any of the field contains the searchText, keep item in the list
@@ -156,6 +156,11 @@ namespace BusinessLayer
                 {
                     //none of the fields had the searchText -> remove from list
                     Customers.RemoveAt(i);
+                }
+
+                if (!customer.Id.ToString().Contains(searchText))
+                {
+
                 }
             }
 

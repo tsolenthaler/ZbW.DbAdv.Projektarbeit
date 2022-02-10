@@ -26,7 +26,7 @@ namespace DataAccessLayer.Models
             }
             else
             {
-                //SeedingDatabase();
+                SeedingDatabase();
             }
         }
 
