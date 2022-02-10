@@ -60,7 +60,7 @@ namespace PresentationLayer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            SetGUIToViewMode();
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -117,12 +117,11 @@ namespace PresentationLayer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
             }
 
             SetGUIToModifyMode();
-
-            //SetGUIToFullViewMode();
         }
 
         private void Cmd_Cancel_Click(object sender, RoutedEventArgs e)
@@ -133,7 +132,8 @@ namespace PresentationLayer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
             }
           
             SetGUIToViewMode();
@@ -151,10 +151,15 @@ namespace PresentationLayer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
             }
             
-            SetGUIToModifyMode();
+            if(index != -1)
+            {
+                SetGUIToModifyMode();
+            }
+            
         }
 
         private void Cmd_SaveCustomer_Click(object sender, RoutedEventArgs e)
@@ -165,7 +170,8 @@ namespace PresentationLayer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
             }
             
             SetGUIToViewMode();
@@ -181,7 +187,8 @@ namespace PresentationLayer
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
             }
             
         }
@@ -200,7 +207,8 @@ namespace PresentationLayer
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                    return;
                 }               
             }
             else
@@ -213,7 +221,8 @@ namespace PresentationLayer
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                    return;
                 }
                 
             }

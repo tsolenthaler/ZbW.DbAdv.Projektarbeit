@@ -12,35 +12,35 @@ namespace BusinessLayer.Models
 {
     public class Customer : BusinessModelBase
     {
-        private string lastName;
+        private string lastName = String.Empty;
         public string LastName
         {
             get => lastName;
             set => Set(ref lastName, value);
         }
 
-        private string firstName;
+        private string firstName = String.Empty;
         public string FirstName
         {
             get => firstName;
             set => Set(ref firstName, value);
         }
 
-        private Address address;
+        private Address address = new Address();
         public Address Address
         {
             get => address;
             set => Set(ref address, value);
         }
 
-        private string email;
+        private string email = String.Empty;
         public string EMail 
         {
             get => email;
             set => Set(ref email, value);
         }
 
-        private string website;
+        private string website = String.Empty;
         public string Website 
         {
             get => website;
@@ -48,7 +48,7 @@ namespace BusinessLayer.Models
         }
 
         //to be defined exactly how passwords are handled
-        private string password;
+        private string password = String.Empty;
         public string Password 
         {
             get => password;
@@ -91,6 +91,8 @@ namespace BusinessLayer.Models
             customerDto.EMail = EMail;
             customerDto.Website = Website;
             customerDto.Password = Password;
+            customerDto.Address = Address.ToAddressDto();
+            customerDto.AddressId = Address.Id;
             return customerDto;
         }
     }

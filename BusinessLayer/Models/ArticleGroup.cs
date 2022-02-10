@@ -8,14 +8,14 @@ namespace BusinessLayer.Models
 {
     public class ArticleGroup : BusinessModelBase
     {
-        private string? name;
+        private string name = String.Empty;
         public string Name
         {
             get => name;
             set => Set(ref name, value);
         }
 
-        private ArticleGroup? parentArticleGroup;
+        private ArticleGroup parentArticleGroup = new ArticleGroup();
         public ArticleGroup ParentArticleGroup
         {
             get => parentArticleGroup; 

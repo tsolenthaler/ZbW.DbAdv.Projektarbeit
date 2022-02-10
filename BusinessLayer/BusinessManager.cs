@@ -52,6 +52,8 @@ namespace BusinessLayer
         {
             var customerDTOs = DataAccessManager.GetAllCustomers();
 
+            Customers.Clear();
+
             foreach (var customerDTO in customerDTOs)
             {
                 Customer customer = new Customer(customerDTO);
@@ -164,6 +166,8 @@ namespace BusinessLayer
         {
             var articleGroupDTOs = DataAccessManager.GetAllArticleGroup();
 
+            ArticleGroups.Clear();
+
             foreach (var articleGroupDto in articleGroupDTOs)
             {
                 var articleGroup = new ArticleGroup(articleGroupDto, DataAccessManager);
@@ -243,6 +247,8 @@ namespace BusinessLayer
         public void LoadAllArticlesFromDb()
         {
             var articleDTOs = DataAccessManager.GetAllArticle();
+
+            Articles.Clear();
 
             foreach (var articleDto in articleDTOs)
             {
@@ -329,6 +335,8 @@ namespace BusinessLayer
         {
             var orderDTOs = DataAccessManager.GetAllOrders();
 
+            Orders.Clear();
+
             foreach (var orderDto in orderDTOs)
             {
                 var order = new Order(orderDto);
@@ -413,6 +421,8 @@ namespace BusinessLayer
         public void LoadOrderPositionsForSpecificOrder(int orderId)
         {
             var orderPositionDTOs = DataAccessManager.GetOrderPositionByOrderID(orderId);
+
+            OrderPositions.Clear();
 
             foreach (var orderPositionDto in orderPositionDTOs)
             {

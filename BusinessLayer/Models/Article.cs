@@ -8,21 +8,21 @@ namespace BusinessLayer.Models
 {
     public class Article : BusinessModelBase
     {
-        private ArticleGroup articlegroup;
+        private ArticleGroup articlegroup = new ArticleGroup();
         public ArticleGroup ArticleGroup
         {
             get => articlegroup;
             set => Set(ref articlegroup, value);
         }
 
-        private decimal price;
+        private decimal price = 0;
         public decimal Price
         {
             get => price;
             set => Set(ref price, value);
         }
 
-        private string name;
+        private string name = String.Empty;
         public string Name
         {
             get => name;

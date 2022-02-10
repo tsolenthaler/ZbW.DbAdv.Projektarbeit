@@ -120,5 +120,10 @@ namespace PresentationLayer
             // else
             SetGUIToViewMode();
         }
+
+        private void Cmd_SaveOrder_Copy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

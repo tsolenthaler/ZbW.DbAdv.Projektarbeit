@@ -21,7 +21,7 @@ namespace BusinessLayer.Models
             set => Set(ref date, value);
         }
 
-        private Customer customer;
+        private Customer customer = new Customer();
         public Customer Customer
         {
             get => customer;

@@ -26,7 +26,7 @@ namespace DataAccessLayer.Models
             }
             else
             {
-                SeedingDatabase();
+                //SeedingDatabase();
             }
         }
 
@@ -39,10 +39,10 @@ namespace DataAccessLayer.Models
             var seedDb = new SeedDB();
 
             context.AddRange(seedDb.GenerateCustomerDTOs());
-            context.AddRange(seedDb.GenerateArticleGroupDTOs());
-            context.AddRange(seedDb.GenerateArticleDTOs());
-            context.AddRange(seedDb.GenerateOrderDTOs());
-            context.AddRange(seedDb.GenerateOrderPositionDTOs());
+            //context.AddRange(seedDb.GenerateArticleGroupDTOs());
+            //context.AddRange(seedDb.GenerateArticleDTOs());
+            //context.AddRange(seedDb.GenerateOrderDTOs());
+            //context.AddRange(seedDb.GenerateOrderPositionDTOs());
             context.SaveChanges();
         }
 
@@ -77,7 +77,18 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
             var customer = context.Customers.Find(customerDto.Id);
-            customer = customerDto;
+
+            //customer = customerDto funktioniert nicht -> man muss Werte einzeln hinzufügen
+            if(customer != null)
+            {
+                customer.Firstname = customerDto.Firstname;
+                customer.Lastname = customerDto.Lastname;
+                customer.Website = customerDto.Website;
+                customer.Address = customerDto.Address;
+                customer.EMail = customerDto.EMail;
+                customer.Password = customerDto.Password;
+                customer.AddressId = customerDto.AddressId;
+            }         
             context.SaveChanges();
         }
 

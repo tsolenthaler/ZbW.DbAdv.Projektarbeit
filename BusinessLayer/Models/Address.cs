@@ -8,28 +8,28 @@ namespace BusinessLayer.Models
 {
     public class Address : BusinessModelBase
     {
-        private string street;
+        private string street = String.Empty;
         public string Street
         {
             get => street;
             set => Set(ref street, value);
         }
 
-        private string streetno;
+        private string streetno = String.Empty;
         public string StreetNo
         {
             get => streetno;
             set => Set(ref streetno, value);
         }
 
-        private string city;
+        private string city = String.Empty;
         public string City
         {
             get => city;
             set => Set(ref city, value);
         }
 
-        private string plz;
+        private string plz = String.Empty;
         public string Plz
         {
             get => plz;

@@ -52,7 +52,7 @@ namespace ZbW.DbAdv.Projektarbeit
             }
             catch(Exception ex)
             {
-                MessageBox.Show("Not able to migrate database - maybe you haven't configured the connection string yet? \r\n \r\nConfigure it in file DataAccessLayer/Context/SetupDB.cs \r\n \r\nError Message: \r\n" + ex.Message);
+                MessageBox.Show("Not able to migrate database - maybe you haven't configured the connection string yet? \r\n \r\nConfigure it in file DataAccessLayer/Context/SetupDB.cs \r\n \r\nError Message: \r\n" + ex.Message + " Inner Exception: " + ex.InnerException?.Message);
             }
             
         }
