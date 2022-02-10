@@ -7,10 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920" Loaded="Window_Loaded">
     <Grid Width="1920" Height="1080">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="307*"/>
-            <ColumnDefinition Width="173*"/>
-        </Grid.ColumnDefinitions>
         <Button x:Name="Cmd_CustomerWindow" Content="Customer" Margin="543,275,543,0" VerticalAlignment="Top" Height="97" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" BorderThickness="0,0,0,0" Click="Cmd_CustomerWindow_Click" Grid.ColumnSpan="2">
             <Button.Resources>
                 <Style TargetType="Border">

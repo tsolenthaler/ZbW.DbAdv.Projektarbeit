@@ -145,5 +145,9 @@ namespace PresentationLayer
         {
             _orderPositionDataGridChef.BlockReadOnlyRows(e);
         }
+
+        private void Cmd_AddOrder_Copy_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }
