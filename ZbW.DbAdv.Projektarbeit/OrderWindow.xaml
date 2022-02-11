@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="OrderWindow" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid Width="1920" Height="1080">
-        
+
         <!--TextBox Search-->
         <TextBox x:Name="Txt_SearchOrders"
                  Margin="131,36,1474,0" 
@@ -17,7 +17,7 @@
                  VerticalAlignment="Top" 
                  FontSize="16"
                  BorderThickness="0,0,0,1"/>
-        
+
         <!--Button Search-->
         <Button x:Name="Cmd_SearchOrders" 
                 Content="Search"
@@ -50,9 +50,24 @@
                   CanUserSortColumns="False"
                   CanUserAddRows="False" 
                   SelectionMode="Single">
-            
+
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id"  Binding="{Binding Path=Id}"/>
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="{DynamicResource readOnlyColor}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Read-Only" Binding="{Binding Path=ReadOnly}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="{DynamicResource readOnlyColor}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Customer"  Binding="{Binding Path=Customer}"/>
                 <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}"/>
             </DataGrid.Columns>
@@ -179,14 +194,29 @@
                   CanUserAddRows="False" 
                   SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Pos."  Binding="{Binding Path=PosNo}"/>
+                <DataGridTextColumn Header="Pos" Binding="{Binding Path=PosNo}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="{DynamicResource readOnlyColor}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Read-Only" Binding="{Binding Path=ReadOnly}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="{DynamicResource readOnlyColor}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Article"  Binding="{Binding Path=Article}"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}"/>
             </DataGrid.Columns>
         </DataGrid>
 
         <!--Button Add Copy-->
-        <Button x:Name="Cmd_AddOrder_Copy"
+        <Button x:Name="Cmd_AddOrderPos"
                 Content="Add" 
                 HorizontalAlignment="Left"
                 Margin="1793,88,0,0"
@@ -200,7 +230,7 @@
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6"
                 Foreground="Black"
-                Click="Cmd_AddOrder_Copy_Click">
+                Click="Cmd_AddOrderPos_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -209,7 +239,7 @@
         </Button>
 
         <!--Button Save Copy-->
-        <Button x:Name="Cmd_SaveOrder_Copy" Content="Save" HorizontalAlignment="Left" Margin="1793,128,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Click="Cmd_SaveOrder_Copy_Click">
+        <Button x:Name="Cmd_SaveOrderPos" Content="Save" HorizontalAlignment="Left" Margin="1793,128,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Click="Cmd_SaveOrder_Copy_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -218,7 +248,7 @@
         </Button>
 
         <!--Button Modify Copy-->
-        <Button x:Name="Cmd_ModifyOrder_Copy" Content="Modify" HorizontalAlignment="Left" Margin="1793,168,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        <Button x:Name="Cmd_ModifyOrderPos" Content="Modify" HorizontalAlignment="Left" Margin="1793,168,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -227,7 +257,7 @@
         </Button>
 
         <!--Button Cancel Copy-->
-        <Button x:Name="Cmd_Cancel_Copy" Content="Cancel" HorizontalAlignment="Left" Margin="1793,250,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        <Button x:Name="Cmd_CancelOrderPos" Content="Cancel" HorizontalAlignment="Left" Margin="1793,250,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -236,12 +266,20 @@
         </Button>
 
         <!--Button Delete Copy-->
-        <Button x:Name="Cmd_Delete_Copy" Content="Delete" HorizontalAlignment="Left" Margin="1793,208,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        <Button x:Name="Cmd_DeleteOrderPos" Content="Delete" HorizontalAlignment="Left" Margin="1793,208,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" RenderTransformOrigin="0.5,0.5">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="4.958"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
         </Button>
     </Grid>
 </Window>

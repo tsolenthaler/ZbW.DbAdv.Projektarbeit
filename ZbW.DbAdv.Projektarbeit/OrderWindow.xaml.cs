@@ -60,6 +60,12 @@ namespace PresentationLayer
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveOrder.IsEnabled = true;
             Cmd_Cancel.IsEnabled = true;
+
+            Cmd_AddOrderPos.IsEnabled = false;
+            Cmd_ModifyOrderPos.IsEnabled = false;
+            Cmd_DeleteOrderPos.IsEnabled = false;
+            Cmd_SaveOrderPos.IsEnabled = true;
+            Cmd_CancelOrderPos.IsEnabled = true;
         }
 
         ///<summary>
@@ -71,6 +77,12 @@ namespace PresentationLayer
             Cmd_Delete.IsEnabled = true;
             Cmd_SaveOrder.IsEnabled = false;
             Cmd_Cancel.IsEnabled = false;
+
+            Cmd_AddOrderPos.IsEnabled = true;
+            Cmd_ModifyOrderPos.IsEnabled = true;
+            Cmd_DeleteOrderPos.IsEnabled = true;
+            Cmd_SaveOrderPos.IsEnabled = false;
+            Cmd_CancelOrderPos.IsEnabled = false;
         }
 
         ///<summary>
@@ -82,6 +94,12 @@ namespace PresentationLayer
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveOrder.IsEnabled = false;
             Cmd_Cancel.IsEnabled = false;
+
+            Cmd_AddOrderPos.IsEnabled = false;
+            Cmd_ModifyOrderPos.IsEnabled = false;
+            Cmd_DeleteOrderPos.IsEnabled = false;
+            Cmd_SaveOrderPos.IsEnabled = false;
+            Cmd_CancelOrderPos.IsEnabled = false;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -131,7 +149,7 @@ namespace PresentationLayer
             SetGUIToViewMode();
         }
 
-        private void Cmd_SaveOrder_Copy_Click(object sender, RoutedEventArgs e)
+        private void Cmd_SaveOrderPos_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -146,7 +164,7 @@ namespace PresentationLayer
             _orderPositionDataGridChef.BlockReadOnlyRows(e);
         }
 
-        private void Cmd_AddOrder_Copy_Click(object sender, RoutedEventArgs e) {
+        private void Cmd_AddOrderPos_Click(object sender, RoutedEventArgs e) {
 
         }
     }

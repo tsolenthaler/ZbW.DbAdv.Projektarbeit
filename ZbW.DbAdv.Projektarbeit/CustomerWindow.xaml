@@ -115,6 +115,7 @@
                 <DataGridTextColumn Header="First Name" Binding="{Binding Path=FirstName}"/>
                 <DataGridTextColumn Header="Last Name" Binding="{Binding Path=LastName}"/>
                 <DataGridTextColumn Header="Street" Binding="{Binding Path=Address.Street}"/>
+                <DataGridTextColumn Header="StreetNo" Binding="{Binding Path=Address.StreetNo}"/>
                 <DataGridTextColumn Header="PLZ" Binding="{Binding Path=Address.Plz}"/>
                 <DataGridTextColumn Header="City" Binding="{Binding Path=Address.City}"/>
                 <DataGridTextColumn Header="E-Mail" Binding="{Binding Path=EMail}"/>

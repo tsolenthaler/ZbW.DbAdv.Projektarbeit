@@ -52,8 +52,22 @@
                   CanUserAddRows="False" 
                   SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id"  Binding="{Binding Path=Id}"/>
-                <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="{DynamicResource readOnlyColor}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Read-Only" Binding="{Binding Path=ReadOnly}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="{DynamicResource readOnlyColor}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>                <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name}"/>
                 <DataGridTextColumn Header="Article Group" Binding="{Binding Path=ArticleGroup}"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding Path=Price}"/>
             </DataGrid.Columns>
@@ -73,7 +87,8 @@
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black" Click="Cmd_AddArticle_Click" Grid.Column="1" >
+                Foreground="Black" Click="Cmd_AddArticle_Click" 
+                Grid.Column="1" >
             <!--Click="Cmd_AddArticle_Click"-->
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -208,7 +223,7 @@
         </Button>
 
         <!--Button Delete Copy-->
-        <Button x:Name="Cmd_Delete_Copy" Content="Delete" HorizontalAlignment="Left" Margin="623,252,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Grid.Column="1" Grid.ColumnSpan="2">
+        <Button x:Name="Cmd_DeleteArticlegroup" Content="Delete" HorizontalAlignment="Left" Margin="623,252,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Grid.Column="1" Grid.ColumnSpan="2">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -223,8 +238,22 @@
                   CanUserAddRows="False" 
                   SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id"  Binding="{Binding Path= Id}"/>
-                <DataGridTextColumn Header="Name"  Binding="{Binding Path= Name}"/>
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="{DynamicResource readOnlyColor}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Read-Only" Binding="{Binding Path=ReadOnly}" IsReadOnly="True">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="{DynamicResource readOnlyColor}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>                <DataGridTextColumn Header="Name"  Binding="{Binding Path= Name}"/>
                 <DataGridTextColumn Header="Parent Article Group"  Binding="{Binding Path= ParentArticleGroup}"/>
             </DataGrid.Columns>
         </DataGrid>

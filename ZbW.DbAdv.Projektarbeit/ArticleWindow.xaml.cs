@@ -66,6 +66,12 @@ namespace PresentationLayer
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveArticle.IsEnabled = true;
             Cmd_CancelArticle.IsEnabled = true;
+
+            Cmd_AddArticleGroup.IsEnabled = false;
+            Cmd_ModifyArticleGroup.IsEnabled = false;
+            Cmd_DeleteArticlegroup.IsEnabled = false;
+            Cmd_SaveArticleGroup.IsEnabled = true;
+            Cmd_CancelArticleGroup.IsEnabled = true;
         }
 
         ///<summary>
@@ -77,6 +83,12 @@ namespace PresentationLayer
             Cmd_Delete.IsEnabled = true;
             Cmd_SaveArticle.IsEnabled = false;
             Cmd_CancelArticle.IsEnabled = false;
+
+            Cmd_AddArticleGroup.IsEnabled = true;
+            Cmd_ModifyArticleGroup.IsEnabled = true;
+            Cmd_DeleteArticlegroup.IsEnabled = true;
+            Cmd_SaveArticleGroup.IsEnabled = false;
+            Cmd_CancelArticleGroup.IsEnabled = false;
         }
 
         ///<summary>
@@ -88,6 +100,12 @@ namespace PresentationLayer
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveArticle.IsEnabled = false;
             Cmd_CancelArticle.IsEnabled = false;
+
+            Cmd_AddArticleGroup.IsEnabled = false;
+            Cmd_ModifyArticleGroup.IsEnabled = false;
+            Cmd_DeleteArticlegroup.IsEnabled = false;
+            Cmd_SaveArticleGroup.IsEnabled = false;
+            Cmd_CancelArticleGroup.IsEnabled = false;
         }
 
         private void Cmd_AddArticle_Click(object sender, RoutedEventArgs e) {
