@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PresentationLayer"
         d:DataContext="{d:DesignInstance local:ArticleWindow}"
         mc:Ignorable="d"
-        Title="ArticleWindow" Height="450" Width="1134" Loaded="Window_Loaded" Closed="Window_Closed">
+        Title="ArticleWindow" Height="700" Width="1000" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
 
         <!--Grid-->
@@ -30,9 +30,9 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="10"/>
@@ -80,7 +80,9 @@
                  FontStyle="Italic"
                  FontStretch="Medium"
                  FontWeight="Bold"
-                 TextAlignment="Center">
+                 TextAlignment="Center"
+                 Background="Ivory"
+                 BorderThickness="0,0,0,0">
             Article
         </TextBox>
 
@@ -324,7 +326,9 @@
                  FontStyle="Italic"
                  FontStretch="Medium"
                  FontWeight="Bold"
-                 TextAlignment="Center">
+                 TextAlignment="Center"
+                 Background="Ivory"
+                 BorderThickness="0,0,0,0">
             ArticleGroup
         </TextBox>
 

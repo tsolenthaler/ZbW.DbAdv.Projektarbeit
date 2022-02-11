@@ -239,7 +239,13 @@
         </Button>
 
         <!--Button Save Copy-->
-        <Button x:Name="Cmd_SaveOrderPos" Content="Save" HorizontalAlignment="Left" Margin="1793,128,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" Click="Cmd_SaveOrder_Copy_Click">
+        <Button x:Name="Cmd_SaveOrderPos" 
+                Content="Save" 
+                HorizontalAlignment="Left" 
+                Margin="1793,128,0,0" 
+                VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" 
+                Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" 
+                Background="#FFD6D6D6" Foreground="Black" Click="Cmd_SaveOrderPos_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
