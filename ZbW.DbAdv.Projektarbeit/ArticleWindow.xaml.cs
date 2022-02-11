@@ -69,7 +69,7 @@ namespace PresentationLayer
 
             Cmd_AddArticleGroup.IsEnabled = false;
             Cmd_ModifyArticleGroup.IsEnabled = false;
-            Cmd_DeleteArticlegroup.IsEnabled = false;
+            Cmd_DeleteArticleGroup.IsEnabled = false;
             Cmd_SaveArticleGroup.IsEnabled = true;
             Cmd_CancelArticleGroup.IsEnabled = true;
         }
@@ -86,7 +86,7 @@ namespace PresentationLayer
 
             Cmd_AddArticleGroup.IsEnabled = true;
             Cmd_ModifyArticleGroup.IsEnabled = true;
-            Cmd_DeleteArticlegroup.IsEnabled = true;
+            Cmd_DeleteArticleGroup.IsEnabled = true;
             Cmd_SaveArticleGroup.IsEnabled = false;
             Cmd_CancelArticleGroup.IsEnabled = false;
         }
@@ -103,7 +103,7 @@ namespace PresentationLayer
 
             Cmd_AddArticleGroup.IsEnabled = false;
             Cmd_ModifyArticleGroup.IsEnabled = false;
-            Cmd_DeleteArticlegroup.IsEnabled = false;
+            Cmd_DeleteArticleGroup.IsEnabled = false;
             Cmd_SaveArticleGroup.IsEnabled = false;
             Cmd_CancelArticleGroup.IsEnabled = false;
         }
