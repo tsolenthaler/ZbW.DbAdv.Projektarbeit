@@ -8,36 +8,63 @@
         mc:Ignorable="d"
         Title="ArticleWindow" Height="450" Width="1134" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
+
+        <!--Grid-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>    <!--0-->
+            <RowDefinition Height="30"/>    <!--1-->
+            <RowDefinition Height="30"/>    <!--2-->
+            <RowDefinition Height="30"/>    <!--3-->
+            <RowDefinition Height="10"/>    <!--4-->
+            <RowDefinition Height="30"/>    <!--5-->
+            <RowDefinition Height="10"/>    <!--6-->
+            <RowDefinition Height="30"/>    <!--7-->
+            <RowDefinition Height="10"/>    <!--8-->
+            <RowDefinition Height="30"/>    <!--9-->
+            <RowDefinition Height="10"/>    <!--11-->
+            <RowDefinition Height="30"/>    <!--12-->
+            <RowDefinition Height="10"/>    <!--13-->
+            <RowDefinition Height="30"/>    <!--14-->
+            <RowDefinition/>                <!--15-->
+            <RowDefinition Height="50"/>    <!--16-->
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="29*"/>
-            <ColumnDefinition Width="48*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
 
         <!--TextBox Search-->
-        <TextBox x:Name="Txt_SearchArticle" 
-                 Margin="41,31,491,0" 
+        <TextBox Grid.Row="1"
+                 Grid.Column="1" 
+                 Grid.ColumnSpan="2"
+                 x:Name="Txt_SearchArticle" 
                  TextWrapping="Wrap" 
                  Text="Search Article" 
-                 VerticalAlignment="Top" 
                  FontSize="16" 
-                 BorderThickness="0,0,0,1" Grid.ColumnSpan="2"/>
+                 BorderThickness="0,0,0,1"/>
 
         <!--Button Search-->
-        <Button x:Name="Cmd_SearchArticle" 
+        <Button Grid.Row="1" 
+                Grid.Column="5" 
+                x:Name="Cmd_SearchArticle" 
                 Content="Search" 
-                HorizontalAlignment="Left" 
-                Margin="265,30,0,0" 
-                VerticalAlignment="Top" 
-                Height="23"
-                Width="88" 
                 FontSize="14"
                 FlowDirection="LeftToRight"
                 Padding="1,1,1,1"
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black" Click="Cmd_SearchArticle_Click" Grid.Column="1">
+                Foreground="Black" 
+                Click="Cmd_SearchArticle_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -46,11 +73,13 @@
         </Button>
 
         <!--DataGrid Article-->
-        <DataGrid x:Name="ArticleDataGrid"  
-                  Margin="41,89,424,117" 
+        <DataGrid Grid.Row="5" 
+                  Grid.RowSpan="10"
+                  Grid.Column="1" 
+                  Grid.ColumnSpan="3"
+                  x:Name="ArticleDataGrid"  
                   BorderThickness="0,0,0,0" 
                   ItemsSource="{Binding Path=Articles}" 
-                  Grid.ColumnSpan="2" 
                   AutoGenerateColumns="False" 
                   BeginningEdit="ArticleDataGrid_BeginningEdit"
                   CanUserSortColumns="False"
@@ -80,21 +109,18 @@
         </DataGrid>
 
         <!--Button Add-->
-        <Button x:Name="Cmd_AddArticle" 
+        <Button Grid.Row="5" 
+                Grid.Column="5" 
+                x:Name="Cmd_AddArticle" 
                 Content="Add" 
-                HorizontalAlignment="Left" 
-                Margin="265,132,0,0" 
-                VerticalAlignment="Top" 
-                Height="23" 
-                Width="88" 
                 FontSize="14" 
                 FlowDirection="LeftToRight" 
                 Padding="1,1,1,1" 
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black" Click="Cmd_AddArticle_Click" 
-                Grid.Column="1" >
+                Foreground="Black" 
+                Click="Cmd_AddArticle_Click">
             <!--Click="Cmd_AddArticle_Click"-->
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -104,21 +130,18 @@
         </Button>
 
         <!--Button Save-->
-        <Button x:Name="Cmd_SaveArticle" 
+        <Button Grid.Row="7" 
+                Grid.Column="5" 
+                x:Name="Cmd_SaveArticle" 
                 Content="Save" 
-                HorizontalAlignment="Left" 
-                Margin="265,172,0,0" 
-                VerticalAlignment="Top" 
-                Height="23" 
-                Width="88" 
                 FontSize="14" 
                 FlowDirection="LeftToRight"
                 Padding="1,1,1,1"
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black" Click="Cmd_SaveArticle_Click" 
-                Grid.Column="1">
+                Foreground="Black"
+                Click="Cmd_SaveArticle_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -127,21 +150,18 @@
         </Button>
 
         <!--Button Modify-->
-        <Button x:Name="Cmd_ModifyArticle" 
+        <Button Grid.Row="9" 
+                Grid.Column="5" 
+                x:Name="Cmd_ModifyArticle" 
                 Content="Modify" 
-                HorizontalAlignment="Left" 
-                Margin="265,212,0,0" 
-                VerticalAlignment="Top"
-                Height="23"
-                Width="88" 
                 FontSize="14"
                 FlowDirection="LeftToRight"
                 Padding="1,1,1,1" 
                 UseLayoutRounding="False"
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black" Click="Cmd_ModifyArticle_Click"
-                Grid.Column="1">
+                Foreground="Black" 
+                Click="Cmd_ModifyArticle_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -150,21 +170,18 @@
         </Button>
 
         <!--Button Cancel-->
-        <Button x:Name="Cmd_CancelArticle" 
+        <Button Grid.Row="13" 
+                Grid.Column="5" 
+                x:Name="Cmd_CancelArticle" 
                 Content="Cancel" 
-                HorizontalAlignment="Left"
-                Margin="265,294,0,0"
-                VerticalAlignment="Top" 
-                Height="23"
-                Width="88" 
                 FontSize="14" 
                 FlowDirection="LeftToRight" 
                 Padding="1,1,1,1"
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black" Click="Cmd_Cancel_Click" 
-                Grid.Column="1">
+                Foreground="Black" 
+                Click="Cmd_Cancel_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -173,21 +190,18 @@
         </Button>
 
         <!--Button Delete-->
-        <Button x:Name="Cmd_Delete" 
+        <Button Grid.Row="11" 
+                Grid.Column="5" 
+                x:Name="Cmd_Delete" 
                 Content="Delete" 
-                HorizontalAlignment="Left" 
-                Margin="265,252,0,0"
-                VerticalAlignment="Top"
-                Height="23" 
-                Width="88"
                 FontSize="14" 
                 FlowDirection="LeftToRight" 
                 Padding="1,1,1,1" 
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black" Click="Cmd_Delete_Click" 
-                Grid.Column="1">
+                Foreground="Black" 
+                Click="Cmd_Delete_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -197,22 +211,17 @@
 
 
         <!--Button AddArticleGroup-->
-        <Button x:Name="Cmd_AddArticleGroup" 
+        <Button Grid.Row="5" 
+                Grid.Column="9" 
+                x:Name="Cmd_AddArticleGroup" 
                 Content="Add" 
-                HorizontalAlignment="Left" 
-                Margin="623,132,0,0" 
-                VerticalAlignment="Top"
-                Height="23" 
-                Width="88" 
                 FontSize="14"
                 FlowDirection="LeftToRight" 
                 Padding="1,1,1,1"
                 UseLayoutRounding="False"
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6"
-                Foreground="Black"
-                Grid.Column="1"
-                Grid.ColumnSpan="2">
+                Foreground="Black">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -221,22 +230,17 @@
         </Button>
 
         <!--Button SaveArticleGroup-->
-        <Button x:Name="Cmd_SaveArticleGroup" 
+        <Button Grid.Row="7" 
+                Grid.Column="9" 
+                x:Name="Cmd_SaveArticleGroup" 
                 Content="Save" 
-                HorizontalAlignment="Right"
-                Margin="0,172,17,0"
-                VerticalAlignment="Top" 
-                Height="23" 
-                Width="88" 
                 FontSize="14" 
                 FlowDirection="LeftToRight" 
                 Padding="1,1,1,1"
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black"
-                Grid.Column="1" 
-                Grid.ColumnSpan="2">
+                Foreground="Black">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -245,22 +249,17 @@
         </Button>
 
         <!--Button ModifyArticleGroup-->
-        <Button x:Name="Cmd_ModifyArticleGroup"
+        <Button Grid.Row="9" 
+                Grid.Column="9" 
+                x:Name="Cmd_ModifyArticleGroup"
                 Content="Modify" 
-                HorizontalAlignment="Left" 
-                Margin="623,212,0,0"
-                VerticalAlignment="Top" 
-                Height="23" 
-                Width="88"
                 FontSize="14" 
                 FlowDirection="LeftToRight"
                 Padding="1,1,1,1" 
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black" 
-                Grid.Column="1" 
-                Grid.ColumnSpan="2">
+                Foreground="Black">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -269,22 +268,17 @@
         </Button>
 
         <!--Button CancelArticleGroup-->
-        <Button x:Name="Cmd_CancelArticleGroup" 
+        <Button Grid.Row="13" 
+                Grid.Column="9" 
+                x:Name="Cmd_CancelArticleGroup" 
                 Content="Cancel" 
-                HorizontalAlignment="Left"
-                Margin="623,294,0,0"
-                VerticalAlignment="Top"
-                Height="23" 
-                Width="88" 
                 FontSize="14" 
                 FlowDirection="LeftToRight"
                 Padding="1,1,1,1"
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black"
-                Grid.Column="1"
-                Grid.ColumnSpan="2">
+                Foreground="Black">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -293,22 +287,17 @@
         </Button>
 
         <!--Button DeleteArticleGroup-->
-        <Button x:Name="Cmd_DeleteArticleGroup" 
+        <Button Grid.Row="11" 
+                Grid.Column="9" 
+                x:Name="Cmd_DeleteArticleGroup" 
                 Content="Delete" 
-                HorizontalAlignment="Left" 
-                Margin="623,252,0,0" 
-                VerticalAlignment="Top"
-                Height="23" 
-                Width="88" 
                 FontSize="14" 
                 FlowDirection="LeftToRight" 
                 Padding="1,1,1,1"
                 UseLayoutRounding="False"
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black"
-                Grid.Column="1" 
-                Grid.ColumnSpan="2">
+                Foreground="Black">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -317,11 +306,12 @@
         </Button>
 
         <!--DataGrid ArticleGroup-->
-        <DataGrid x:Name="ArticleGroupDataGrid"  
-                  Margin="375,89,69,117"
+        <DataGrid Grid.Row="5" 
+                  Grid.Column="7" 
+                  Grid.RowSpan="10"
+                  x:Name="ArticleGroupDataGrid"  
                   BorderThickness="0,0,0,0" 
                   ItemsSource="{Binding Path= ArticleGroups}" 
-                  Grid.Column="1" 
                   AutoGenerateColumns="False" 
                   BeginningEdit="ArticleGroupDataGrid_BeginningEdit"
                   CanUserSortColumns="False"
