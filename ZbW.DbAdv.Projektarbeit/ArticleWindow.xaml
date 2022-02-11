@@ -72,6 +72,18 @@
             </Button.Resources>
         </Button>
 
+        <!--TextBox Title Article-->
+        <TextBox Grid.Row="3"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="3"
+                 FontSize="20"
+                 FontStyle="Italic"
+                 FontStretch="Medium"
+                 FontWeight="Bold"
+                 TextAlignment="Center">
+            Article
+        </TextBox>
+
         <!--DataGrid Article-->
         <DataGrid Grid.Row="5" 
                   Grid.RowSpan="10"
@@ -304,6 +316,17 @@
                 </Style>
             </Button.Resources>
         </Button>
+
+        <!--TextBox Title ArticleGroup-->
+        <TextBox Grid.Row="3"
+                 Grid.Column="7"
+                 FontSize="20"
+                 FontStyle="Italic"
+                 FontStretch="Medium"
+                 FontWeight="Bold"
+                 TextAlignment="Center">
+            ArticleGroup
+        </TextBox>
 
         <!--DataGrid ArticleGroup-->
         <DataGrid Grid.Row="5" 
