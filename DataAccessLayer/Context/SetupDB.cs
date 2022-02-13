@@ -28,7 +28,7 @@ namespace DataAccessLayer
                 //string Angelo: @"Server=KOLLEG-MPC\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;";
                 //string Corina: @"Server=DESKTOP-94QDIHG\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;";
 
-                string connection = @"Server=AHERCAXLANG02;Database=Auftragsverwaltung;Trusted_Connection=True;"; ;
+                string connection = @"Server=KOLLEG-MPC\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;";
                 // https://docs.microsoft.com/de-de/ef/core/miscellaneous/connection-strings#winforms--wpf-applications
                 optionsBuilder.UseSqlServer(connection);
                 optionsBuilder.LogTo(Console.WriteLine);

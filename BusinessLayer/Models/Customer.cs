@@ -12,14 +12,14 @@ namespace BusinessLayer.Models
 {
     public class Customer : BusinessModelBase
     {
-        private string lastName = String.Empty;
+        private string lastName;
         public string LastName
         {
             get => lastName;
             set => Set(ref lastName, value);
         }
 
-        private string firstName = String.Empty;
+        private string firstName;
         public string FirstName
         {
             get => firstName;
@@ -33,14 +33,14 @@ namespace BusinessLayer.Models
             set => Set(ref address, value);
         }
 
-        private string email = String.Empty;
+        private string email;
         public string EMail 
         {
             get => email;
             set => Set(ref email, value);
         }
 
-        private string website = String.Empty;
+        private string website;
         public string Website 
         {
             get => website;
@@ -48,7 +48,7 @@ namespace BusinessLayer.Models
         }
 
         //to be defined exactly how passwords are handled
-        private string password = String.Empty;
+        private string password;
         public string Password 
         {
             get => password;

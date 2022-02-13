@@ -135,7 +135,7 @@ namespace BusinessLayer
             //Refresh list prior to filtering
             LoadAllCustomersFromDb();
 
-            for(int i= Customers.Count()-1; i>0; i--)
+            for(int i= Customers.Count()-1; i>=0; i--)
             {
                 var customer = Customers[i];
 
@@ -157,11 +157,6 @@ namespace BusinessLayer
                     //none of the fields had the searchText -> remove from list
                     Customers.RemoveAt(i);
                 }
-
-                if (!customer.Id.ToString().Contains(searchText))
-                {
-
-                }
             }
 
         }
@@ -175,7 +170,7 @@ namespace BusinessLayer
 
             foreach (var articleGroupDto in articleGroupDTOs)
             {
-                var articleGroup = new ArticleGroup(articleGroupDto, DataAccessManager);
+                var articleGroup = new ArticleGroup(articleGroupDto);
                 ArticleGroups.Add(articleGroup);
             }
         }
@@ -203,7 +198,7 @@ namespace BusinessLayer
                 else
                 {
                     //Item known by database
-                    itemList[index] = new ArticleGroup(DataAccessManager.GetArticleGroupById(itemList[index].Id), DataAccessManager);
+                    itemList[index] = new ArticleGroup(DataAccessManager.GetArticleGroupById(itemList[index].Id));
                 }
             }
         }
@@ -332,7 +327,26 @@ namespace BusinessLayer
 
         public void FilterArticle(string searchText)
         {
+            //Refresh list prior to filtering
+            LoadAllArticlesFromDb();
 
+            for (int i = Articles.Count()-1; i>=0; i--)
+            {
+                var article = Articles[i];
+
+                if (article.Id.ToString().Contains(searchText)
+                    || article.Price != null && article.Price.ToString().Contains(searchText)
+                    || article.Name != null && article.Name.Contains(searchText)
+                   )
+                {
+                    //if any of the field contains the searchText, keep item in the list
+                }
+                else
+                {
+                    //none of the fields had the searchText -> remove from list
+                    Articles.RemoveAt(i);
+                }
+            }
         }
 
         //Order
@@ -419,7 +433,26 @@ namespace BusinessLayer
 
         public void FilterOrder(string searchText)
         {
+            //Refresh list prior to filtering
+            LoadAllOrdersFromDb();
 
+            for (int i = Orders.Count()-1; i>=0; i--)
+            {
+                var order = Orders[i];
+
+                if (order.Id.ToString().Contains(searchText)
+                    || order.Date != null && order.Date.ToString().Contains(searchText)
+                    || order.Customer != null && order.Customer.ToString().Contains(searchText)
+                   )
+                {
+                    //if any of the field contains the searchText, keep item in the list
+                }
+                else
+                {
+                    //none of the fields had the searchText -> remove from list
+                    Articles.RemoveAt(i);
+                }
+            }
         }
 
         //OrderPosition

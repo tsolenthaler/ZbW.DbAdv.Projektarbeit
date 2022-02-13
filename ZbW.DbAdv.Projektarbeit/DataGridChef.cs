@@ -34,7 +34,7 @@ namespace PresentationLayer
 
         public void BlockReadOnlyRows(DataGridBeginningEditEventArgs e)
         {
-            if (((Customer)e.Row.Item).ReadOnly)
+            if (((BusinessModelBase)e.Row.Item).ReadOnly)
             {
                 e.Cancel = true;
             }

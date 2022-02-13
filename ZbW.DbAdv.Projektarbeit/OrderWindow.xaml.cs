@@ -46,7 +46,7 @@ namespace PresentationLayer
 
             try
             {
-                //BusinessManager.LoadAllOrdersFromDb();
+                BusinessManager.LoadAllOrdersFromDb();
             }
             catch (Exception ex)
             {

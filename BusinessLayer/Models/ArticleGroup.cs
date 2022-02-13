@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using DataAccessLayer.Models;
@@ -18,8 +19,15 @@ namespace BusinessLayer.Models
         private ArticleGroup parentArticleGroup;
         public ArticleGroup ParentArticleGroup
         {
-            get => parentArticleGroup; 
+            get => GetParentArticleGroup(new DataAccessManager()); 
             set => Set(ref parentArticleGroup, value);
+        }
+
+        private int parentArticleGroupId;
+        public int ParentArticleGroupId
+        {
+            get => parentArticleGroupId;
+            set => Set(ref parentArticleGroupId, value);
         }
 
         public ArticleGroup()
@@ -27,11 +35,27 @@ namespace BusinessLayer.Models
 
         }
 
-        public ArticleGroup(ArticleGroupDTO articleGroupDto, DataAccessManager dataAccessManager)
+        public ArticleGroup(ArticleGroupDTO articleGroupDto)
         {
             Id = articleGroupDto.Id;
             Name = articleGroupDto.Name;
-            //ParentArticleGroup = new ArticleGroup(dataAccessManager.GetArticleGroupById(articleGroupDto.Id), dataAccessManager);
+            ParentArticleGroupId = articleGroupDto.ParentArticleGroupId;
+        }
+
+        private ArticleGroup GetParentArticleGroup(DataAccessManager dataAccessManager)
+        {
+            if (ParentArticleGroupId == 0)
+            {
+                return new ArticleGroup()
+                {
+                    Id = 0,
+                    Name = "No parent"
+                };
+            }
+            else
+            {
+                return new ArticleGroup(dataAccessManager.GetArticleGroupById(ParentArticleGroupId));
+            }
         }
 
         public ArticleGroupDTO ToArticleGroupDto()

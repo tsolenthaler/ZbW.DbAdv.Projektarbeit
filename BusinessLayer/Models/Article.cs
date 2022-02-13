@@ -15,14 +15,14 @@ namespace BusinessLayer.Models
             set => Set(ref articlegroup, value);
         }
 
-        private decimal price = 0;
+        private decimal price;
         public decimal Price
         {
             get => price;
             set => Set(ref price, value);
         }
 
-        private string name = String.Empty;
+        private string name;
         public string Name
         {
             get => name;

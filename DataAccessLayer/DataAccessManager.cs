@@ -297,7 +297,7 @@ namespace DataAccessLayer.Models
         public OrderDTO[] GetAllOrders()
         {
             using var context = new SetupDB();
-            return context.Orders.Include(c => c.Customer).ToArray();
+            return context.Orders.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
         }
 
         /// <summary>
