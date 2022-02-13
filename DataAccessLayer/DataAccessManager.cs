@@ -20,14 +20,7 @@ namespace DataAccessLayer.Models
             //context.Database.Migrate();
 
             // ADD INITIAL DATA 
-            if (context.Customers.Any(o => o.Id == 1))
-            {
-                // No INITAL DATA Customer with 1 exist
-            }
-            else
-            {
-                SeedingDatabase();
-            }
+            SeedingDatabase();
         }
 
         /// <summary>
@@ -38,16 +31,31 @@ namespace DataAccessLayer.Models
             using var context = new SetupDB();
             var seedDb = new SeedDB();
 
-            context.AddRange(seedDb.GenerateCustomerDTOs());
-            context.SaveChanges();
-            context.AddRange(seedDb.GenerateArticleGroupDTOs());
-            context.SaveChanges();
-            context.AddRange(seedDb.GenerateArticleDTOs());
-            context.SaveChanges();
-            context.AddRange(seedDb.GenerateOrderDTOs());
-            context.SaveChanges();
-            context.AddRange(seedDb.GenerateOrderPositionDTOs());
-            context.SaveChanges();
+            if (!context.Customers.Any())
+            {
+                context.AddRange(seedDb.GenerateCustomerDTOs());
+                context.SaveChanges();
+            }
+            if (!context.ArticelGroups.Any())
+            {
+                context.AddRange(seedDb.GenerateArticleGroupDTOs());
+                context.SaveChanges();
+            }
+            if (!context.Articles.Any())
+            {
+                context.AddRange(seedDb.GenerateArticleDTOs());
+                context.SaveChanges();
+            }
+            if (!context.Orders.Any())
+            {
+                context.AddRange(seedDb.GenerateOrderDTOs());
+                context.SaveChanges();
+            }
+            if (!context.OrderPositions.Any())
+            {
+                context.AddRange(seedDb.GenerateOrderPositionDTOs());
+                context.SaveChanges();
+            }
         }
 
         /// <summary>
