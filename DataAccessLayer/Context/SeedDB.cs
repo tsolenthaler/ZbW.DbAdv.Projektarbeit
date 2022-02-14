@@ -61,13 +61,24 @@ namespace DataAccessLayer.Context
             };
             return customers;
         }
-        public List<ArticleGroupDTO> GenerateArticleGroupDTOs()
+        public List<ArticleGroupDTO> GenerateFirstArticleGroupDTOs()
         {
             var articleGroup = new List<ArticleGroupDTO>
             {
                 new ArticleGroupDTO(){ Name = "Kleider", ParentArticleGroupId = 0},
-                new ArticleGroupDTO(){ Name = "T-Shirt", ParentArticleGroupId = 1},
-                new ArticleGroupDTO(){ Name = "Hosen", ParentArticleGroupId = 1}
+            };
+            return articleGroup;
+        }
+
+        public List<ArticleGroupDTO> GenerateSecendArticleGroupDTOs()
+        {
+            using var context = new SetupDB();
+            var articleGroupFirst = context.ArticelGroups.Where(c => c.Name == "Kleider").First();
+
+            var articleGroup = new List<ArticleGroupDTO>
+            {
+                new ArticleGroupDTO(){ Name = "T-Shirt", ParentArticleGroupId = articleGroupFirst.Id},
+                new ArticleGroupDTO(){ Name = "Hosen", ParentArticleGroupId = articleGroupFirst.Id}
             };
             return articleGroup;
         }

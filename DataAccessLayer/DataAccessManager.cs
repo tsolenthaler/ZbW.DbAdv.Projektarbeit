@@ -38,7 +38,9 @@ namespace DataAccessLayer.Models
             }
             if (!context.ArticelGroups.Any())
             {
-                context.AddRange(seedDb.GenerateArticleGroupDTOs());
+                context.AddRange(seedDb.GenerateFirstArticleGroupDTOs());
+                context.SaveChanges();
+                context.AddRange(seedDb.GenerateSecendArticleGroupDTOs());
                 context.SaveChanges();
             }
             if (!context.Articles.Any())
