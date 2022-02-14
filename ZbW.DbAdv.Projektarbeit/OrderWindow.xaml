@@ -6,43 +6,93 @@
         xmlns:local="clr-namespace:PresentationLayer"
         d:DataContext="{d:DesignInstance local:OrderWindow}"
         mc:Ignorable="d"
-        Title="OrderWindow" Height="1080" Width="1920" Loaded="Window_Loaded" Closed="Window_Closed">
-    <Grid Width="1920" Height="1080">
+        Title="OrderWindow" Height="700" Width="1000" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Grid Width="1000" Height="700">
+
+
+               <!--Grid-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>    <!--0-->
+            <RowDefinition Height="30"/>    <!--1-->
+            <RowDefinition Height="30"/>    <!--2-->
+            <RowDefinition Height="30"/>    <!--3-->
+            <RowDefinition Height="10"/>    <!--4-->
+            <RowDefinition Height="30"/>    <!--5-->
+            <RowDefinition Height="10"/>    <!--6-->
+            <RowDefinition Height="30"/>    <!--7-->
+            <RowDefinition Height="10"/>    <!--8-->
+            <RowDefinition Height="30"/>    <!--9-->
+            <RowDefinition Height="10"/>    <!--11-->
+            <RowDefinition Height="30"/>    <!--12-->
+            <RowDefinition Height="10"/>    <!--13-->
+            <RowDefinition Height="30"/>    <!--14-->
+            <RowDefinition/>                <!--15-->
+            <RowDefinition Height="50"/>    <!--16-->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
 
         <!--TextBox Search-->
-        <TextBox x:Name="Txt_SearchOrders"
-                 Margin="131,36,1474,0" 
+        <TextBox Grid.Row="1"
+                 Grid.Column="1" 
+                 Grid.ColumnSpan="2"
+                 x:Name="Txt_SearchOrders"
                  TextWrapping="Wrap"
                  Text="Search Orders"
-                 VerticalAlignment="Top" 
                  FontSize="16"
                  BorderThickness="0,0,0,1"/>
 
         <!--Button Search-->
-        <Button x:Name="Cmd_SearchOrders" 
+        <Button Grid.Row="1" 
+                Grid.Column="5" 
+                x:Name="Cmd_SearchOrders" 
                 Content="Search"
-                HorizontalAlignment="Left"
-                Margin="488,35,0,0"
-                VerticalAlignment="Top" 
-                Height="23"
-                Width="88" 
-                FontSize="14" 
+                FontSize="12" 
                 FlowDirection="LeftToRight" 
                 Padding="1,1,1,1" 
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6"
-                Foreground="Black" Click="Cmd_SearchOrders_Click">
+                Foreground="Black" 
+                Click="Cmd_SearchOrders_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
         </Button>
-
+               
+        <!--TextBox Title Article-->
+        <TextBox Grid.Row="3"
+                 Grid.Column="1"
+                 Grid.ColumnSpan="3"
+                 FontSize="20"
+                 FontStyle="Italic"
+                 FontStretch="Medium"
+                 FontWeight="Bold"
+                 TextAlignment="Center"
+                 Background="Ivory"
+                 BorderThickness="0,0,0,0">
+            Order
+        </TextBox>
+               
         <!--DataGrid Order-->
-        <DataGrid x:Name="OrderDataGrid"
-                  Margin="41,100,1474,133" 
+        <DataGrid Grid.Row="5" 
+                  Grid.RowSpan="10"
+                  Grid.Column="1" 
+                  Grid.ColumnSpan="3"
+                  x:Name="OrderDataGrid"
                   BorderThickness="0,0,0,0" 
                   ItemsSource="{Binding Path=Orders}" 
                   AutoGenerateColumns="False"
@@ -74,20 +124,18 @@
         </DataGrid>
 
         <!--Button Add-->
-        <Button x:Name="Cmd_AddOrder" 
-                Content="Add" 
-                HorizontalAlignment="Left" 
-                Margin="488,100,0,0" 
-                VerticalAlignment="Top" 
-                Height="23"
-                Width="88" 
-                FontSize="14" 
-                FlowDirection="LeftToRight"
-                Padding="1,1,1,1" 
-                UseLayoutRounding="False"
-                BorderThickness="0,0,0,0" 
-                Background="#FFD6D6D6" 
-                Foreground="Black" Click="Cmd_AddOrder_Click" >
+        <Button Grid.Row="5" 
+                 Grid.Column="5" 
+                 x:Name="Cmd_AddOrder" 
+                 Content="Add" 
+                 FontSize="12" 
+                 FlowDirection="LeftToRight"
+                 Padding="1,1,1,1" 
+                 UseLayoutRounding="False"
+                 BorderThickness="0,0,0,0" 
+                 Background="#FFD6D6D6" 
+                 Foreground="Black" 
+                 Click="Cmd_AddOrder_Click" >
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -96,20 +144,18 @@
         </Button>
 
         <!--Button Save-->
-        <Button x:Name="Cmd_SaveOrder" 
+        <Button Grid.Row="7" 
+                Grid.Column="5"
+                x:Name="Cmd_SaveOrder" 
                 Content="Save" 
-                HorizontalAlignment="Left"
-                Margin="488,140,0,0" 
-                VerticalAlignment="Top" 
-                Height="23" 
-                Width="88" 
-                FontSize="14" 
+                FontSize="12" 
                 FlowDirection="LeftToRight"
                 Padding="1,1,1,1"
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6"
-                Foreground="Black" Click="Cmd_SaveOrder_Click">
+                Foreground="Black" 
+                Click="Cmd_SaveOrder_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -118,20 +164,18 @@
         </Button>
 
         <!--Button Modify-->
-        <Button x:Name="Cmd_ModifyOrder" 
-                Content="Modify"
-                HorizontalAlignment="Left" 
-                Margin="488,180,0,0" 
-                VerticalAlignment="Top"
-                Height="23" 
-                Width="88"
-                FontSize="14" 
-                FlowDirection="LeftToRight"
-                Padding="1,1,1,1"
-                UseLayoutRounding="False" 
-                BorderThickness="0,0,0,0"
-                Background="#FFD6D6D6" 
-                Foreground="Black" Click="Cmd_ModifyOrder_Click">
+        <Button Grid.Row="9" 
+                 Grid.Column="5" 
+                 x:Name="Cmd_ModifyOrder" 
+                 Content="Modify Selected"
+                 FontSize="12" 
+                 FlowDirection="LeftToRight"
+                 Padding="1,1,1,1"
+                 UseLayoutRounding="False" 
+                 BorderThickness="0,0,0,0"
+                 Background="#FFD6D6D6" 
+                 Foreground="Black" 
+                 Click="Cmd_ModifyOrder_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -140,14 +184,11 @@
         </Button>
 
         <!--Button Cancel-->
-        <Button x:Name="Cmd_Cancel"
+        <Button Grid.Row="13" 
+                Grid.Column="5" 
+                x:Name="Cmd_Cancel"
                 Content="Cancel"
-                HorizontalAlignment="Left"
-                Margin="488,262,0,0" 
-                VerticalAlignment="Top"
-                Height="23"
-                Width="88"
-                FontSize="14" 
+                FontSize="12" 
                 FlowDirection="LeftToRight"
                 Padding="1,1,1,1" 
                 UseLayoutRounding="False"
@@ -162,14 +203,11 @@
         </Button>
 
         <!--Button Delete-->
-        <Button x:Name="Cmd_Delete"
+        <Button Grid.Row="11" 
+                Grid.Column="5" 
+                x:Name="Cmd_Delete"
                 Content="Delete"
-                HorizontalAlignment="Left"
-                Margin="488,220,0,0" 
-                VerticalAlignment="Top" 
-                Height="23"
-                Width="88" 
-                FontSize="14" 
+                FontSize="12" 
                 FlowDirection="LeftToRight" 
                 Padding="1,1,1,1"
                 UseLayoutRounding="False"
@@ -183,9 +221,24 @@
             </Button.Resources>
         </Button>
 
+        <!--TextBox Title OrderPosition-->
+        <TextBox Grid.Row="3"
+                 Grid.Column="7"
+                 FontSize="20"
+                 FontStyle="Italic"
+                 FontStretch="Medium"
+                 FontWeight="Bold"
+                 TextAlignment="Center"
+                 Background="Ivory"
+                 BorderThickness="0,0,0,0">
+            OrderPosition
+        </TextBox>
+
         <!--DataGrid OrderPosition-->
-        <DataGrid x:Name="OrderPositionDataGrid" 
-                  Margin="668,89,170,133"
+        <DataGrid Grid.Row="5" 
+                  Grid.Column="7" 
+                  Grid.RowSpan="10"
+                  x:Name="OrderPositionDataGrid" 
                   BorderThickness="0,0,0,0" 
                   ItemsSource="{Binding Path=OrderPositions}" 
                   AutoGenerateColumns="False"
@@ -215,14 +268,11 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <!--Button Add Copy-->
-        <Button x:Name="Cmd_AddOrderPos"
+        <!--Button AddOrderPos-->
+        <Button Grid.Row="5" 
+                Grid.Column="9" 
+                x:Name="Cmd_AddOrderPos"
                 Content="Add" 
-                HorizontalAlignment="Left"
-                Margin="1793,88,0,0"
-                VerticalAlignment="Top" 
-                Height="23"
-                Width="88"
                 FontSize="14" 
                 FlowDirection="LeftToRight"
                 Padding="1,1,1,1" 
@@ -238,14 +288,19 @@
             </Button.Resources>
         </Button>
 
-        <!--Button Save Copy-->
-        <Button x:Name="Cmd_SaveOrderPos" 
+        <!--Button SaveOrderPos-->
+        <Button Grid.Row="7" 
+                Grid.Column="9" 
+                x:Name="Cmd_SaveOrderPos" 
                 Content="Save" 
-                HorizontalAlignment="Left" 
-                Margin="1793,128,0,0" 
-                VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" 
-                Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" 
-                Background="#FFD6D6D6" Foreground="Black" Click="Cmd_SaveOrderPos_Click">
+                FontSize="12" 
+                FlowDirection="LeftToRight" 
+                Padding="1,1,1,1" 
+                UseLayoutRounding="False" 
+                BorderThickness="0,0,0,0" 
+                Background="#FFD6D6D6" 
+                Foreground="Black"
+                Click="Cmd_SaveOrderPos_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -253,8 +308,17 @@
             </Button.Resources>
         </Button>
 
-        <!--Button Modify Copy-->
-        <Button x:Name="Cmd_ModifyOrderPos" Content="Modify" HorizontalAlignment="Left" Margin="1793,168,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        <!--Button ModifyOrderPosition-->
+        <Button Grid.Row="9" 
+                Grid.Column="9" 
+                x:Name="Cmd_ModifyOrderPos"
+                Content="Modify Selected"
+                FontSize="12" 
+                FlowDirection="LeftToRight"
+                Padding="1,1,1,1" 
+                UseLayoutRounding="False" BorderThickness="0,0,0,0" 
+                Background="#FFD6D6D6" 
+                Foreground="Black">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -262,8 +326,18 @@
             </Button.Resources>
         </Button>
 
-        <!--Button Cancel Copy-->
-        <Button x:Name="Cmd_CancelOrderPos" Content="Cancel" HorizontalAlignment="Left" Margin="1793,250,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black">
+        <!--Button CancelOrderPos-->
+        <Button Grid.Row="13" 
+                Grid.Column="9" 
+                x:Name="Cmd_CancelOrderPos" 
+                Content="Cancel" 
+                FontSize="12"
+                FlowDirection="LeftToRight" 
+                Padding="1,1,1,1" 
+                UseLayoutRounding="False" 
+                BorderThickness="0,0,0,0" 
+                Background="#FFD6D6D6" 
+                Foreground="Black">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -271,21 +345,24 @@
             </Button.Resources>
         </Button>
 
-        <!--Button Delete Copy-->
-        <Button x:Name="Cmd_DeleteOrderPos" Content="Delete" HorizontalAlignment="Left" Margin="1793,208,0,0" VerticalAlignment="Top" Height="23" Width="88" FontSize="14" FlowDirection="LeftToRight" Padding="1,1,1,1" UseLayoutRounding="False" BorderThickness="0,0,0,0" Background="#FFD6D6D6" Foreground="Black" RenderTransformOrigin="0.5,0.5">
+        <!--Button DeleteOrderPos-->
+        <Button Grid.Row="11" 
+                Grid.Column="9" 
+                x:Name="Cmd_DeleteOrderPos"
+                Content="Delete" 
+                FontSize="12"
+                FlowDirection="LeftToRight" 
+                Padding="1,1,1,1" 
+                UseLayoutRounding="False" 
+                BorderThickness="0,0,0,0" 
+                Background="#FFD6D6D6" 
+                Foreground="Black">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="4.958"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
         </Button>
+        
     </Grid>
 </Window>
