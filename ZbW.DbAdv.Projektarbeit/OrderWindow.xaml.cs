@@ -114,24 +114,65 @@ namespace PresentationLayer
 
         private void Cmd_AddOrder_Click(object sender, RoutedEventArgs e) {
 
+            try
+            {
+                BusinessManager.CreateLocalOrder();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
 
             SetGUIToModifyMode();
         }
 
         private void Cmd_SaveOrder_Click(object sender, RoutedEventArgs e) {
 
-
+            try
+            {
+                BusinessManager.SaveModifiedOrder(Orders);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
             SetGUIToViewMode();
         }
 
         private void Cmd_ModifyOrder_Click(object sender, RoutedEventArgs e) {
 
+            int index = OrderDataGrid.SelectedIndex;
 
-            SetGUIToModifyMode();
+            try
+            {
+                BusinessManager.ModifySelected(Orders, index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+
+            if (index != -1)
+            {
+                SetGUIToModifyMode();
+            }
         }
 
-        private void Cmd_Delete_Click(object sender, RoutedEventArgs e) {
+        private void Cmd_DeleteOrder_Click(object sender, RoutedEventArgs e) {
+            int index = OrderDataGrid.SelectedIndex;
 
+            try
+            {
+                BusinessManager.DeleteSelectedOrder(index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
         }
 
         private void Cmd_Cancel_Click(object sender, RoutedEventArgs e) {

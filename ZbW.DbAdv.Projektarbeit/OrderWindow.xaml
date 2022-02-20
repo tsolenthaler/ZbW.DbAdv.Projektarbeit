@@ -213,7 +213,7 @@
                 UseLayoutRounding="False"
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black" Click="Cmd_Delete_Click">
+                Foreground="Black" Click="Cmd_DeleteOrder_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>

@@ -426,7 +426,7 @@ namespace BusinessLayer
             }
             else
             {
-                DataAccessManager.DeleteOrderById(Customers[index].Id);
+                DataAccessManager.DeleteOrderById(Orders[index].Id);
                 LoadAllOrdersFromDb();
             }
         }
