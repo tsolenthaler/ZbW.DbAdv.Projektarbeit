@@ -108,40 +108,176 @@ namespace PresentationLayer
             Cmd_CancelArticleGroup.IsEnabled = false;
         }
 
-        private void Cmd_AddArticle_Click(object sender, RoutedEventArgs e) {
-
-
+        private void Cmd_AddArticle_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BusinessManager.CreateLocalArticle();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
             SetGUIToModifyMode();
         }
 
         private void Cmd_SaveArticle_Click(object sender, RoutedEventArgs e) {
-          
-            
+            try
+            {
+                BusinessManager.SaveModifiedArticle(Articles);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+
             SetGUIToViewMode();
         }
 
         private void Cmd_ModifyArticle_Click(object sender, RoutedEventArgs e) {
-           
-            
-            SetGUIToModifyMode();
+
+            int index = ArticleDataGrid.SelectedIndex;
+
+            try
+            {
+                BusinessManager.ModifySelected(Articles, index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+
+            if (index != -1)
+            {
+                SetGUIToModifyMode();
+            }
         }
 
-        private void Cmd_Delete_Click(object sender, RoutedEventArgs e) {
+        private void Cmd_DeleteArticle_Click(object sender, RoutedEventArgs e) {
 
+            int index = ArticleDataGrid.SelectedIndex;
+
+            try
+            {
+                BusinessManager.DeleteSelectedArticle(index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
         }
 
-        private void Cmd_Cancel_Click(object sender, RoutedEventArgs e) {
-            
+        private void Cmd_CancelArticle_Click(object sender, RoutedEventArgs e) {
             
             SetGUIToViewMode();
         }
 
         private void Cmd_SearchArticle_Click(object sender, RoutedEventArgs e) {
-            
-            // if
-            SetGUIToFullViewMode();
 
-            // else
+            string searchText = Txt_SearchArticle.Text;
+
+            if (searchText != String.Empty)
+            {
+                SetGUIToFullViewMode();
+
+                try
+                {
+                    BusinessManager.FilterArticle(searchText);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                    return;
+                }
+            }
+            else
+            {
+                SetGUIToViewMode();
+
+                try
+                {
+                    BusinessManager.LoadAllArticlesFromDb();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                    return;
+                }
+
+            }
+        }
+
+        public void Cmd_AddArticleGroup_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BusinessManager.CreateLocalArticleGroup();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+            SetGUIToModifyMode();
+        }
+
+        public void Cmd_SaveArticleGroup_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                BusinessManager.SaveModifiedArticleGroup(ArticleGroups);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+
+            SetGUIToViewMode();
+        }
+
+        public void Cmd_ModifyArticleGroup_Click(object sender, RoutedEventArgs e)
+        {
+            int index = ArticleGroupDataGrid.SelectedIndex;
+
+            try
+            {
+                BusinessManager.ModifySelected(ArticleGroups, index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+
+            if (index != -1)
+            {
+                SetGUIToModifyMode();
+            }
+        }
+
+        public void Cmd_DeleteArticleGroup_Click(object sender, RoutedEventArgs e)
+        {
+            int index = ArticleGroupDataGrid.SelectedIndex;
+
+            try
+            {
+                BusinessManager.DeleteSelectedArticleGroup(index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+        }
+
+        private void Cmd_CancelArticleGroup_Click(object sender, RoutedEventArgs e)
+        {
+
             SetGUIToViewMode();
         }
 

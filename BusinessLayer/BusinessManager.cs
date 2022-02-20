@@ -238,7 +238,7 @@ namespace BusinessLayer
             }
             else
             {
-                DataAccessManager.DeleteArticleGroup(Customers[index].Id);
+                DataAccessManager.DeleteArticleGroup(ArticleGroups[index].Id);
                 LoadAllArticleGroupsFromDb();
             }
         }
@@ -320,7 +320,7 @@ namespace BusinessLayer
             }
             else
             {
-                DataAccessManager.DeleteArticleById(Customers[index].Id);
+                DataAccessManager.DeleteArticleById(Articles[index].Id);
                 LoadAllArticlesFromDb();
             }
         }

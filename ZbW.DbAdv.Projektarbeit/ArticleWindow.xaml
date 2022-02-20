@@ -195,7 +195,7 @@
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
                 Foreground="Black" 
-                Click="Cmd_Cancel_Click">
+                Click="Cmd_CancelArticle_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -215,7 +215,7 @@
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
                 Foreground="Black" 
-                Click="Cmd_Delete_Click">
+                Click="Cmd_DeleteArticle_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -235,7 +235,8 @@
                 UseLayoutRounding="False"
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6"
-                Foreground="Black">
+                Foreground="Black"
+                Click="Cmd_AddArticleGroup_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -254,7 +255,8 @@
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black">
+                Foreground="Black"
+                Click="Cmd_SaveArticleGroup_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -273,7 +275,8 @@
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black">
+                Foreground="Black"
+                Click="Cmd_ModifyArticleGroup_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -292,7 +295,8 @@
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black">
+                Foreground="Black"
+                Click="Cmd_CancelArticleGroup_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -311,7 +315,8 @@
                 UseLayoutRounding="False"
                 BorderThickness="0,0,0,0"
                 Background="#FFD6D6D6" 
-                Foreground="Black">
+                Foreground="Black"
+                Click="Cmd_DeleteArticleGroup_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
