@@ -17,7 +17,7 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
 
-            //context.Database.Migrate();
+            context.Database.Migrate();
 
             // ADD INITIAL DATA 
             SeedingDatabase();
@@ -40,7 +40,9 @@ namespace DataAccessLayer.Models
             {
                 context.AddRange(seedDb.GenerateFirstArticleGroupDTOs());
                 context.SaveChanges();
-                context.AddRange(seedDb.GenerateSecendArticleGroupDTOs());
+                context.AddRange(seedDb.GenerateSecondArticleGroupDTOs());
+                context.SaveChanges();
+                context.AddRange(seedDb.GenerateThirdArticleGroupDTOs());
                 context.SaveChanges();
             }
             if (!context.Articles.Any())

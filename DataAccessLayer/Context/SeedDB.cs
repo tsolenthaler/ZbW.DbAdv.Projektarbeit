@@ -66,27 +66,54 @@ namespace DataAccessLayer.Context
             var articleGroup = new List<ArticleGroupDTO>
             {
                 new ArticleGroupDTO(){ Name = "Kleider", ParentArticleGroupId = 0},
+                new ArticleGroupDTO(){ Name = "Schuhe", ParentArticleGroupId = 0},
             };
             return articleGroup;
         }
 
-        public List<ArticleGroupDTO> GenerateSecendArticleGroupDTOs()
+        public List<ArticleGroupDTO> GenerateSecondArticleGroupDTOs()
         {
             using var context = new SetupDB();
             var articleGroupFirst = context.ArticelGroups.Where(c => c.Name == "Kleider").First();
 
             var articleGroup = new List<ArticleGroupDTO>
             {
-                new ArticleGroupDTO(){ Name = "T-Shirt", ParentArticleGroupId = articleGroupFirst.Id},
-                new ArticleGroupDTO(){ Name = "Hosen", ParentArticleGroupId = articleGroupFirst.Id}
+                new ArticleGroupDTO(){ Name = "Hosen", ParentArticleGroupId = articleGroupFirst.Id},
+                new ArticleGroupDTO(){ Name = "Oberteile", ParentArticleGroupId = articleGroupFirst.Id},
             };
+
+            var articleGroupFirst2 = context.ArticelGroups.Where(c => c.Name == "Schuhe").First();
+
+            articleGroup.Add(new ArticleGroupDTO() { Name = "Sandalen", ParentArticleGroupId = articleGroupFirst2.Id });
+            articleGroup.Add(new ArticleGroupDTO() { Name = "Pantoffeln", ParentArticleGroupId = articleGroupFirst2.Id });
+            articleGroup.Add(new ArticleGroupDTO() { Name = "Wanderschuhe", ParentArticleGroupId = articleGroupFirst2.Id });
+
+            return articleGroup;
+        }
+
+        public List<ArticleGroupDTO> GenerateThirdArticleGroupDTOs()
+        {
+            using var context = new SetupDB();
+            var articleGroupFirst = context.ArticelGroups.Where(c => c.Name == "Oberteile").First();
+
+            var articleGroup = new List<ArticleGroupDTO>
+            {
+                new ArticleGroupDTO(){ Name = "T-Shirts", ParentArticleGroupId = articleGroupFirst.Id},
+                new ArticleGroupDTO(){ Name = "Pullover", ParentArticleGroupId = articleGroupFirst.Id}
+            };
+
+            var articleGroupFirst2 = context.ArticelGroups.Where(c => c.Name == "Hosen").First();
+
+            articleGroup.Add(new ArticleGroupDTO() { Name = "Lange Hosen", ParentArticleGroupId = articleGroupFirst2.Id });
+            articleGroup.Add(new ArticleGroupDTO() { Name = "Kurze Hosen", ParentArticleGroupId = articleGroupFirst2.Id });
+            
             return articleGroup;
         }
 
         public List<ArticleDTO> GenerateArticleDTOs()
         {
             using var context = new SetupDB();
-            var articleGroup = context.ArticelGroups.Where(c => c.Name == "T-Shirt").First();
+            var articleGroup = context.ArticelGroups.Where(c => c.Name == "T-Shirts").First();
 
             var article = new List<ArticleDTO>()
             {
