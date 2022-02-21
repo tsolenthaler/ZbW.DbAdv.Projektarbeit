@@ -215,7 +215,6 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
             var articleGroup = context.ArticelGroups.Find(articleGroupDTO.Id);
-            articleGroup = articleGroupDTO;
             if (articleGroup != null)
             {
                 articleGroup.Name = articleGroupDTO.Name;
@@ -270,11 +269,11 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
             var article = context.Articles.Find(articleDTO.Id);
-            article = articleDTO;
             if (article != null)
             {
                 article.Name = articleDTO.Name;
                 article.ArticleGroupId = articleDTO.ArticleGroupId;
+                article.ArticleGroup = articleDTO.ArticleGroup;
                 article.Price = articleDTO.Price;
             }
             context.SaveChanges();

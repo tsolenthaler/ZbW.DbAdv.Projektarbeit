@@ -39,11 +39,14 @@ namespace BusinessLayer.Models
 
         }
 
+
         public Article(ArticleDTO articleDto)
         {
             Id = articleDto.Id;
             Name = articleDto.Name;
             Price = articleDto.Price;
+            ArticleGroup = new ArticleGroup(articleDto.ArticleGroup);
+            //ArticleGroupId = articleDto.ArticleGroupId;
         }
 
         public ArticleDTO ToArticleDto()
