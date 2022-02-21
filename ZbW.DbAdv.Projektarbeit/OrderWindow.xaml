@@ -99,7 +99,7 @@
                   BeginningEdit="OrderDataGrid_BeginningEdit"
                   CanUserSortColumns="False"
                   CanUserAddRows="False" 
-                  SelectionMode="Single">
+                  SelectionMode="Single" SelectionChanged="OrderDataGrid_SelectionChanged">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True">
@@ -247,14 +247,6 @@
                   CanUserAddRows="False" 
                   SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Pos" Binding="{Binding Path=PosNo}" IsReadOnly="True">
-                    <DataGridTextColumn.CellStyle>
-                        <Style TargetType="DataGridCell">
-                            <Setter Property="Background" 
-                                    Value="{DynamicResource readOnlyColor}" />
-                        </Style>
-                    </DataGridTextColumn.CellStyle>
-                </DataGridTextColumn>
                 <DataGridTextColumn Header="Read-Only" Binding="{Binding Path=ReadOnly}" IsReadOnly="True">
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell">

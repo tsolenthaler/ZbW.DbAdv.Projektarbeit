@@ -23,12 +23,20 @@ namespace BusinessLayer.Models
             set => Set(ref quantity, value);
         }
 
-        private Order order;
-        public Order Order
+        private int orderId;
+
+        public int OrderId
         {
-            get => order;
-            set => Set(ref order, value);
+            get => orderId;
+            set => Set(ref orderId, value);
         }
+
+        //private Order order;
+        //public Order Order
+        //{
+        //    get => order;
+        //    set => Set(ref order, value);
+        //}
 
         public OrderPosition()
         {
@@ -40,15 +48,16 @@ namespace BusinessLayer.Models
             Id = orderPositionDto.Id;
             Article = new Article(orderPositionDto.Article);
             Quantity = orderPositionDto.Quantity;
-            Order = new Order(orderPositionDto.Order);
+            //Order = new Order(orderPositionDto.Order);
+            OrderId =  orderPositionDto.OrderId;
         }
 
         public OrderPositionDTO ToOrderPositionDto()
         {
             var orderPositionDto = new OrderPositionDTO();
             orderPositionDto.Id = Id;
-            orderPositionDto.Order = Order.ToOrderDto();
-            orderPositionDto.OrderId = Order.Id;
+            //orderPositionDto.Order = Order.ToOrderDto();
+            orderPositionDto.OrderId = OrderId;
             orderPositionDto.Quantity = Quantity;
             orderPositionDto.Article = Article.ToArticleDto();
             orderPositionDto.ArticleId = Article.Id;

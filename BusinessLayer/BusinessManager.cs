@@ -519,7 +519,7 @@ namespace BusinessLayer
                     DataAccessManager.UpdateOrderPosition(itemList[index].ToOrderPositionDto());
                 }
 
-                LoadOrderPositionsForSpecificOrder(itemList[index].Order.Id);
+                LoadOrderPositionsForSpecificOrder(itemList[index].OrderId);
             }
         }
 
@@ -532,7 +532,7 @@ namespace BusinessLayer
             }
             else
             {
-                int orderId = OrderPositions[index].Order.Id;
+                int orderId = OrderPositions[index].OrderId;
 
                 DataAccessManager.DeleteOrderPositionById(OrderPositions[index].Id);
                 LoadOrderPositionsForSpecificOrder(orderId);

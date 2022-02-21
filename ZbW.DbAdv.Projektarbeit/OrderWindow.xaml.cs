@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Windows;
+using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using ZbW.DbAdv.Projektarbeit;
 
@@ -207,6 +208,19 @@ namespace PresentationLayer
 
         private void Cmd_AddOrderPos_Click(object sender, RoutedEventArgs e) {
 
+        }
+
+        private void OrderDataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            try
+            {
+                Order selectedOrder = (Order) OrderDataGrid.SelectedItem;
+                BusinessManager.LoadOrderPositionsForSpecificOrder(selectedOrder.Id);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

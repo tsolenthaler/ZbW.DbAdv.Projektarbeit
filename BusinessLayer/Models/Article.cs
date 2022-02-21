@@ -31,7 +31,7 @@ namespace BusinessLayer.Models
 
         public override string ToString()
         {
-            return Id + "| " + Name + " (" + ArticleGroup + ")";
+            return Id + "| " + Name;
         }
 
         public Article()
