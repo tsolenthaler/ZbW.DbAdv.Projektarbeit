@@ -10,7 +10,7 @@
     <Grid Width="1000" Height="700">
 
 
-               <!--Grid-->
+        <!--Grid-->
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>    <!--0-->
             <RowDefinition Height="30"/>    <!--1-->
