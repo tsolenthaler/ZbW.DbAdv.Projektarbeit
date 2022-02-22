@@ -156,5 +156,18 @@ namespace DataAccessLayer.Context
             };
             return order;
         }
+
+        public List<InvoiceDTO> GenerateInvoiceDTOs()
+        {
+            using var context = new SetupDB();
+            var customerFirst = context.Customers.First();
+            var invoice = new List<InvoiceDTO>
+            {
+                new InvoiceDTO { Date = new DateTime(2021, 3, 15), CustomerId = customerFirst.Id, Netto = 1205.00, Brutto = 1301.40 },
+                new InvoiceDTO { Date = new DateTime(2022, 1, 15), CustomerId = customerFirst.Id, Netto = 340.00, Brutto = 367.20},
+                new InvoiceDTO { Date = new DateTime(2022, 1, 30), CustomerId = customerFirst.Id, Netto = 200.10, Brutto = 216.10}
+            };
+            return invoice;
+        }
     }
 }

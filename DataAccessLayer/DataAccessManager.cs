@@ -60,6 +60,11 @@ namespace DataAccessLayer.Models
                 context.AddRange(seedDb.GenerateOrderPositionDTOs());
                 context.SaveChanges();
             }
+            if (!context.Invoices.Any())
+            {
+                context.AddRange(seedDb.GenerateInvoiceDTOs());
+                context.SaveChanges();
+            }
         }
 
         /// <summary>

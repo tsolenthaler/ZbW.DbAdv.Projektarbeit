@@ -20,7 +20,8 @@ namespace DataAccessLayer
         public virtual DbSet<CustomerDTO> Customers { get; set; }
         public virtual DbSet<OrderDTO> Orders { get; set; }
         public virtual DbSet<OrderPositionDTO> OrderPositions { get; set; }
-        
+        public virtual DbSet<InvoiceDTO> Invoices { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -84,6 +85,11 @@ namespace DataAccessLayer
             orderposition.Property(x => x.Quantity).IsRequired(true);
             orderposition.HasOne(x => x.Order).WithMany().HasForeignKey(x => x.OrderId); // Eine Position hat nur eine Order
             orderposition.HasOne(x => x.Article).WithMany().HasForeignKey(x => x.ArticleId); // Eine Position hat nur einen Artikel
+
+            var invoice = modelBuilder.Entity<InvoiceDTO>();
+            invoice.HasKey(x => x.Id); // Rechnungsnummer
+            invoice.Property(x => x.Date).IsRequired(true);
+            invoice.HasOne(x => x.Customer);
         }
     }
 }
