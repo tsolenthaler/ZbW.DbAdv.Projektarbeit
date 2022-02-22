@@ -97,6 +97,7 @@ namespace DataAccessLayer.Models
             //customer = customerDto funktioniert nicht -> man muss Werte einzeln hinzufügen
             if(customer != null)
             {
+                customer.Company = customerDto.Company;
                 customer.Firstname = customerDto.Firstname;
                 customer.Lastname = customerDto.Lastname;
                 customer.Website = customerDto.Website;

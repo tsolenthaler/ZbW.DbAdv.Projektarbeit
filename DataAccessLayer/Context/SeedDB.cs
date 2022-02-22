@@ -16,6 +16,7 @@ namespace DataAccessLayer.Context
                 {
                     Firstname = "Hans",
                     Lastname = "Muster",
+                    Company = "ABC AG",
                     AddressId = 1,
                     Address = new AddressDTO
                     {
@@ -28,6 +29,7 @@ namespace DataAccessLayer.Context
                 new CustomerDTO{
                     Firstname = "Kurt",
                     Lastname = "Lörrer",
+                    Company = "Lörrer GmbH",
                     Address = new AddressDTO
                     {
                         Street = "Bahnhofstrasse",
@@ -39,6 +41,7 @@ namespace DataAccessLayer.Context
                 new CustomerDTO{
                     Firstname = "Simone",
                     Lastname = "Stadler",
+                    Company = "Stadler AG",
                     Address = new AddressDTO
                     {
                         Street = "Wiesenstrasse",
@@ -50,6 +53,7 @@ namespace DataAccessLayer.Context
                 new CustomerDTO{
                     Firstname = "Peeetraa",
                     Lastname = "Sturzenegger",
+                    Company = "Sturzenegger & Co. AG",
                     Address = new AddressDTO
                     {
                         Street = "Hauptstrasse",
