@@ -141,6 +141,33 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name}"/>
                 <DataGridTextColumn Header="Article Group" Binding="{Binding Path=ArticleGroup}"/>
+                <DataGridTemplateColumn Header="Font" x:Name="FontColumn" Width="100" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="FontColumnTemplateTextBlock"
+       Text="{Binding FontT.Source}"
+       FontFamily="{Binding FontT}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox x:Name="FontColumnEditTemplateComboBox"
+        ItemsSource="{x:Static Fonts.SystemFontFamilies}"
+        SelectedValue="{Binding FontT}">
+                                <ComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ComboBox.ItemsPanel>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Source}" FontFamily="{Binding}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Price" Binding="{Binding Path=Price}"/>
             </DataGrid.Columns>
         </DataGrid>
