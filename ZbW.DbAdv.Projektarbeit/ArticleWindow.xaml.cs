@@ -176,39 +176,55 @@ namespace PresentationLayer
             SetGUIToViewMode();
         }
 
+   
         private void Cmd_SearchArticle_Click(object sender, RoutedEventArgs e) {
 
-            string searchText = Txt_SearchArticle.Text;
-
-            if (searchText != String.Empty)
-            {
-                SetGUIToFullViewMode();
-
-                try
-                {
-                    BusinessManager.FilterArticle(searchText);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-                    return;
-                }
-            }
-            else
+            if (Cmd_SearchArticle.Content == "Reset")
             {
                 SetGUIToViewMode();
 
-                try
-                {
+                try {
                     BusinessManager.LoadAllArticlesFromDb();
                 }
-                catch (Exception ex)
-                {
+                catch (Exception ex) {
                     MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                     return;
                 }
 
+                Cmd_SearchArticle.Content = "Search";
+                Txt_SearchArticle.Clear();
             }
+            else
+            {
+                string searchText = Txt_SearchArticle.Text;
+                
+                if (searchText != String.Empty) {
+                    SetGUIToFullViewMode();
+
+                    try {
+                        BusinessManager.FilterArticle(searchText);
+                    }
+                    catch (Exception ex) {
+                        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                        return;
+                    }
+                }
+                else
+                {
+                    SetGUIToViewMode();
+
+                    try {
+                        BusinessManager.LoadAllArticlesFromDb();
+                    }
+                    catch (Exception ex) {
+                        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                        return;
+                    }
+                }
+
+                Cmd_SearchArticle.Content = "Reset";
+            }
+
         }
 
         public void Cmd_AddArticleGroup_Click(object sender, RoutedEventArgs e)

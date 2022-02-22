@@ -47,14 +47,36 @@
         
         <!--TextBox Search-->
         <TextBox Grid.Row="1"
-                 Grid.Column="5" 
-                 Grid.ColumnSpan="3" 
-                 x:Name="Txt_SearchCustomer" 
-                 TextWrapping="Wrap" 
-                 Text="Search Customer" 
-                 VerticalAlignment="Center"
-                 FontSize="16" 
-                 BorderThickness="0,0,0,1"/>
+                 Grid.Column="5"
+                 Grid.ColumnSpan="3"
+                 x:Name="Txt_SearchCustomer"
+                 TextWrapping="Wrap"
+                 FontSize="16"
+                 BorderThickness="0,0,0,1">
+            <TextBox.Style>
+                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Search" Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
         
         <!--Button Search-->
         <Button Grid.Row="1" 

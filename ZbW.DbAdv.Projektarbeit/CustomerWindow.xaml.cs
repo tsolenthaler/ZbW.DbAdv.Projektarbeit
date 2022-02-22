@@ -3,19 +3,8 @@ using BusinessLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ZbW.DbAdv.Projektarbeit;
 
 namespace PresentationLayer
@@ -28,15 +17,21 @@ namespace PresentationLayer
         private readonly DataGridChef _dataGridChef;
 
         //no ComboBox or DatePicker necessary for Customer Window
-        private readonly List<int> _comboBoxColumnIndices = new List<int>() {};
-        private readonly List<int> _datePickerColumnIndices = new List<int>() {};
+        private readonly List<int> _comboBoxColumnIndices = new List<int>() { };
+        private readonly List<int> _datePickerColumnIndices = new List<int>() { };
 
-        public ObservableCollection<Customer> Customers { get => mainWindow.BusinessManager.Customers; }
+        public ObservableCollection<Customer> Customers
+        {
+            get => mainWindow.BusinessManager.Customers;
+        }
 
         public readonly MainWindow mainWindow;
 
-        public BusinessManager BusinessManager { get => mainWindow.BusinessManager; }
-        
+        public BusinessManager BusinessManager
+        {
+            get => mainWindow.BusinessManager;
+        }
+
 
         public CustomerWindow(MainWindow mainWindow)
         {
@@ -44,7 +39,7 @@ namespace PresentationLayer
             this.mainWindow = mainWindow;
 
             InitializeComponent();
-            
+
             _dataGridChef = new DataGridChef(CustomerDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
             Resources["readOnlyColor"] = _dataGridChef.ReadOnlyFieldColor;
 
@@ -52,10 +47,10 @@ namespace PresentationLayer
             {
                 BusinessManager.LoadAllCustomersFromDb();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-            }     
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -135,7 +130,7 @@ namespace PresentationLayer
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
             }
-          
+
             SetGUIToViewMode();
         }
 
@@ -154,12 +149,12 @@ namespace PresentationLayer
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
             }
-            
-            if(index != -1)
+
+            if (index != -1)
             {
                 SetGUIToModifyMode();
             }
-            
+
         }
 
         private void Cmd_SaveCustomer_Click(object sender, RoutedEventArgs e)
@@ -173,7 +168,7 @@ namespace PresentationLayer
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
             }
-            
+
             SetGUIToViewMode();
         }
 
@@ -190,31 +185,14 @@ namespace PresentationLayer
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
             }
-            
+
         }
 
         private void Cmd_SearchCustomers_Click(object sender, RoutedEventArgs e)
         {
-            string searchText = Txt_SearchCustomer.Text;
-
-            if (searchText != String.Empty)
-            {
-                SetGUIToFullViewMode();
-
-                try
-                {
-                    BusinessManager.FilterCustomers(searchText);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-                    return;
-                }               
-            }
-            else
+            if (Cmd_SearchCustomers.Content == "Reset")
             {
                 SetGUIToViewMode();
-
                 try
                 {
                     BusinessManager.LoadAllCustomersFromDb();
@@ -224,7 +202,41 @@ namespace PresentationLayer
                     MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                     return;
                 }
-                
+
+                Cmd_SearchCustomers.Content = "Search";
+                Txt_SearchCustomer.Clear();
+            }
+            else
+            {
+                string searchText = Txt_SearchCustomer.Text;
+                if (searchText != String.Empty)
+                {
+                    SetGUIToFullViewMode();
+                    try
+                    {
+                        BusinessManager.FilterCustomers(searchText);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                        return;
+                    }
+                }
+                else
+                {
+                    SetGUIToViewMode();
+                    try
+                    {
+                        BusinessManager.LoadAllCustomersFromDb();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                        return;
+                    }
+                }
+
+                Cmd_SearchCustomers.Content = "Reset";
             }
         }
     }

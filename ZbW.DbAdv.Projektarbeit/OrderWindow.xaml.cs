@@ -3,20 +3,14 @@ using BusinessLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
 using System.Windows;
-using DataAccessLayer.Models;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using ZbW.DbAdv.Projektarbeit;
 
-namespace PresentationLayer
-{
+namespace PresentationLayer {
     /// <summary>
     /// Interaktionslogik für OrderWindow.xaml
     /// </summary>
-    public partial class OrderWindow : Window
-    {
+    public partial class OrderWindow : Window {
 
         private MainWindow mainWindow;
 
@@ -34,8 +28,7 @@ namespace PresentationLayer
 
         public BusinessManager BusinessManager { get => mainWindow.BusinessManager; }
 
-        public OrderWindow(MainWindow mainWindow)
-        {
+        public OrderWindow(MainWindow mainWindow) {
             DataContext = this;
             this.mainWindow = mainWindow;
 
@@ -45,12 +38,10 @@ namespace PresentationLayer
             _orderPositionDataGridChef = new DataGridChef(OrderPositionDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
             Resources["readOnlyColor"] = _orderDataGridChef.ReadOnlyFieldColor;
 
-            try
-            {
+            try {
                 BusinessManager.LoadAllOrdersFromDb();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
             }
         }
@@ -103,24 +94,20 @@ namespace PresentationLayer
             Cmd_CancelOrderPos.IsEnabled = false;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
             SetGUIToViewMode();
         }
 
-        private void Window_Closed(object sender, System.EventArgs e)
-        {
+        private void Window_Closed(object sender, System.EventArgs e) {
             mainWindow.Show();
         }
 
         private void Cmd_AddOrder_Click(object sender, RoutedEventArgs e) {
 
-            try
-            {
+            try {
                 BusinessManager.CreateLocalOrder();
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
             }
@@ -130,12 +117,10 @@ namespace PresentationLayer
 
         private void Cmd_SaveOrder_Click(object sender, RoutedEventArgs e) {
 
-            try
-            {
+            try {
                 BusinessManager.SaveModifiedOrder(Orders);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
             }
@@ -146,18 +131,15 @@ namespace PresentationLayer
 
             int index = OrderDataGrid.SelectedIndex;
 
-            try
-            {
+            try {
                 BusinessManager.ModifySelected(Orders, index);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
             }
 
-            if (index != -1)
-            {
+            if (index != -1) {
                 SetGUIToModifyMode();
             }
         }
@@ -165,12 +147,10 @@ namespace PresentationLayer
         private void Cmd_DeleteOrder_Click(object sender, RoutedEventArgs e) {
             int index = OrderDataGrid.SelectedIndex;
 
-            try
-            {
+            try {
                 BusinessManager.DeleteSelectedOrder(index);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
             }
@@ -183,26 +163,60 @@ namespace PresentationLayer
         }
 
         private void Cmd_SearchOrders_Click(object sender, RoutedEventArgs e) {
-            
-            // if
-            SetGUIToFullViewMode();
 
-            // else
-            SetGUIToViewMode();
+            if (Cmd_SearchOrders.Content == "Reset") {
+                //SetGUIToViewMode();
+                //try {
+                //    BusinessManager.LoadAllOrdersFromDb();
+                //}
+                //catch (Exception ex) {
+                //    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                //    return;
+                //}
+
+                Cmd_SearchOrders.Content = "Search";
+                Txt_SearchOrders.Clear();
+            }
+            else {
+                //string searchText = Txt_SearchOrders.Text;
+                //if (searchText != String.Empty) 
+                //{
+                //    SetGUIToFullViewMode();
+                //    try 
+                //    {
+                //        BusinessManager.FilterOrder(searchText);
+                //    }
+                //    catch (Exception ex) 
+                //    {
+                //        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                //        return;
+                //    }
+                //}
+                //else
+                //{
+                //    SetGUIToViewMode();
+                //    try {
+                //        BusinessManager.LoadAllOrdersFromDb();
+                //    }
+                //    catch (Exception ex) {
+                //        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                //        return;
+                //    }
+                //}
+
+                Cmd_SearchOrders.Content = "Reset";
+            }
         }
 
-        private void Cmd_SaveOrderPos_Click(object sender, RoutedEventArgs e)
-        {
+        private void Cmd_SaveOrderPos_Click(object sender, RoutedEventArgs e) {
 
         }
 
-        private void OrderDataGrid_BeginningEdit(object sender, System.Windows.Controls.DataGridBeginningEditEventArgs e)
-        {
+        private void OrderDataGrid_BeginningEdit(object sender, System.Windows.Controls.DataGridBeginningEditEventArgs e) {
             _orderDataGridChef.BlockReadOnlyRows(e);
         }
 
-        private void OrderPositionDataGrid_BeginningEdit(object sender, System.Windows.Controls.DataGridBeginningEditEventArgs e)
-        {
+        private void OrderPositionDataGrid_BeginningEdit(object sender, System.Windows.Controls.DataGridBeginningEditEventArgs e) {
             _orderPositionDataGridChef.BlockReadOnlyRows(e);
         }
 
@@ -210,15 +224,12 @@ namespace PresentationLayer
 
         }
 
-        private void OrderDataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            try
-            {
-                Order selectedOrder = (Order) OrderDataGrid.SelectedItem;
+        private void OrderDataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
+            try {
+                Order selectedOrder = (Order)OrderDataGrid.SelectedItem;
                 BusinessManager.LoadOrderPositionsForSpecificOrder(selectedOrder.Id);
             }
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
 
             }
         }
