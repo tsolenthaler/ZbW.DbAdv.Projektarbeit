@@ -66,7 +66,9 @@ namespace PresentationLayer
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveArticle.IsEnabled = true;
             Cmd_CancelArticle.IsEnabled = true;
+        }
 
+        private void SetGUIToModifyModeArticleGroup() {
             Cmd_AddArticleGroup.IsEnabled = false;
             Cmd_ModifyArticleGroup.IsEnabled = false;
             Cmd_DeleteArticleGroup.IsEnabled = false;
@@ -83,7 +85,10 @@ namespace PresentationLayer
             Cmd_Delete.IsEnabled = true;
             Cmd_SaveArticle.IsEnabled = false;
             Cmd_CancelArticle.IsEnabled = false;
+        }
 
+        private void SetGUIToViewModeArticleGroup()
+        {
             Cmd_AddArticleGroup.IsEnabled = true;
             Cmd_ModifyArticleGroup.IsEnabled = true;
             Cmd_DeleteArticleGroup.IsEnabled = true;
@@ -100,7 +105,10 @@ namespace PresentationLayer
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveArticle.IsEnabled = false;
             Cmd_CancelArticle.IsEnabled = false;
+        }
 
+        private void SetGUIToFullViewModeArticleGroup()
+        {
             Cmd_AddArticleGroup.IsEnabled = false;
             Cmd_ModifyArticleGroup.IsEnabled = false;
             Cmd_DeleteArticleGroup.IsEnabled = false;
@@ -108,6 +116,8 @@ namespace PresentationLayer
             Cmd_CancelArticleGroup.IsEnabled = false;
         }
 
+
+        /* ----------------------------- Article Buttons ------------------------------------------ */
         private void Cmd_AddArticle_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -172,11 +182,17 @@ namespace PresentationLayer
         }
 
         private void Cmd_CancelArticle_Click(object sender, RoutedEventArgs e) {
-            
+            try {
+                BusinessManager.CancelModificationArticle(Articles);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+
             SetGUIToViewMode();
         }
 
-   
         private void Cmd_SearchArticle_Click(object sender, RoutedEventArgs e) {
 
             if (Cmd_SearchArticle.Content == "Reset")
@@ -226,7 +242,9 @@ namespace PresentationLayer
             }
 
         }
+        /* ---------------------------------------------------------------------------------------- */
 
+        /* ----------------------- Article Group Buttons ------------------------------------------ */
         public void Cmd_AddArticleGroup_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -238,7 +256,7 @@ namespace PresentationLayer
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
             }
-            SetGUIToModifyMode();
+            SetGUIToModifyModeArticleGroup();
         }
 
         public void Cmd_SaveArticleGroup_Click(object sender, RoutedEventArgs e)
@@ -253,7 +271,7 @@ namespace PresentationLayer
                 return;
             }
 
-            SetGUIToViewMode();
+            SetGUIToViewModeArticleGroup();
         }
 
         public void Cmd_ModifyArticleGroup_Click(object sender, RoutedEventArgs e)
@@ -272,7 +290,7 @@ namespace PresentationLayer
 
             if (index != -1)
             {
-                SetGUIToModifyMode();
+                SetGUIToModifyModeArticleGroup();
             }
         }
 
@@ -293,9 +311,17 @@ namespace PresentationLayer
 
         private void Cmd_CancelArticleGroup_Click(object sender, RoutedEventArgs e)
         {
+            try {
+                BusinessManager.CancelModificationArticleGroup(ArticleGroups);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
 
-            SetGUIToViewMode();
+            SetGUIToViewModeArticleGroup();
         }
+        /* ---------------------------------------------------------------------------------------- */
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
