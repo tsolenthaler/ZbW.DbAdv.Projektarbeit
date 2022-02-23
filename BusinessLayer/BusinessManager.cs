@@ -368,6 +368,11 @@ namespace BusinessLayer
             Orders.Add(new Order() { ReadOnly = false });
         }
 
+        public void CreateLocalOrderPos()
+        {
+            OrderPositions.Add(new OrderPosition() { ReadOnly = false });
+        }
+
         public void CancelModificationOrder(ObservableCollection<Order> itemList)
         {
             int index = GetIndexOfModifiableDataGridChild(itemList);
@@ -412,7 +417,6 @@ namespace BusinessLayer
                     //known by database
                     DataAccessManager.UpdateOrder(itemList[index].ToOrderDto());
                 }
-
                 LoadAllOrdersFromDb();
             }
         }
@@ -427,6 +431,17 @@ namespace BusinessLayer
             else
             {
                 DataAccessManager.DeleteOrderById(Orders[index].Id);
+                LoadAllOrdersFromDb();
+            }
+        }
+
+        public void DeleteSelectedOrderPos(int index) {
+            if (index == -1) {
+                //Item not found
+                return;
+            }
+            else {
+                DataAccessManager.DeleteOrderPosById(OrderPositions[index].Id);
                 LoadAllOrdersFromDb();
             }
         }
@@ -472,6 +487,27 @@ namespace BusinessLayer
         public void CreateLocalOrderPosition()
         {
             OrderPositions.Add(new OrderPosition() { ReadOnly = false });
+        }
+
+        public void SaveModifiedOrderPos(ObservableCollection<OrderPosition> itemList) {
+            int index = GetIndexOfModifiableDataGridChild(itemList);
+
+            if (index == -1) {
+                //Item not found
+                return;
+            }
+            else {
+                if (itemList[index].Id == 0) {
+                    //not known by database yet
+                    DataAccessManager.NewOrderPosition(itemList[index].ToOrderPositionDto());
+                }
+                else {
+                    //known by database
+                    DataAccessManager.UpdateOrderPosition(itemList[index].ToOrderPositionDto());
+                }
+
+                LoadOrderPositionsForSpecificOrder(index);
+            }
         }
 
         public void CancelModificationOrderPosition(ObservableCollection<OrderPosition> itemList)

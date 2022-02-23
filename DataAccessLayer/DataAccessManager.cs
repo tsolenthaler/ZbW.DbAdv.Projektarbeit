@@ -347,6 +347,16 @@ namespace DataAccessLayer.Models
         }
 
         /// <summary>
+        ///  DELETE OrderPos by ID
+        /// </summary>
+        public void DeleteOrderPosById(int id) {
+            using var context = new SetupDB();
+            var orderPos = context.OrderPositions.Find(id);
+            context.OrderPositions.Remove(orderPos);
+            context.SaveChanges();
+        }
+
+        /// <summary>
         ///  CREATE OrderPosition
         /// </summary>
         public void NewOrderPosition(OrderPositionDTO orderPositionDTO)
