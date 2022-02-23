@@ -121,7 +121,8 @@
                   BeginningEdit="OrderDataGrid_BeginningEdit"
                   CanUserSortColumns="False"
                   CanUserAddRows="False" 
-                  SelectionMode="Single" SelectionChanged="OrderDataGrid_SelectionChanged">
+                  SelectionMode="Single"
+                  SelectionChanged="OrderDataGrid_SelectionChanged">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True">
@@ -141,7 +142,18 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Customer"  Binding="{Binding Path=Customer}"/>
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}"/>
+                <DataGridTemplateColumn Header="Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Date,StringFormat=MM/dd/yyyy hh:mm:ss}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path=Date}"></DatePicker>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -332,7 +344,7 @@
                 Padding="1,1,1,1" 
                 UseLayoutRounding="False" BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black">
+                Foreground="Black" Click="Cmd_ModifyOrderPos_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -351,7 +363,7 @@
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black">
+                Foreground="Black" Click="Cmd_CancelOrderPos_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -370,7 +382,7 @@
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black">
+                Foreground="Black" Click="Cmd_DeleteOrderPos_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>

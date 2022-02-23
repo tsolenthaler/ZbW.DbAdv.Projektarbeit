@@ -21,6 +21,8 @@ namespace PresentationLayer {
         private readonly List<int> _comboBoxColumnIndices = new List<int>() { };
         private readonly List<int> _datePickerColumnIndices = new List<int>() { };
 
+        
+
         public ObservableCollection<Customer> Customers { get => mainWindow.BusinessManager.Customers; }
 
         public ObservableCollection<Order> Orders { get => mainWindow.BusinessManager.Orders; }
@@ -52,7 +54,10 @@ namespace PresentationLayer {
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveOrder.IsEnabled = true;
             Cmd_Cancel.IsEnabled = true;
+        }
 
+        private void SetGUIToModifyModeOrderPos()
+        {
             Cmd_AddOrderPos.IsEnabled = false;
             Cmd_ModifyOrderPos.IsEnabled = false;
             Cmd_DeleteOrderPos.IsEnabled = false;
@@ -69,7 +74,10 @@ namespace PresentationLayer {
             Cmd_Delete.IsEnabled = true;
             Cmd_SaveOrder.IsEnabled = false;
             Cmd_Cancel.IsEnabled = false;
+        }
 
+        private void SetGUIToViewModeOrderPos()
+        {
             Cmd_AddOrderPos.IsEnabled = true;
             Cmd_ModifyOrderPos.IsEnabled = true;
             Cmd_DeleteOrderPos.IsEnabled = true;
@@ -86,13 +94,17 @@ namespace PresentationLayer {
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveOrder.IsEnabled = false;
             Cmd_Cancel.IsEnabled = false;
+        }
 
+        private void SetGUIToFullViewModeOrderPos()
+        {
             Cmd_AddOrderPos.IsEnabled = false;
             Cmd_ModifyOrderPos.IsEnabled = false;
             Cmd_DeleteOrderPos.IsEnabled = false;
             Cmd_SaveOrderPos.IsEnabled = false;
             Cmd_CancelOrderPos.IsEnabled = false;
         }
+        
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             SetGUIToViewMode();
@@ -102,6 +114,8 @@ namespace PresentationLayer {
             mainWindow.Show();
         }
 
+
+        // Order Buttons
         private void Cmd_AddOrder_Click(object sender, RoutedEventArgs e) {
 
             try {
@@ -157,7 +171,13 @@ namespace PresentationLayer {
         }
 
         private void Cmd_Cancel_Click(object sender, RoutedEventArgs e) {
-
+            try {
+                BusinessManager.CancelModificationOrder(Orders);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
 
             SetGUIToViewMode();
         }
@@ -212,9 +232,7 @@ namespace PresentationLayer {
             }
         }
 
-        private void Cmd_SaveOrderPos_Click(object sender, RoutedEventArgs e) {
 
-        }
 
         private void OrderDataGrid_BeginningEdit(object sender, System.Windows.Controls.DataGridBeginningEditEventArgs e) {
             _orderDataGridChef.BlockReadOnlyRows(e);
@@ -224,9 +242,7 @@ namespace PresentationLayer {
             _orderPositionDataGridChef.BlockReadOnlyRows(e);
         }
 
-        private void Cmd_AddOrderPos_Click(object sender, RoutedEventArgs e) {
 
-        }
 
         private void OrderDataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             try {
@@ -240,6 +256,69 @@ namespace PresentationLayer {
             {
 
             }
+        }
+
+        // OrderPosition Buttons
+        private void Cmd_AddOrderPos_Click(object sender, RoutedEventArgs e) {
+            try {
+                BusinessManager.CreateLocalOrderPos();
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+
+            SetGUIToModifyModeOrderPos();
+        }
+
+        private void Cmd_SaveOrderPos_Click(object sender, RoutedEventArgs e) {
+            try {
+                BusinessManager.SaveModifiedOrderPos(OrderPositions);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+            SetGUIToViewModeOrderPos();
+        }
+
+        private void Cmd_ModifyOrderPos_Click(object sender, RoutedEventArgs e) {
+            int index = OrderDataGrid.SelectedIndex;
+
+            try {
+                BusinessManager.ModifySelected(Orders, index);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+
+            if (index != -1) {
+                SetGUIToModifyModeOrderPos();
+            }
+        }
+        private void Cmd_DeleteOrderPos_Click(object sender, RoutedEventArgs e) {
+            int index = OrderDataGrid.SelectedIndex;
+
+            try {
+                BusinessManager.DeleteSelectedOrderPos(index);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+        }
+
+        private void Cmd_CancelOrderPos_Click(object sender, RoutedEventArgs e) {
+            try {
+                BusinessManager.CancelModificationOrderPosition(OrderPositions);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+
+            SetGUIToViewModeOrderPos();
         }
     }
 }
