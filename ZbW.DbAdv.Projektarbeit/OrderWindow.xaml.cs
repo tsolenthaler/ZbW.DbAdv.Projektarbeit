@@ -165,44 +165,48 @@ namespace PresentationLayer {
         private void Cmd_SearchOrders_Click(object sender, RoutedEventArgs e) {
 
             if (Cmd_SearchOrders.Content == "Reset") {
-                //SetGUIToViewMode();
-                //try {
-                //    BusinessManager.LoadAllOrdersFromDb();
-                //}
-                //catch (Exception ex) {
-                //    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-                //    return;
-                //}
+                SetGUIToViewMode();
+                try
+                {
+                    BusinessManager.LoadAllOrdersFromDb();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                    return;
+                }
 
                 Cmd_SearchOrders.Content = "Search";
                 Txt_SearchOrders.Clear();
             }
             else {
-                //string searchText = Txt_SearchOrders.Text;
-                //if (searchText != String.Empty) 
-                //{
-                //    SetGUIToFullViewMode();
-                //    try 
-                //    {
-                //        BusinessManager.FilterOrder(searchText);
-                //    }
-                //    catch (Exception ex) 
-                //    {
-                //        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-                //        return;
-                //    }
-                //}
-                //else
-                //{
-                //    SetGUIToViewMode();
-                //    try {
-                //        BusinessManager.LoadAllOrdersFromDb();
-                //    }
-                //    catch (Exception ex) {
-                //        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-                //        return;
-                //    }
-                //}
+                string searchText = Txt_SearchOrders.Text;
+                if (searchText != String.Empty)
+                {
+                    SetGUIToFullViewMode();
+                    try
+                    {
+                        BusinessManager.FilterOrder(searchText);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                        return;
+                    }
+                }
+                else
+                {
+                    SetGUIToViewMode();
+                    try
+                    {
+                        BusinessManager.LoadAllOrdersFromDb();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                        return;
+                    }
+                }
 
                 Cmd_SearchOrders.Content = "Reset";
             }
@@ -227,9 +231,13 @@ namespace PresentationLayer {
         private void OrderDataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
             try {
                 Order selectedOrder = (Order)OrderDataGrid.SelectedItem;
-                BusinessManager.LoadOrderPositionsForSpecificOrder(selectedOrder.Id);
+                if (selectedOrder != null)
+                {
+                    BusinessManager.LoadOrderPositionsForSpecificOrder(selectedOrder.Id);
+                }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
 
             }
         }
