@@ -64,6 +64,8 @@ namespace DataAccessLayer.Models
             {
                 context.AddRange(seedDb.GenerateInvoiceDTOs());
                 context.SaveChanges();
+                context.AddRange(seedDb.ChangeCustomerDTOs());
+                context.SaveChanges();
             }
         }
 
@@ -404,5 +406,13 @@ namespace DataAccessLayer.Models
             context.SaveChanges();
         }
 
+        /// <summary>
+        ///  READ all Invoices
+        /// </summary>
+        public InvoiceDTO[] GetAllInvoices()
+        {
+            using var context = new SetupDB();
+            return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
+        }
     }
 }

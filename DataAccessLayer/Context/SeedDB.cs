@@ -62,6 +62,42 @@ namespace DataAccessLayer.Context
                         City = "Wil"
                     }
                 },
+                new CustomerDTO{
+                    Firstname = "Hansruedi",
+                    Lastname = "Arpa",
+                    Company = "Arpanet AG",
+                    Address = new AddressDTO
+                    {
+                        Street = "Aprastrasse",
+                        StreetNo = "15",
+                        Plz = "8000",
+                        City = "Zürich"
+                    }
+                },
+                new CustomerDTO{
+                    Firstname = "Stan",
+                    Lastname = "Rich",
+                    Company = "Rich AG",
+                    Address = new AddressDTO
+                    {
+                        Street = "Richterstrasse",
+                        StreetNo = "258",
+                        Plz = "8000",
+                        City = "Zürich"
+                    }
+                },
+                new CustomerDTO{
+                    Firstname = "Jack",
+                    Lastname = "Nest",
+                    Company = "Nest AG",
+                    Address = new AddressDTO
+                    {
+                        Street = "Neststrasse",
+                        StreetNo = "43",
+                        Plz = "8000",
+                        City = "Zürich"
+                    }
+                },
             };
             return customers;
         }
@@ -161,12 +197,36 @@ namespace DataAccessLayer.Context
         {
             using var context = new SetupDB();
             var customerFirst = context.Customers.First();
+            var customerArpanet = context.Customers.Where(c => c.Company == "Arpanet AG" || c.Company == "Isernet AG").First();
             var invoice = new List<InvoiceDTO>
             {
-                new InvoiceDTO { Date = new DateTime(2021, 3, 15), CustomerId = customerFirst.Id, Netto = 1205.00, Brutto = 1301.40 },
-                new InvoiceDTO { Date = new DateTime(2022, 1, 15), CustomerId = customerFirst.Id, Netto = 340.00, Brutto = 367.20},
-                new InvoiceDTO { Date = new DateTime(2022, 1, 30), CustomerId = customerFirst.Id, Netto = 200.10, Brutto = 216.10}
+                new InvoiceDTO { Date = new DateTime(2021, 3, 15), CustomerId = customerFirst.Id, Netto = 999.00, Brutto = 1078.92 },
+                new InvoiceDTO { Date = new DateTime(2022, 1, 15), CustomerId = customerFirst.Id, Netto = 1480.50, Brutto = 1598.94},
+                new InvoiceDTO { Date = new DateTime(2022, 1, 30), CustomerId = customerFirst.Id, Netto = 200.10, Brutto = 216.10},
+                new InvoiceDTO { Date = new DateTime(2022, 1, 30), CustomerId = customerArpanet.Id, Netto = 343.40, Brutto = 370.90},
+                new InvoiceDTO { Date = new DateTime(2022, 2, 28), CustomerId = customerArpanet.Id, Netto = 560.30, Brutto = 605.10}
             };
+
+            return invoice;
+        }
+
+        public List<InvoiceDTO> ChangeCustomerDTOs()
+        {
+            using var context = new SetupDB();
+            var customer = context.Customers.Where(c => c.Company == "Arpanet AG" || c.Company == "Isernet AG").First();
+            var customerRemove = context.Customers.Where(c => c.Company == "Nest AG").First();
+
+            customer.Company = "Isernet AG";
+            context.Remove(customerRemove);
+            context.SaveChanges();
+
+            var customerIsernet = context.Customers.Where(c => c.Company == "Isernet AG").First();
+            var invoice = new List<InvoiceDTO>
+            {
+                new InvoiceDTO { Date = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day), CustomerId = customerIsernet.Id, Netto = 1205.00, Brutto = 1301.40},
+                new InvoiceDTO { Date = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day), CustomerId = customerIsernet.Id, Netto = 340.00, Brutto = 367.20}
+            };
+
             return invoice;
         }
     }
