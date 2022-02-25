@@ -52,7 +52,18 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="KdNr" Binding="{Binding Path=Company}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=FirstName}"/>
-                <DataGridTextColumn Header="Datum" Binding="{Binding Path=LastName}"/>
+                <DataGridTemplateColumn Header="Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Date,StringFormat=MM/dd/yyyy hh:mm:ss}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path=Date}"></DatePicker>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Nr" Binding="{Binding Path=Address.Street}"/>
                 <DataGridTextColumn Header="Netto" Binding="{Binding Path=Address.StreetNo}"/>
                 <DataGridTextColumn Header="Brutto" Binding="{Binding Path=Address.Plz}"/>
