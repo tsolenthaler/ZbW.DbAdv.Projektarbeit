@@ -1,14 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using BusinessLayer;
 using ZbW.DbAdv.Projektarbeit;
 
 namespace PresentationLayer {
     /// <summary>
     /// Interaktionslogik für InvoiceWindow.xaml
     /// </summary>
-    public partial class InvoiceWindow : Window {
+    public partial class YearEndingWindow : Window {
 
         private readonly DataGridChef _dataGridChef;
 
@@ -19,19 +29,22 @@ namespace PresentationLayer {
         public readonly MainWindow mainWindow;
 
 
-        public InvoiceWindow(MainWindow mainWindow) {
+        public YearEndingWindow(MainWindow mainWindow)
+        {
             DataContext = this;
             this.mainWindow = mainWindow;
 
             InitializeComponent();
 
-            _dataGridChef = new DataGridChef(InvoiceDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
+            _dataGridChef = new DataGridChef(YearEndingDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
             Resources["readOnlyColor"] = _dataGridChef.ReadOnlyFieldColor;
 
-            try {
+            try
+            {
                 // BusinessManager.LoadAllInvoicesFromDb();
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
             }
         }
@@ -40,7 +53,7 @@ namespace PresentationLayer {
             mainWindow.Show();
         }
 
-        private void InvoiceDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e) {
+        private void YearEndingDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e) {
             _dataGridChef.BlockReadOnlyRows(e);
         }
     }
