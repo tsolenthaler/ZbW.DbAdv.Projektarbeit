@@ -43,6 +43,12 @@ namespace ZbW.DbAdv.Projektarbeit
             this.Hide();
         }
 
+        private void Cmd_InvoiceWindow_Click(object sender, RoutedEventArgs e) {
+            InvoiceWindow invoiceWindow = new InvoiceWindow(this);
+            invoiceWindow.Show();
+            this.Hide();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             
@@ -61,6 +67,12 @@ namespace ZbW.DbAdv.Projektarbeit
         {
             ArticleWindow articleWindow = new ArticleWindow(this);
             articleWindow.Show();
+            this.Hide();
+        }
+
+        private void Cmd_YearEndingWindow_Click(object sender, RoutedEventArgs e) {
+            YearEndingWindow yearEndingWindow = new YearEndingWindow(this);
+            yearEndingWindow.Show();
             this.Hide();
         }
     }
