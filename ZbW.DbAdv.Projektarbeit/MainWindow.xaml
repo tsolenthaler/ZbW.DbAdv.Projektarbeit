@@ -5,23 +5,113 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZbW.DbAdv.Projektarbeit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920" Loaded="Window_Loaded">
-    <Grid Width="1920" Height="1080">
-        <Button x:Name="Cmd_CustomerWindow" Content="Customer" Margin="543,275,543,0" VerticalAlignment="Top" Height="97" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" BorderThickness="0,0,0,0" Click="Cmd_CustomerWindow_Click" Grid.ColumnSpan="2">
+        Title="MainWindow" Height="700" Width="1000" Loaded="Window_Loaded">
+    <Grid Width="1000" Height="700">
+
+        <!--Grid-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <Button Grid.Row="1"
+                Grid.Column="1"
+                x:Name="Cmd_CustomerWindow" 
+                Content="Customer"
+                FontSize="20" 
+                FontWeight="DemiBold" 
+                Background="#FFD6D6D6"
+                BorderBrush="White"
+                Foreground="Black" 
+                BorderThickness="0,0,0,0" 
+                Click="Cmd_CustomerWindow_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="Cmd_OrdersWindow" Content="Orders" Margin="543,668,543,0" VerticalAlignment="Top" Height="98" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" Click="Cmd_OrdersWindow_Click" Grid.ColumnSpan="2">
+
+        <Button Grid.Row="3"
+                Grid.Column="1"
+                x:Name="Cmd_OrdersWindow" 
+                Content="Orders"
+                FontSize="20" 
+                FontWeight="DemiBold" 
+                Background="#FFD6D6D6"
+                BorderBrush="White" 
+                Foreground="Black" 
+                BorderThickness="0,0,0,0" 
+                Click="Cmd_OrdersWindow_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="Cmd_ArticleWindow" Content="Article" Margin="543,510,543,473" FontSize="20" FontWeight="DemiBold" Background="#FFD6D6D6" BorderBrush="White" Foreground="Black" Grid.ColumnSpan="2" Click="Cmd_ArticleWindow_Click">
+
+        <Button Grid.Row="5"
+                Grid.Column="1"
+                x:Name="Cmd_ArticleWindow" 
+                Content="Article"
+                FontSize="20"
+                FontWeight="DemiBold"
+                Background="#FFD6D6D6"
+                BorderBrush="White" 
+                Foreground="Black" 
+                BorderThickness="0,0,0,0" 
+                Click="Cmd_ArticleWindow_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button Grid.Row="7"
+                Grid.Column="1"
+                x:Name="Cmd_InvoiceWindow" 
+                Content="Invoice"
+                FontSize="20"
+                FontWeight="DemiBold"
+                Background="#FFD6D6D6"
+                BorderBrush="White" 
+                Foreground="Black" 
+                BorderThickness="0,0,0,0" 
+                Click="Cmd_InvoiceWindow_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button Grid.Row="9"
+                Grid.Column="1"
+                x:Name="Cmd_YearEndingWindow" 
+                Content="YearEnding"
+                FontSize="20"
+                FontWeight="DemiBold"
+                Background="#FFD6D6D6"
+                BorderBrush="White" 
+                Foreground="Black" 
+                BorderThickness="0,0,0,0" 
+                Click="Cmd_YearEndingWindow_Click">
             <Button.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="5"/>
