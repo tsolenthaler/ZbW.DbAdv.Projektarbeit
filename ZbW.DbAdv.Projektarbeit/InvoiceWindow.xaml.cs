@@ -36,7 +36,7 @@ namespace PresentationLayer {
             }
         }
 
-        private void Window_Closed(object sender, EventArgs e) {
+        private void Window_Closed(object sender, System.EventArgs e) {
             mainWindow.Show();
         }
 
