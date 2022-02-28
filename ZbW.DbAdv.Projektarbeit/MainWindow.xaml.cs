@@ -44,9 +44,9 @@ namespace ZbW.DbAdv.Projektarbeit
         }
 
         private void Cmd_InvoiceWindow_Click(object sender, RoutedEventArgs e) {
-            InvoiceWindow invoiceWindow = new InvoiceWindow(this);
-            invoiceWindow.Show();
-            this.Hide();
+            //InvoiceWindow invoiceWindow = new InvoiceWindow(this);
+            //invoiceWindow.Show();
+            //this.Hide();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -71,9 +71,9 @@ namespace ZbW.DbAdv.Projektarbeit
         }
 
         private void Cmd_YearEndingWindow_Click(object sender, RoutedEventArgs e) {
-            YearEndingWindow yearEndingWindow = new YearEndingWindow(this);
-            yearEndingWindow.Show();
-            this.Hide();
+            //YearEndingWindow yearEndingWindow = new YearEndingWindow(this);
+            //yearEndingWindow.Show();
+            //this.Hide();
         }
     }
 }

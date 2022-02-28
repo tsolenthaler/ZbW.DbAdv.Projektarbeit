@@ -408,5 +408,17 @@ namespace DataAccessLayer.Models
             context.SaveChanges();
         }
 
+        public ArticleGroupDTO[] GetAllArticleGroupsRecursiveCte()
+        {
+            string sqlCommand = "WITH CTE_ARTICLEGROUPS (Id, Name, ParentArticleGroupId ) AS (SELECT Id, Name, ParentArticleGroupId " +
+                "FROM dbo.ArticelGroups WHERE ParentArticleGroupId IS NULL UNION ALL " +
+                "SELECT pn.Id,pn.Name, pn.ParentArticleGroupId FROM dbo.ArticelGroups AS " +
+                "pn INNER JOIN CTE_ARTICLEGROUPS AS p1 ON p1.Id = pn.ParentArticleGroupId) SELECT	" +
+                "Id,Name, ParentArticleGroupId FROM CTE_ARTICLEGROUPS ORDER BY ParentArticleGroupId";
+            using var context = new SetupDB();
+            var articleGroups = context.ArticelGroups.FromSqlRaw(sqlCommand);
+            return articleGroups.ToArray();
+        }
+
     }
 }

@@ -575,6 +575,10 @@ namespace BusinessLayer
             }
         }
 
+        public void GetArticleGroupsRecursiveCte()
+        {
+            ArticleGroupDTO[] articleGroupDtos = DataAccessManager.GetAllArticleGroupsRecursiveCte();
+        }
 
     }
 }

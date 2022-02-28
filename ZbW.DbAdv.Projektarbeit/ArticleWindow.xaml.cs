@@ -342,5 +342,12 @@ namespace PresentationLayer
         {
             _articleGroupDataGridChef.BlockReadOnlyRows(e);
         }
+
+        private void CmdTreeView_Click(object sender, RoutedEventArgs e)
+        {
+            TreeViewWindow treeViewWindow = new TreeViewWindow(mainWindow, this);
+            treeViewWindow.Show();
+            this.Hide();
+        }
     }
 }
