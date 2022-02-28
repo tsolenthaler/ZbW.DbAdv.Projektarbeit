@@ -575,9 +575,17 @@ namespace BusinessLayer
             }
         }
 
-        public void GetArticleGroupsRecursiveCte()
+        public List<ArticleGroup> GetArticleGroupsRecursiveCte()
         {
             ArticleGroupDTO[] articleGroupDtos = DataAccessManager.GetAllArticleGroupsRecursiveCte();
+            var articleGroups = new List<ArticleGroup>();
+
+            foreach (ArticleGroupDTO articleGroupDto in articleGroupDtos)
+            {
+                articleGroups.Add(new ArticleGroup(articleGroupDto));
+            }
+
+            return articleGroups;
         }
 
     }
