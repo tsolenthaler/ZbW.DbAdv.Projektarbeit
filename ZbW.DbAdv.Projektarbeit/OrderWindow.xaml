@@ -104,7 +104,6 @@
                  FontStretch="Medium"
                  FontWeight="Bold"
                  TextAlignment="Center"
-                 Background="Ivory"
                  BorderThickness="0,0,0,0">
             Order
         </TextBox>
@@ -263,7 +262,6 @@
                  FontStretch="Medium"
                  FontWeight="Bold"
                  TextAlignment="Center"
-                 Background="Ivory"
                  BorderThickness="0,0,0,0">
             OrderPosition
         </TextBox>
