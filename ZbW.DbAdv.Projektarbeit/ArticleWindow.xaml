@@ -1,4 +1,5 @@
-﻿<Window x:Class="PresentationLayer.ArticleWindow"
+﻿
+<Window x:Class="PresentationLayer.ArticleWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,6 +8,9 @@
         d:DataContext="{d:DesignInstance local:ArticleWindow}"
         mc:Ignorable="d"
         Title="ArticleWindow" Height="700" Width="1000" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Window.Resources>
+        <CollectionViewSource x:Key="ArticleGroupDropDown" Source="{Binding ArticleGroups}"></CollectionViewSource>
+    </Window.Resources>
     <Grid>
 
         <!--Grid-->
@@ -140,35 +144,20 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name}"/>
-                <DataGridTextColumn Header="Article Group" Binding="{Binding Path=ArticleGroup}"/>
-                <DataGridTemplateColumn Header="Font" x:Name="FontColumn" Width="100" IsReadOnly="False">
+                <DataGridTemplateColumn Header="Article Group" x:Name="ArticleGroup" Width="100" IsReadOnly="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock x:Name="FontColumnTemplateTextBlock"
-       Text="{Binding FontT.Source}"
-       FontFamily="{Binding FontT}" />
+                            <TextBlock x:Name="ArticleGroupColumnTemplateTextBlock"
+                                       Text="{Binding ArticleGroup}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox x:Name="FontColumnEditTemplateComboBox"
-        ItemsSource="{x:Static Fonts.SystemFontFamilies}"
-        SelectedValue="{Binding FontT}">
-                                <ComboBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel />
-                                    </ItemsPanelTemplate>
-                                </ComboBox.ItemsPanel>
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Source}" FontFamily="{Binding}" />
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource ArticleGroupDropDown}}" SelectedValue="{Binding ArticleGroup}">
                             </ComboBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="Price" Binding="{Binding Path=Price}"/>
             </DataGrid.Columns>
         </DataGrid>
 

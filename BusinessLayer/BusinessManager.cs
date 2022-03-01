@@ -299,7 +299,9 @@ namespace BusinessLayer
                 if (itemList[index].Id == 0)
                 {
                     //not known by database yet
-                    DataAccessManager.NewArticle(itemList[index].ToArticleDto());
+                    var articleDto = itemList[index].ToArticleDto();
+                    articleDto.ArticleGroup = null;
+                    DataAccessManager.NewArticle(articleDto);
                 }
                 else
                 {

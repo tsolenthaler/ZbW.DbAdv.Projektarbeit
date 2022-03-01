@@ -317,7 +317,7 @@ namespace DataAccessLayer.Models
         public OrderDTO GetOrderByID(int id)
         {
             using var context = new SetupDB();
-            return context.Orders.Include(c => c.Customer).Where(c => c.Id == id).ToArray()[0];
+            return context.Orders.Include(c => c.Customer).Include(a => a.Customer.Address).Where(c => c.Id == id).ToArray()[0];
         }
 
         /// <summary>

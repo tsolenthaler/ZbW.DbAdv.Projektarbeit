@@ -31,6 +31,8 @@ namespace PresentationLayer
         private readonly List<int> _comboBoxColumnIndices = new List<int>() { };
         private readonly List<int> _datePickerColumnIndices = new List<int>() { };
 
+        public ObservableCollection<string> DropDownOptions = new ObservableCollection<string>() {"string1", "string2"};
+
         public ObservableCollection<Article> Articles { get => mainWindow.BusinessManager.Articles; }
         public ObservableCollection<ArticleGroup> ArticleGroups { get => mainWindow.BusinessManager.ArticleGroups; }
 
