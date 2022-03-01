@@ -16,10 +16,6 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -82,42 +78,5 @@
                 </Style>
             </Button.Resources>
         </Button>
-
-        <Button Grid.Row="7"
-                Grid.Column="1"
-                x:Name="Cmd_InvoiceWindow" 
-                Content="Invoice"
-                FontSize="20"
-                FontWeight="DemiBold"
-                Background="#FFD6D6D6"
-                BorderBrush="White" 
-                Foreground="Black" 
-                BorderThickness="0,0,0,0" 
-                Click="Cmd_InvoiceWindow_Click">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
-                </Style>
-            </Button.Resources>
-        </Button>
-
-        <Button Grid.Row="9"
-                Grid.Column="1"
-                x:Name="Cmd_YearEndingWindow" 
-                Content="YearEnding"
-                FontSize="20"
-                FontWeight="DemiBold"
-                Background="#FFD6D6D6"
-                BorderBrush="White" 
-                Foreground="Black" 
-                BorderThickness="0,0,0,0" 
-                Click="Cmd_YearEndingWindow_Click">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
-                </Style>
-            </Button.Resources>
-        </Button>
-
     </Grid>
 </Window>
