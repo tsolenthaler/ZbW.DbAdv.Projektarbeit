@@ -8,6 +8,11 @@
         Title="TreeViewWindow" Height="450" Width="800" Closed="Window_Closed" Loaded="Window_Loaded">
     <Grid>
         <TreeView Name="TreeViewArticleGroups">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True" />
+                </Style>
+            </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type TreeView}" ItemsSource="{Binding Items}">
                     <TextBlock Text="{Binding Title}" />

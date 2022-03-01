@@ -43,32 +43,66 @@ namespace PresentationLayer
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //Get all ArticleGroups recursive with their parent Id
             List<ArticleGroup> articleGroups = BusinessManager.GetArticleGroupsRecursiveCte();
-
-            TreeViewNode root = new TreeViewNode() { Title = "ArticleGroups", Id=0};
-
-            foreach (ArticleGroup articleGroup in articleGroups)
+            
+            //Convert to TreeViewNode
+            List<TreeViewNode> nodes = new List<TreeViewNode>();          
+            foreach(ArticleGroup articleGroup in articleGroups)
             {
-                if (articleGroup.ParentArticleGroupId == 0)
+                nodes.Add(new TreeViewNode() { Id = articleGroup.Id, Title = articleGroup.Name, ParentId=articleGroup.ParentArticleGroupId });
+            }
+
+            TreeViewNode root = new TreeViewNode() { Title = "ArticleGroups", Id = 0 };
+            int parentNode = 0;
+            for(int i=0; i < nodes.Count; i++)
+            {
+                //add to root node
+                if(nodes[i].ParentId == 0)
                 {
-                    root.Items.Add(new TreeViewNode(){Title = articleGroup.Name, Id = articleGroup.Id});
+                    root.Items.Add(nodes[i]);
                 }
                 else
                 {
-                    foreach (TreeViewNode node in root.Items)
+                    //As list is sorted, check if parentId has changed. If so, previous node must be new parent of following nodes
+                    if(nodes[i].ParentId != nodes[i - 1].ParentId)
                     {
-                        if (node.Id == articleGroup.ParentArticleGroupId)
-                        {
-                            node.Items.Add(new TreeViewNode() { Title = articleGroup.Name, Id = articleGroup.Id });
-                        }
-                        else
-                        {
-                            //MessageBox.Show("Parent ArticleGroup not found! Child Node: " + articleGroup.Name);
-                        }
+                        parentNode = nodes[i-1].ParentId;
                     }
+                    nodes[parentNode].Items.Add(nodes[i]);
                 }
+                
+                if(TreeViewArticleGroups.Items.Count == 0)
+                {
+                    TreeViewArticleGroups.Items.Add(root);
+                }     
             }
-            TreeViewArticleGroups.Items.Add(root);
+
+
+            
+
+            //foreach (ArticleGroup articleGroup in articleGroups)
+            //{
+            //    if (articleGroup.ParentArticleGroupId == 0)
+            //    {
+            //        root.Items.Add(new TreeViewNode(){Title = articleGroup.Name, Id = articleGroup.Id});
+            //    }
+            //    else
+            //    {
+            //        foreach (TreeViewNode node in root.Items)
+            //        {
+            //            if (node.Id == articleGroup.ParentArticleGroupId)
+            //            {
+            //                node.Items.Add(new TreeViewNode() { Title = articleGroup.Name, Id = articleGroup.Id });
+            //            }
+            //            else
+            //            {
+            //                //MessageBox.Show("Parent ArticleGroup not found! Child Node: " + articleGroup.Name);
+            //            }
+            //        }
+            //    }
+            //}
+            //TreeViewArticleGroups.Items.Add(root);
         }
 
     }

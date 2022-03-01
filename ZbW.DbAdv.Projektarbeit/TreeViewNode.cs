@@ -13,6 +13,8 @@ namespace PresentationLayer
 
         public int Id { get; set; }
 
+        public int ParentId { get; set; }
+
         public ObservableCollection<TreeViewNode> Items { get; set; }
 
         public TreeViewNode()
