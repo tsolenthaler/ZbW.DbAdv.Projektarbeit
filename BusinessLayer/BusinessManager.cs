@@ -412,7 +412,9 @@ namespace BusinessLayer
                 if (itemList[index].Id == 0)
                 {
                     //not known by database yet
-                    DataAccessManager.NewOrder(itemList[index].ToOrderDto());
+                    var newOrder = itemList[index].ToOrderDto();
+                    newOrder.Customer = null;
+                    DataAccessManager.NewOrder(newOrder);
                 }
                 else
                 {

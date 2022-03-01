@@ -21,6 +21,8 @@ namespace PresentationLayer {
         private readonly List<int> _comboBoxColumnIndices = new List<int>() { };
         private readonly List<int> _datePickerColumnIndices = new List<int>() { };
 
+        private bool modifyingOrderPositions = false;
+        private bool modifyingOrders = false;
         
 
         public ObservableCollection<Customer> Customers { get => mainWindow.BusinessManager.Customers; }
@@ -42,6 +44,8 @@ namespace PresentationLayer {
 
             try {
                 BusinessManager.LoadAllOrdersFromDb();
+                BusinessManager.LoadAllCustomersFromDb();
+                BusinessManager.LoadAllArticlesFromDb();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
@@ -54,6 +58,7 @@ namespace PresentationLayer {
             Cmd_Delete.IsEnabled = false;
             Cmd_SaveOrder.IsEnabled = true;
             Cmd_Cancel.IsEnabled = true;
+            modifyingOrders = true;
         }
 
         private void SetGUIToModifyModeOrderPos()
@@ -63,6 +68,7 @@ namespace PresentationLayer {
             Cmd_DeleteOrderPos.IsEnabled = false;
             Cmd_SaveOrderPos.IsEnabled = true;
             Cmd_CancelOrderPos.IsEnabled = true;
+            modifyingOrderPositions = true;
         }
 
         ///<summary>
@@ -74,6 +80,7 @@ namespace PresentationLayer {
             Cmd_Delete.IsEnabled = true;
             Cmd_SaveOrder.IsEnabled = false;
             Cmd_Cancel.IsEnabled = false;
+
         }
 
         private void SetGUIToViewModeOrderPos()
@@ -83,6 +90,7 @@ namespace PresentationLayer {
             Cmd_DeleteOrderPos.IsEnabled = true;
             Cmd_SaveOrderPos.IsEnabled = false;
             Cmd_CancelOrderPos.IsEnabled = false;
+            modifyingOrderPositions = false;
         }
 
         ///<summary>
@@ -103,6 +111,8 @@ namespace PresentationLayer {
             Cmd_DeleteOrderPos.IsEnabled = false;
             Cmd_SaveOrderPos.IsEnabled = false;
             Cmd_CancelOrderPos.IsEnabled = false;
+
+            modifyingOrderPositions = false;
         }
         
 
@@ -184,37 +194,13 @@ namespace PresentationLayer {
 
         private void Cmd_SearchOrders_Click(object sender, RoutedEventArgs e) {
 
-            if (Cmd_SearchOrders.Content == "Reset") {
-                SetGUIToViewMode();
-                try
-                {
-                    BusinessManager.LoadAllOrdersFromDb();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-                    return;
-                }
-
-                Cmd_SearchOrders.Content = "Search";
-                Txt_SearchOrders.Clear();
+            if (modifyingOrderPositions)
+            {
+                MessageBox.Show("Cannot filter Orders as there are still unsaved changes. Finish modification of Order Positions first");
             }
-            else {
-                string searchText = Txt_SearchOrders.Text;
-                if (searchText != String.Empty)
-                {
-                    SetGUIToFullViewMode();
-                    try
-                    {
-                        BusinessManager.FilterOrder(searchText);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-                        return;
-                    }
-                }
-                else
+            else
+            {
+                if (Cmd_SearchOrders.Content == "Reset")
                 {
                     SetGUIToViewMode();
                     try
@@ -226,10 +212,44 @@ namespace PresentationLayer {
                         MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                         return;
                     }
-                }
 
-                Cmd_SearchOrders.Content = "Reset";
+                    Cmd_SearchOrders.Content = "Search";
+                    Txt_SearchOrders.Clear();
+                }
+                else
+                {
+                    string searchText = Txt_SearchOrders.Text;
+                    if (searchText != String.Empty)
+                    {
+                        SetGUIToFullViewMode();
+                        try
+                        {
+                            BusinessManager.FilterOrder(searchText);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        SetGUIToViewMode();
+                        try
+                        {
+                            BusinessManager.LoadAllOrdersFromDb();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                            return;
+                        }
+                    }
+
+                    Cmd_SearchOrders.Content = "Reset";
+                }
             }
+
         }
 
 
@@ -245,16 +265,24 @@ namespace PresentationLayer {
 
 
         private void OrderDataGrid_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) {
-            try {
-                Order selectedOrder = (Order)OrderDataGrid.SelectedItem;
-                if (selectedOrder != null)
-                {
-                    BusinessManager.LoadOrderPositionsForSpecificOrder(selectedOrder.Id);
-                }
-            }
-            catch (Exception ex)
+            if (modifyingOrderPositions)
             {
+                MessageBox.Show("Cannot change displayed Order Positions as there are still unsaved changes. Finish modification of Order Positions first");
+            }
+            else
+            {
+                try
+                {
+                    Order selectedOrder = (Order)OrderDataGrid.SelectedItem;
+                    if (selectedOrder != null)
+                    {
+                        BusinessManager.LoadOrderPositionsForSpecificOrder(selectedOrder.Id);
+                    }
+                }
+                catch (Exception ex)
+                {
 
+                }
             }
         }
 

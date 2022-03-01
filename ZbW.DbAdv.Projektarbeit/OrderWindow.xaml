@@ -7,6 +7,9 @@
         d:DataContext="{d:DesignInstance local:OrderWindow}"
         mc:Ignorable="d"
         Title="OrderWindow" Height="700" Width="1000" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Window.Resources>
+        <CollectionViewSource x:Key="CustomerDropDown" Source="{Binding Customers}"></CollectionViewSource>
+    </Window.Resources>
     <Grid Width="1000" Height="700">
 
 
@@ -140,7 +143,21 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Customer"  Binding="{Binding Path=Customer}"/>
+                <!--<DataGridTextColumn Header="Customer"  Binding="{Binding Path=Customer}"/>-->
+                <DataGridTemplateColumn Header="Customer" x:Name="Customer" Width="100" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="CustomerColumnTemplateTextBlock"
+                                       Text="{Binding Customer}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource CustomerDropDown}}" SelectedValue="{Binding Customer}">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn Header="Date">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

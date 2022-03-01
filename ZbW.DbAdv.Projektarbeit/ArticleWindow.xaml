@@ -1,5 +1,4 @@
-﻿
-<Window x:Class="PresentationLayer.ArticleWindow"
+﻿<Window x:Class="PresentationLayer.ArticleWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -15,22 +14,38 @@
 
         <!--Grid-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>    <!--0-->
-            <RowDefinition Height="30"/>    <!--1-->
-            <RowDefinition Height="30"/>    <!--2-->
-            <RowDefinition Height="30"/>    <!--3-->
-            <RowDefinition Height="10"/>    <!--4-->
-            <RowDefinition Height="30"/>    <!--5-->
-            <RowDefinition Height="10"/>    <!--6-->
-            <RowDefinition Height="30"/>    <!--7-->
-            <RowDefinition Height="10"/>    <!--8-->
-            <RowDefinition Height="30"/>    <!--9-->
-            <RowDefinition Height="10"/>    <!--11-->
-            <RowDefinition Height="30"/>    <!--12-->
-            <RowDefinition Height="10"/>    <!--13-->
-            <RowDefinition Height="30"/>    <!--14-->
-            <RowDefinition/>                <!--15-->
-            <RowDefinition Height="50"/>    <!--16-->
+            <RowDefinition Height="50"/>
+            <!--0-->
+            <RowDefinition Height="30"/>
+            <!--1-->
+            <RowDefinition Height="30"/>
+            <!--2-->
+            <RowDefinition Height="30"/>
+            <!--3-->
+            <RowDefinition Height="10"/>
+            <!--4-->
+            <RowDefinition Height="30"/>
+            <!--5-->
+            <RowDefinition Height="10"/>
+            <!--6-->
+            <RowDefinition Height="30"/>
+            <!--7-->
+            <RowDefinition Height="10"/>
+            <!--8-->
+            <RowDefinition Height="30"/>
+            <!--9-->
+            <RowDefinition Height="10"/>
+            <!--11-->
+            <RowDefinition Height="30"/>
+            <!--12-->
+            <RowDefinition Height="10"/>
+            <!--13-->
+            <RowDefinition Height="30"/>
+            <!--14-->
+            <RowDefinition/>
+            <!--15-->
+            <RowDefinition Height="50"/>
+            <!--16-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -108,7 +123,7 @@
                  FontStretch="Medium"
                  FontWeight="Bold"
                  TextAlignment="Center"
-                 BorderThickness="0,0,0,0">
+                 BorderThickness="0,0,0,0" Background="Ivory">
             Article
         </TextBox>
 
@@ -370,7 +385,7 @@
                  FontStretch="Medium"
                  FontWeight="Bold"
                  TextAlignment="Center"
-                 BorderThickness="0,0,0,0">
+                 BorderThickness="0,0,0,0" Background="Ivory">
             ArticleGroup
         </TextBox>
 
@@ -404,7 +419,21 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Name"  Binding="{Binding Path= Name}"/>
-                <DataGridTextColumn Header="Parent Article Group"  Binding="{Binding Path= ParentArticleGroup}"/>
+                <!--<DataGridTextColumn Header="Parent Article Group"  Binding="{Binding Path= ParentArticleGroup}"/>-->
+                <DataGridTemplateColumn Header="Parent Article Group" x:Name="ParentArticleGroup" Width="100" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="ArticleGroupColumnTemplateTextBlock"
+                                       Text="{Binding ParentArticleGroup}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource ArticleGroupDropDown}}" SelectedValue="{Binding ParentArticleGroup}">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button Grid.Row="13" 

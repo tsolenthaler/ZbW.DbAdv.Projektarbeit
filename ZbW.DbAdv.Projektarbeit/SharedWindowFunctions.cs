@@ -9,7 +9,6 @@ namespace PresentationLayer
 {
     public class SharedWindowFunctions
     {
-        public ObservableCollection<string> ArticleGroupsDropDown = new ObservableCollection<string>()
-            {"string1", "string2"};
+
     }
 }
