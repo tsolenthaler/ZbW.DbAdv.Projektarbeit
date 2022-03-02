@@ -18,6 +18,7 @@ namespace BusinessLayer
         public ObservableCollection<ArticleGroup> ArticleGroups { get; set; } = new ObservableCollection<ArticleGroup>();
         public ObservableCollection<Order> Orders { get; set; } = new ObservableCollection<Order>();
         public ObservableCollection<OrderPosition> OrderPositions { get; set; } = new ObservableCollection<OrderPosition>();
+        public ObservableCollection<Invoice> Invoices { get; set; } = new ObservableCollection<Invoice>();
 
 
         public DataAccessManager DataAccessManager { get; set; } = new DataAccessManager();
@@ -536,6 +537,19 @@ namespace BusinessLayer
 
                 DataAccessManager.DeleteOrderPositionById(OrderPositions[index].Id);
                 LoadOrderPositionsForSpecificOrder(orderId);
+            }
+        }
+
+        public void LoadAllInvoicesFromDb()
+        {
+            var invoicesDTOs = DataAccessManager.GetAllInvoices();
+
+            Invoices.Clear();
+
+            foreach (var invoicesDTO in invoicesDTOs)
+            {
+                Invoice invoice = new Invoice(invoicesDTO);
+                Invoices.Add(invoice);
             }
         }
 

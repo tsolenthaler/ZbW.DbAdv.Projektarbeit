@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using ZbW.DbAdv.Projektarbeit;
+using BusinessLayer;
+using BusinessLayer.Models;
+using System.Collections.ObjectModel;
 
 namespace PresentationLayer {
     /// <summary>
@@ -16,8 +19,10 @@ namespace PresentationLayer {
         private readonly List<int> _comboBoxColumnIndices = new List<int>() { };
         private readonly List<int> _datePickerColumnIndices = new List<int>() { };
 
-        public readonly MainWindow mainWindow;
+        public ObservableCollection<Invoice> Invoices { get => mainWindow.BusinessManager.Invoices; }
 
+        public readonly MainWindow mainWindow;
+        public BusinessManager BusinessManager { get => mainWindow.BusinessManager; }
 
         public InvoiceWindow(MainWindow mainWindow) {
             DataContext = this;
@@ -29,7 +34,7 @@ namespace PresentationLayer {
             Resources["readOnlyColor"] = _dataGridChef.ReadOnlyFieldColor;
 
             try {
-                // BusinessManager.LoadAllInvoicesFromDb();
+                BusinessManager.LoadAllInvoicesFromDb();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);

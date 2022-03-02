@@ -11,7 +11,7 @@ namespace DataAccessLayer.Models
     {
         public enum Country
         {
-            Schwiez,
+            Schweiz,
             Lichtenstein,
             Deutschland,
             Österreich,

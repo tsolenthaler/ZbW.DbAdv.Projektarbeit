@@ -412,7 +412,16 @@ namespace DataAccessLayer.Models
         public InvoiceDTO[] GetAllInvoices()
         {
             using var context = new SetupDB();
-            return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
+            //return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
+            return context.Invoices.Include(c => c.Customer)
+                    /*.Select(c => new
+                    {
+                        Customer = c,
+                        PeriodStart = EF.Property<DateTime>(c, "PeriodStart"),
+                        PeriodEnd = EF.Property<DateTime>(c, "PeriodEnd")
+                    })*/
+                .Include(a => a.Customer.Address)
+                .ToArray();
         }
     }
 }
