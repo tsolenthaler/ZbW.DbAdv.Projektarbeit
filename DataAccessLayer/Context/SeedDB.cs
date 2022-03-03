@@ -232,9 +232,27 @@ namespace DataAccessLayer.Context
                 new OrderPositionDTO() { Quantity = 5, ArticleId = articles[1].Id, OrderId = orders[13].Id},
                 new OrderPositionDTO() { Quantity = 13, ArticleId = articles[2].Id, OrderId = orders[13].Id},
 
-                new OrderPositionDTO() { Quantity = 32, ArticleId = articles[0].Id, OrderId = orders[14].Id},
-                new OrderPositionDTO() { Quantity = 22, ArticleId = articles[1].Id, OrderId = orders[14].Id},
-                new OrderPositionDTO() { Quantity = 7, ArticleId = articles[2].Id, OrderId = orders[14].Id},
+                new OrderPositionDTO() { Quantity = 13, ArticleId = articles[0].Id, OrderId = orders[14].Id},
+                new OrderPositionDTO() { Quantity = 20, ArticleId = articles[1].Id, OrderId = orders[14].Id},
+                new OrderPositionDTO() { Quantity = 9, ArticleId = articles[2].Id, OrderId = orders[14].Id},
+
+                new OrderPositionDTO() { Quantity = 12, ArticleId = articles[0].Id, OrderId = orders[15].Id},
+                new OrderPositionDTO() { Quantity = 16, ArticleId = articles[1].Id, OrderId = orders[15].Id},
+
+                new OrderPositionDTO() { Quantity = 11, ArticleId = articles[0].Id, OrderId = orders[16].Id},
+                new OrderPositionDTO() { Quantity = 42, ArticleId = articles[1].Id, OrderId = orders[16].Id},
+                new OrderPositionDTO() { Quantity = 6, ArticleId = articles[2].Id, OrderId = orders[16].Id},
+
+                new OrderPositionDTO() { Quantity = 16, ArticleId = articles[0].Id, OrderId = orders[16].Id},
+                new OrderPositionDTO() { Quantity = 31, ArticleId = articles[1].Id, OrderId = orders[16].Id},
+                new OrderPositionDTO() { Quantity = 7, ArticleId = articles[2].Id, OrderId = orders[16].Id},
+
+                new OrderPositionDTO() { Quantity = 23, ArticleId = articles[1].Id, OrderId = orders[17].Id},
+                new OrderPositionDTO() { Quantity = 6, ArticleId = articles[2].Id, OrderId = orders[17].Id},
+
+                new OrderPositionDTO() { Quantity = 17, ArticleId = articles[0].Id, OrderId = orders[18].Id},
+                new OrderPositionDTO() { Quantity = 13, ArticleId = articles[1].Id, OrderId = orders[18].Id},
+                new OrderPositionDTO() { Quantity = 61, ArticleId = articles[2].Id, OrderId = orders[18].Id},
             };
             return orderposition;
         }
@@ -256,6 +274,8 @@ namespace DataAccessLayer.Context
                 new OrderDTO() { Date = new DateTime(2021, 2, 6), CustomerId = customers[0].Id},
                 new OrderDTO() { Date = new DateTime(2021, 6, 12), CustomerId = customers[0].Id},
                 new OrderDTO() { Date = new DateTime(2021, 9, 22), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2022, 1, 2), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2022, 3, 14), CustomerId = customers[0].Id},
               
                 /* --------- Customer 2 --------- */
                 new OrderDTO() { Date = new DateTime(2019, 3, 23), CustomerId = customers[1].Id},
@@ -264,7 +284,10 @@ namespace DataAccessLayer.Context
                 new OrderDTO() { Date = new DateTime(2020, 7, 17), CustomerId = customers[1].Id},
                 new OrderDTO() { Date = new DateTime(2021, 2, 25), CustomerId = customers[1].Id},
                 new OrderDTO() { Date = new DateTime(2021, 9, 11), CustomerId = customers[1].Id},
-                new OrderDTO() { Date = new DateTime(2021, 11, 29), CustomerId = customers[1].Id}
+                new OrderDTO() { Date = new DateTime(2021, 11, 29), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2022, 2, 17), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2022, 3, 3), CustomerId = customers[1].Id}
+
             };
             return order;
         }
