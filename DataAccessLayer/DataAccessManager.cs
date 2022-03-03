@@ -429,7 +429,7 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
             //return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
-            var invoices = context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).Where(x => x.Date >= startDate && x.Date <= endDate);
+            var invoices = context.Invoices.TemporalAsOf(DateTime.UtcNow).Include(c => c.Customer).Include(a => a.Customer.Address).Where(x => x.Date >= startDate && x.Date <= endDate);
             // public static IQueryable<Archive> BetweenDates(this IQueryable<Archive> archives,
 
             //var VaildFrom = context.Entry(customers).Property("VaildFrom").CurrentValue;
