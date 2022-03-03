@@ -299,11 +299,11 @@ namespace DataAccessLayer.Context
             var customerArpanet = context.Customers.Where(c => c.Company == "Arpanet AG" || c.Company == "Isernet AG").First();
             var invoice = new List<InvoiceDTO>
             {
-                new InvoiceDTO { Date = new DateTime(2021, 3, 15), CustomerId = customerFirst.Id, Netto = 999.00, Brutto = 1078.92 },
-                new InvoiceDTO { Date = new DateTime(2022, 1, 15), CustomerId = customerFirst.Id, Netto = 1480.50, Brutto = 1598.94},
-                new InvoiceDTO { Date = new DateTime(2022, 1, 30), CustomerId = customerFirst.Id, Netto = 200.10, Brutto = 216.10},
-                new InvoiceDTO { Date = new DateTime(2022, 1, 30), CustomerId = customerArpanet.Id, Netto = 343.40, Brutto = 370.90},
-                new InvoiceDTO { Date = new DateTime(2022, 2, 28), CustomerId = customerArpanet.Id, Netto = 560.30, Brutto = 605.10}
+                new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerFirst.Id, Netto = 999.00, Brutto = 1078.92 },
+                new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerFirst.Id, Netto = 1480.50, Brutto = 1598.94},
+                new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerFirst.Id, Netto = 200.10, Brutto = 216.10},
+                new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerArpanet.Id, Netto = 343.40, Brutto = 370.90},
+                new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerArpanet.Id, Netto = 560.30, Brutto = 605.10}
             };
 
             return invoice;
@@ -322,8 +322,8 @@ namespace DataAccessLayer.Context
             var customerIsernet = context.Customers.Where(c => c.Company == "Isernet AG").First();
             var invoice = new List<InvoiceDTO>
             {
-                new InvoiceDTO { Date = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day), CustomerId = customerIsernet.Id, Netto = 1205.00, Brutto = 1301.40},
-                new InvoiceDTO { Date = new DateTime(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day), CustomerId = customerIsernet.Id, Netto = 340.00, Brutto = 367.20}
+                new InvoiceDTO { Date = DateTime.Now, CustomerId = customerIsernet.Id, Netto = 1205.00, Brutto = 1301.40},
+                new InvoiceDTO { Date = DateTime.Now, CustomerId = customerIsernet.Id, Netto = 340.00, Brutto = 367.20}
             };
 
             return invoice;
