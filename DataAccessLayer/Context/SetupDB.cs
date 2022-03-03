@@ -75,28 +75,58 @@ namespace DataAccessLayer
             address.Property(x => x.Plz).IsRequired(false);
 
             var article = modelBuilder.Entity<ArticleDTO>();
+            article.ToTable("Articles", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             article.HasKey(x => x.Id);
             article.Property(x => x.Name).IsRequired(true);
             article.Property(x => x.Price).IsRequired(true);   
             article.HasOne(x => x.ArticleGroup); // Artikel hat eine Artikelgruppe
 
             var articlegroup = modelBuilder.Entity<ArticleGroupDTO>();
+            articlegroup.ToTable("ArticelGroups", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             articlegroup.HasKey(x => x.Id);
             articlegroup.Property(x => x.Name).IsRequired(true);
             articlegroup.Property(x => x.ParentArticleGroupId).IsRequired(true);
 
             var order = modelBuilder.Entity<OrderDTO>();
+            order.ToTable("Orders", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             order.HasKey(x => x.Id); // Auftragsnummer
             order.Property(x => x.Date).IsRequired(true);
             order.HasOne(x => x.Customer); // Eine Bestellung hat immer nur einen Kunden
 
             var orderposition = modelBuilder.Entity<OrderPositionDTO>();
+            orderposition.ToTable("OrderPositions", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             orderposition.HasKey(x => x.Id);
             orderposition.Property(x => x.Quantity).IsRequired(true);
             orderposition.HasOne(x => x.Order).WithMany().HasForeignKey(x => x.OrderId); // Eine Position hat nur eine Order
             orderposition.HasOne(x => x.Article).WithMany().HasForeignKey(x => x.ArticleId); // Eine Position hat nur einen Artikel
 
             var invoice = modelBuilder.Entity<InvoiceDTO>();
+            invoice.ToTable("Invoices", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             invoice.HasKey(x => x.Id); // Rechnungsnummer
             invoice.Property(x => x.Date).IsRequired(true);
             invoice.HasOne(x => x.Customer);

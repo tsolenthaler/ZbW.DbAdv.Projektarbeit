@@ -90,11 +90,32 @@ namespace DataAccessLayer.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<DateTime>("ValidFrom")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ValidTo");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleGroupId");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
+
+                    b.ToTable(tb => tb.IsTemporal(ttb =>
+                        {
+                            ttb
+                                .HasPeriodStart("ValidFrom")
+                                .HasColumnName("ValidFrom");
+                            ttb
+                                .HasPeriodEnd("ValidTo")
+                                .HasColumnName("ValidTo");
+                        }
+                    ));
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.ArticleGroupDTO", b =>
@@ -112,9 +133,30 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("ParentArticleGroupId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("ValidFrom")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ValidTo");
+
                     b.HasKey("Id");
 
-                    b.ToTable("ArticelGroups");
+                    b.ToTable("ArticelGroups", (string)null);
+
+                    b.ToTable(tb => tb.IsTemporal(ttb =>
+                        {
+                            ttb
+                                .HasPeriodStart("ValidFrom")
+                                .HasColumnName("ValidFrom");
+                            ttb
+                                .HasPeriodEnd("ValidTo")
+                                .HasColumnName("ValidTo");
+                        }
+                    ));
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.CustomerDTO", b =>
@@ -198,11 +240,32 @@ namespace DataAccessLayer.Migrations
                     b.Property<double>("Netto")
                         .HasColumnType("float");
 
+                    b.Property<DateTime>("ValidFrom")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ValidTo");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Invoices", (string)null);
+
+                    b.ToTable(tb => tb.IsTemporal(ttb =>
+                        {
+                            ttb
+                                .HasPeriodStart("ValidFrom")
+                                .HasColumnName("ValidFrom");
+                            ttb
+                                .HasPeriodEnd("ValidTo")
+                                .HasColumnName("ValidTo");
+                        }
+                    ));
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.OrderDTO", b =>
@@ -220,11 +283,32 @@ namespace DataAccessLayer.Migrations
                         .IsRequired()
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("ValidFrom")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ValidTo");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
+
+                    b.ToTable(tb => tb.IsTemporal(ttb =>
+                        {
+                            ttb
+                                .HasPeriodStart("ValidFrom")
+                                .HasColumnName("ValidFrom");
+                            ttb
+                                .HasPeriodEnd("ValidTo")
+                                .HasColumnName("ValidTo");
+                        }
+                    ));
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.OrderPositionDTO", b =>
@@ -244,13 +328,34 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("ValidFrom")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ValidFrom");
+
+                    b.Property<DateTime>("ValidTo")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("ValidTo");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderPositions");
+                    b.ToTable("OrderPositions", (string)null);
+
+                    b.ToTable(tb => tb.IsTemporal(ttb =>
+                        {
+                            ttb
+                                .HasPeriodStart("ValidFrom")
+                                .HasColumnName("ValidFrom");
+                            ttb
+                                .HasPeriodEnd("ValidTo")
+                                .HasColumnName("ValidTo");
+                        }
+                    ));
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.ArticleDTO", b =>

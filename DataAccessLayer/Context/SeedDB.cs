@@ -293,11 +293,6 @@ namespace DataAccessLayer.Context
             var customerRemove = context.Customers.Where(c => c.Company == "Nest AG").First();
 
             customer.Company = "Isernet AG";
-            customer.Address.Street = "Newstreet";
-            customer.Address.StreetNo = "984";
-            customer.Address.Plz = "45002";
-            customer.Address.City = "Berlin";
-            customer.Address.Countryname = AddressDTO.Country.Deutschland;
             context.Remove(customerRemove);
             context.SaveChanges();
 
