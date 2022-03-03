@@ -548,6 +548,21 @@ namespace BusinessLayer
 
             foreach (var invoicesDTO in invoicesDTOs)
             {
+                //Customer customer = new Customer(invoicesDTO);
+                Invoice invoice = new Invoice(invoicesDTO);
+                Invoices.Add(invoice);
+            }
+        }
+
+        public void LoadAllInvoicesFromDbbyDate(DateTime startDate, DateTime endDate)
+        {
+            var invoicesDTOs = DataAccessManager.GetAllInvoicesbyDate(startDate, endDate);
+
+            Invoices.Clear();
+
+            foreach (var invoicesDTO in invoicesDTOs)
+            {
+                //Customer customer = new Customer(invoicesDTO);
                 Invoice invoice = new Invoice(invoicesDTO);
                 Invoices.Add(invoice);
             }

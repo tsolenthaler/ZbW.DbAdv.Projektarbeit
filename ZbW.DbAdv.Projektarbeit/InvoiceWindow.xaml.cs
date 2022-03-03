@@ -11,7 +11,8 @@ namespace PresentationLayer {
     /// <summary>
     /// Interaktionslogik für InvoiceWindow.xaml
     /// </summary>
-    public partial class InvoiceWindow : Window {
+    public partial class InvoiceWindow : Window
+    {
 
         private readonly DataGridChef _dataGridChef;
 
@@ -24,7 +25,8 @@ namespace PresentationLayer {
         public readonly MainWindow mainWindow;
         public BusinessManager BusinessManager { get => mainWindow.BusinessManager; }
 
-        public InvoiceWindow(MainWindow mainWindow) {
+        public InvoiceWindow(MainWindow mainWindow)
+        {
             DataContext = this;
             this.mainWindow = mainWindow;
 
@@ -33,20 +35,46 @@ namespace PresentationLayer {
             _dataGridChef = new DataGridChef(InvoiceDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
             Resources["readOnlyColor"] = _dataGridChef.ReadOnlyFieldColor;
 
-            try {
+            var startDate = DateTime.Now.AddMonths(1);
+            var endDate = DateTime.Now;
+
+            BusinessManager.LoadAllInvoicesFromDbbyDate(startDate, endDate);
+            /*try {
                 BusinessManager.LoadAllInvoicesFromDb();
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-            }
+            }*/
         }
 
-        private void Window_Closed(object sender, System.EventArgs e) {
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
             mainWindow.Show();
         }
 
-        private void InvoiceDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e) {
+        private void InvoiceDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
             _dataGridChef.BlockReadOnlyRows(e);
+        }
+
+        private void Cmd_SelectedDate(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime? startDate = DatePickerStartDate.SelectedDate;
+            DateTime? endDate = DatePickerEndDate.SelectedDate;
+
+            if (startDate != null && endDate != null)
+            {
+                BusinessManager.LoadAllInvoicesFromDbbyDate((DateTime)startDate, (DateTime)endDate);
+                /*try
+                {
+                    BusinessManager.LoadAllInvoicesFromDbbyDate((DateTime)searchDate);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                    return;
+                }*/
+            }
         }
     }
 }

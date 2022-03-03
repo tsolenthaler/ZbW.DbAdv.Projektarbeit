@@ -44,7 +44,12 @@ namespace DataAccessLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var customer = modelBuilder.Entity<CustomerDTO>();
-            customer.ToTable("Customer", b => b.IsTemporal());
+            customer.ToTable("Customer", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             customer.HasKey(x => x.Id); // Id hinterlegen
             customer.Property(x => x.Company).IsRequired(true);
             customer.Property(x => x.Firstname).IsRequired(true); //Pflichtfeld
@@ -57,7 +62,12 @@ namespace DataAccessLayer
                      //.WithMany(x => x.Customer); // Eine Adresse kann mehrere Kunden haben.
 
             var address = modelBuilder.Entity<AddressDTO>();
-            address.ToTable("Addresses", b => b.IsTemporal());
+            address.ToTable("Addresses", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             address.HasKey(x => x.Id);
             address.Property(x => x.Street).IsRequired(true);
             address.Property(x => x.StreetNo).IsRequired(false);

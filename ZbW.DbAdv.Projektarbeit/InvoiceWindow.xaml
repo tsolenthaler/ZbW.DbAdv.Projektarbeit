@@ -68,16 +68,19 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                 </DataGridTemplateColumn>
-                
+
                 <DataGridTextColumn Header="Invocie No" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="Netto" Binding="{Binding Path=Netto}"/>
                 <DataGridTextColumn Header="Brutto" Binding="{Binding Path=Brutto}"/>
             </DataGrid.Columns>
         </DataGrid>
-        
+
         <DatePicker Grid.Column="1" 
                     Grid.Row="1"
-                    HorizontalAlignment="Left"/>
+                    HorizontalAlignment="Left" Name="DatePickerStartDate" SelectedDateChanged="Cmd_SelectedDate"/>
+        <DatePicker Grid.Column="1" 
+                    Grid.Row="1"
+                    HorizontalAlignment="Left" Name="DatePickerEndDate" SelectedDateChanged="Cmd_SelectedDate" Margin="163,0,0,0"/>
 
     </Grid>
 </Window>

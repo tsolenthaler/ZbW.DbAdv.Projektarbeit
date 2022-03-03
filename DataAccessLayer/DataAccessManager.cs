@@ -413,15 +413,28 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
             //return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
-            return context.Invoices.Include(c => c.Customer)
-                    /*.Select(c => new
-                    {
-                        Customer = c,
-                        PeriodStart = EF.Property<DateTime>(c, "PeriodStart"),
-                        PeriodEnd = EF.Property<DateTime>(c, "PeriodEnd")
-                    })*/
-                .Include(a => a.Customer.Address)
-                .ToArray();
+            var invoices = context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address);
+            var customers = context.Customers.Include(a => a.Address);
+            var customersEntry = context.Entry(customers);
+
+            //var VaildFrom = context.Entry(customers).Property("VaildFrom").CurrentValue;
+            //var VaildTo = context.Entry(customers).Property("VaildTo").CurrentValue;
+            return invoices.ToArray();
+        }
+
+        /// <summary>
+        ///  READ all Invoices by Date
+        /// </summary>
+        public InvoiceDTO[] GetAllInvoicesbyDate(DateTime startDate, DateTime endDate)
+        {
+            using var context = new SetupDB();
+            //return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
+            var invoices = context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).Where(x => x.Date >= startDate && x.Date <= endDate);
+            // public static IQueryable<Archive> BetweenDates(this IQueryable<Archive> archives,
+
+            //var VaildFrom = context.Entry(customers).Property("VaildFrom").CurrentValue;
+            //var VaildTo = context.Entry(customers).Property("VaildTo").CurrentValue;
+            return invoices.ToArray();
         }
     }
 }
