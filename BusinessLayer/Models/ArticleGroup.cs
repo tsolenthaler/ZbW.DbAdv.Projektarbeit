@@ -19,8 +19,12 @@ namespace BusinessLayer.Models
         private ArticleGroup parentArticleGroup;
         public ArticleGroup ParentArticleGroup
         {
-            get => GetParentArticleGroup(new DataAccessManager()); 
-            set => Set(ref parentArticleGroup, value);
+            get => GetParentArticleGroup(new DataAccessManager());
+            set
+            {
+                Set(ref parentArticleGroup, value);
+                parentArticleGroupId = value.Id;
+            }
         }
 
         private int parentArticleGroupId;

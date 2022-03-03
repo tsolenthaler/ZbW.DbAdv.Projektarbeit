@@ -328,6 +328,7 @@ namespace PresentationLayer
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             SetGUIToViewMode();
+            SetGUIToViewModeArticleGroup();
         }
 
         private void Window_Closed(object sender, EventArgs e)
