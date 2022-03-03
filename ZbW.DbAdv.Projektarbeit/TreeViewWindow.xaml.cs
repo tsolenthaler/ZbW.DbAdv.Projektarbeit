@@ -64,12 +64,13 @@ namespace PresentationLayer
                 }
                 else
                 {
-                    //As list is sorted, check if parentId has changed. If so, previous node must be new parent of following nodes
-                    if(nodes[i].ParentId != nodes[i - 1].ParentId)
+                    foreach(TreeViewNode node in nodes)
                     {
-                        parentNode = nodes[i-1].ParentId;
+                        if(nodes[i].ParentId == node.Id)
+                        {
+                            node.Items.Add(nodes[i]);
+                        }
                     }
-                    nodes[parentNode].Items.Add(nodes[i]);
                 }
                 
                 if(TreeViewArticleGroups.Items.Count == 0)
@@ -79,30 +80,6 @@ namespace PresentationLayer
             }
 
 
-            
-
-            //foreach (ArticleGroup articleGroup in articleGroups)
-            //{
-            //    if (articleGroup.ParentArticleGroupId == 0)
-            //    {
-            //        root.Items.Add(new TreeViewNode(){Title = articleGroup.Name, Id = articleGroup.Id});
-            //    }
-            //    else
-            //    {
-            //        foreach (TreeViewNode node in root.Items)
-            //        {
-            //            if (node.Id == articleGroup.ParentArticleGroupId)
-            //            {
-            //                node.Items.Add(new TreeViewNode() { Title = articleGroup.Name, Id = articleGroup.Id });
-            //            }
-            //            else
-            //            {
-            //                //MessageBox.Show("Parent ArticleGroup not found! Child Node: " + articleGroup.Name);
-            //            }
-            //        }
-            //    }
-            //}
-            //TreeViewArticleGroups.Items.Add(root);
         }
 
     }
