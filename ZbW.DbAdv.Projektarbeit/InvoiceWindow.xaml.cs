@@ -35,8 +35,11 @@ namespace PresentationLayer {
             _dataGridChef = new DataGridChef(InvoiceDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
             Resources["readOnlyColor"] = _dataGridChef.ReadOnlyFieldColor;
 
-            var startDate = DateTime.Now.AddMonths(1);
+            var startDate = DateTime.Now.AddMonths(-1);
             var endDate = DateTime.Now;
+
+            DatePickerStartDate.SelectedDate = startDate;
+            DatePickerEndDate.SelectedDate = endDate;
 
             BusinessManager.LoadAllInvoicesFromDbbyDate(startDate, endDate);
             /*try {
