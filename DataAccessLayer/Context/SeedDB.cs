@@ -23,7 +23,8 @@ namespace DataAccessLayer.Context
                         Street = "Rorschacherstrasse",
                         StreetNo = "11",
                         Plz = "9000",
-                        City = "St.Gallen"
+                        City = "St.Gallen",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
                 new CustomerDTO{
@@ -35,7 +36,8 @@ namespace DataAccessLayer.Context
                         Street = "Bahnhofstrasse",
                         StreetNo = "5",
                         Plz = "8000",
-                        City = "Zürich"
+                        City = "Zürich",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
                 new CustomerDTO{
@@ -47,7 +49,8 @@ namespace DataAccessLayer.Context
                         Street = "Wiesenstrasse",
                         StreetNo = "21",
                         Plz = "3000",
-                        City = "Bern"
+                        City = "Bern",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
                 new CustomerDTO{
@@ -59,7 +62,8 @@ namespace DataAccessLayer.Context
                         Street = "Hauptstrasse",
                         StreetNo = "1",
                         Plz = "9500",
-                        City = "Wil"
+                        City = "Wil",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
                 new CustomerDTO{
@@ -71,7 +75,8 @@ namespace DataAccessLayer.Context
                         Street = "Aprastrasse",
                         StreetNo = "15",
                         Plz = "8000",
-                        City = "Zürich"
+                        City = "Zürich",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
                 new CustomerDTO{
@@ -83,7 +88,8 @@ namespace DataAccessLayer.Context
                         Street = "Richterstrasse",
                         StreetNo = "258",
                         Plz = "8000",
-                        City = "Zürich"
+                        City = "Zürich",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
                 new CustomerDTO{
@@ -95,7 +101,8 @@ namespace DataAccessLayer.Context
                         Street = "Neststrasse",
                         StreetNo = "43",
                         Plz = "8000",
-                        City = "Zürich"
+                        City = "Zürich",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
             };
@@ -286,6 +293,11 @@ namespace DataAccessLayer.Context
             var customerRemove = context.Customers.Where(c => c.Company == "Nest AG").First();
 
             customer.Company = "Isernet AG";
+            customer.Address.Street = "Newstreet";
+            customer.Address.StreetNo = "984";
+            customer.Address.Plz = "45002";
+            customer.Address.City = "Berlin";
+            customer.Address.Countryname = AddressDTO.Country.Deutschland;
             context.Remove(customerRemove);
             context.SaveChanges();
 
