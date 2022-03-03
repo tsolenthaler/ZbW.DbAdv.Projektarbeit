@@ -469,7 +469,7 @@ namespace BusinessLayer
                 else
                 {
                     //none of the fields had the searchText -> remove from list
-                    Articles.RemoveAt(i);
+                    Orders.RemoveAt(i);
                 }
             }
         }

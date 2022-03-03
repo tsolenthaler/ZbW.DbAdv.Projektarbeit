@@ -229,6 +229,7 @@ namespace PresentationLayer {
                         SetGUIToFullViewMode();
                         try
                         {
+                            BusinessManager.OrderPositions.Clear();
                             BusinessManager.FilterOrder(searchText);
                         }
                         catch (Exception ex)
