@@ -493,7 +493,7 @@ namespace BusinessLayer
             OrderPositions.Add(new OrderPosition() { ReadOnly = false });
         }
 
-        public void SaveModifiedOrderPos(ObservableCollection<OrderPosition> itemList) {
+        public void SaveModifiedOrderPos(ObservableCollection<OrderPosition> itemList, int selectedOrderId) {
             int index = GetIndexOfModifiableDataGridChild(itemList);
 
             if (index == -1) {
@@ -503,7 +503,10 @@ namespace BusinessLayer
             else {
                 if (itemList[index].Id == 0) {
                     //not known by database yet
-                    DataAccessManager.NewOrderPosition(itemList[index].ToOrderPositionDto());
+                    var orderPosition = itemList[index].ToOrderPositionDto();
+                    orderPosition.Article = null;
+                    orderPosition.OrderId = selectedOrderId;
+                    DataAccessManager.NewOrderPosition(orderPosition);
                 }
                 else {
                     //known by database

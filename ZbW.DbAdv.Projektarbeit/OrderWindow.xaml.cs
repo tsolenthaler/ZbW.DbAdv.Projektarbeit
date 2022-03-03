@@ -23,11 +23,15 @@ namespace PresentationLayer {
 
         private bool modifyingOrderPositions = false;
         private bool modifyingOrders = false;
+
+        private int selectedOrderId;
         
 
         public ObservableCollection<Customer> Customers { get => mainWindow.BusinessManager.Customers; }
 
         public ObservableCollection<Order> Orders { get => mainWindow.BusinessManager.Orders; }
+
+        public ObservableCollection<Article> Articles { get => mainWindow.BusinessManager.Articles;}
         public ObservableCollection<OrderPosition> OrderPositions { get => mainWindow.BusinessManager.OrderPositions; }
 
         public BusinessManager BusinessManager { get => mainWindow.BusinessManager; }
@@ -118,6 +122,7 @@ namespace PresentationLayer {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             SetGUIToViewMode();
+            SetGUIToViewModeOrderPos();
         }
 
         private void Window_Closed(object sender, System.EventArgs e) {
@@ -277,6 +282,7 @@ namespace PresentationLayer {
                     if (selectedOrder != null)
                     {
                         BusinessManager.LoadOrderPositionsForSpecificOrder(selectedOrder.Id);
+                        selectedOrderId = selectedOrder.Id;
                     }
                 }
                 catch (Exception ex)
@@ -301,20 +307,21 @@ namespace PresentationLayer {
 
         private void Cmd_SaveOrderPos_Click(object sender, RoutedEventArgs e) {
             try {
-                BusinessManager.SaveModifiedOrderPos(OrderPositions);
+                BusinessManager.SaveModifiedOrderPos(OrderPositions, selectedOrderId);
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
             }
             SetGUIToViewModeOrderPos();
+            BusinessManager.LoadOrderPositionsForSpecificOrder(selectedOrderId);
         }
 
         private void Cmd_ModifyOrderPos_Click(object sender, RoutedEventArgs e) {
-            int index = OrderDataGrid.SelectedIndex;
+            int index = OrderPositionDataGrid.SelectedIndex;
 
             try {
-                BusinessManager.ModifySelected(Orders, index);
+                BusinessManager.ModifySelected(OrderPositions, index);
             }
             catch (Exception ex) {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
