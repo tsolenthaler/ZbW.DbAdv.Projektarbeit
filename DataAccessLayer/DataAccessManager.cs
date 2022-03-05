@@ -130,6 +130,21 @@ namespace DataAccessLayer.Models
         }
 
         /// <summary>
+        ///  READ Customer by ID and ValidDate
+        /// </summary>
+        public CustomerDTO GetCustomerByIdValidDate(int id, DateTime date)
+        {
+            using var context = new SetupDB();
+            //var customer = context.Customers.Find(id);
+            var customer = context.Customers
+                .TemporalAsOf(date)
+                .Include(c => c.Address)
+                .Where(c => c.Id == id).ToArray();
+
+            return customer[0];
+        }
+
+        /// <summary>
         ///  UPDATE Customer without Address!! --> need Testing
         /// </summary>
         public void UpdateCustomer(CustomerDTO customerDto)
@@ -194,6 +209,16 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
             var address = context.Addresses.Find(id);
+            return address;
+        }
+
+        /// <summary>
+        ///  READ Address by ID and Valid Date
+        /// </summary>
+        public AddressDTO GetAddressByIdValidDate(int id, DateTime date)
+        {
+            using var context = new SetupDB();
+            var address = context.Addresses.TemporalAsOf(date).Single(address => address.Id == id);
             return address;
         }
 
