@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,8 @@ namespace DataAccessLayer.Models
     public class DataAccessManager
     {
 
+        
+
         public void MigrateDatabase()
         {
             using var context = new SetupDB();
@@ -21,6 +24,9 @@ namespace DataAccessLayer.Models
 
             // ADD INITIAL DATA 
             SeedingDatabase();
+
+            //Testing only
+            GetYearEndingData();
         }
 
         /// <summary>
@@ -68,6 +74,36 @@ namespace DataAccessLayer.Models
                 context.SaveChanges();
             }
         }
+
+        public List<YearEndStatisticDTO> GetYearEndingData()
+        {
+            var yearEndStatistics = new List<YearEndStatisticDTO>();
+
+            using var context = new SetupDB();
+            using var command = context.Database.GetDbConnection().CreateCommand();
+            command.CommandText = SqlRawCommands.YearEndingRequest;
+            context.Database.OpenConnection();
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                YearEndStatisticDTO yearEndStatisticDto = new YearEndStatisticDTO()
+                {
+                    Year = Convert.ToString(reader[0]),
+                    Quarter = Convert.ToString(reader[1]),
+                    TotalOrdersPerQuarter = Convert.ToString(reader[2]),
+                    AvgArticleQtySumPerOrderPerQuarter = Convert.ToString(reader[3]),
+                    AvgSumSalesPerCustomerPerQuarter = Convert.ToString(reader[4]),
+                    SalesTotalPerQuarter = Convert.ToString(reader[5]),
+                    TotalArticlesInTheSystem = Convert.ToString(reader[6]),
+                };
+
+                yearEndStatistics.Add(yearEndStatisticDto);
+            }
+
+            return yearEndStatistics;
+        }
+
+
 
         /// <summary>
         ///  READ all Customers
