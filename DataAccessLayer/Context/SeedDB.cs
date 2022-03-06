@@ -157,8 +157,7 @@ namespace DataAccessLayer.Context
             return articleGroup;
         }
 
-        public List<ArticleDTO> GenerateArticleDTOs()
-        {
+        public List<ArticleDTO> GenerateArticleDTOs() {
             using var context = new SetupDB();
             var articleGroup = context.ArticelGroups.Where(c => c.Name == "T-Shirts").First();
 
@@ -169,6 +168,26 @@ namespace DataAccessLayer.Context
                 new ArticleDTO() { Name = "Sterne T-Shirt", Price = (decimal)9.50, ArticleGroupId = articleGroup.Id }
             };
             return article;
+
+
+            //using var context = new SetupDB();
+            //var seedArticle = new List<ArticleDTO>();
+
+            //using var command = context.Database.GetDbConnection().CreateCommand();
+            //command.CommandText = SqlRawCommands.SeedArticle;
+            //context.Database.OpenConnection();
+
+            //using var reader = command.ExecuteReader();
+            //while (reader.Read()) {
+            //    ArticleDTO articleDto = new ArticleDTO() {
+            //        Name = Convert.ToString(reader[0]),
+            //        Price = Convert.ToDecimal(reader[1]),
+            //        ArticleGroupId = Convert.ToInt32(reader[2]),
+            //    };
+
+            //    seedArticle.Add(articleDto);
+            //}
+            //return seedArticle;
         }
 
         public List<OrderPositionDTO> GenerateOrderPositionDTOs()
