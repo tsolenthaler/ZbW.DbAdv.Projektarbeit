@@ -378,7 +378,7 @@ namespace DataAccessLayer.Models
         public OrderPositionDTO GetOrderPositionByID(int id)
         {
             using var context = new SetupDB();
-            return context.OrderPositions.Include(c => c.Article).Where(x => x.Id == id).ToArray()[0];
+            return context.OrderPositions.Include(c => c.Article).Where(x => x.Id == id).Include(g => g.Article.ArticleGroup).ToArray()[0];
         }
 
         /// <summary>
