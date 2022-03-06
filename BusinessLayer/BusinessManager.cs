@@ -18,7 +18,7 @@ namespace BusinessLayer
         public ObservableCollection<ArticleGroup> ArticleGroups { get; set; } = new ObservableCollection<ArticleGroup>();
         public ObservableCollection<Order> Orders { get; set; } = new ObservableCollection<Order>();
         public ObservableCollection<OrderPosition> OrderPositions { get; set; } = new ObservableCollection<OrderPosition>();
-        public ObservableCollection<Invoice> Invoices { get; set; } = new ObservableCollection<Invoice>();
+        public ObservableCollection<InvoiceReport> InvoiceReports { get; set; } = new ObservableCollection<InvoiceReport>();
 
         public ObservableCollection<YearEndData> YearEndDataCollection { get; set; } = new ObservableCollection<YearEndData>();
 
@@ -541,31 +541,16 @@ namespace BusinessLayer
             }
         }
 
-        public void LoadAllInvoicesFromDb()
-        {
-            var invoicesDTOs = DataAccessManager.GetAllInvoices();
-
-            Invoices.Clear();
-
-            foreach (var invoicesDTO in invoicesDTOs)
-            {
-                //Customer customer = new Customer(invoicesDTO);
-                Invoice invoice = new Invoice(invoicesDTO);
-                Invoices.Add(invoice);
-            }
-        }
-
         public void LoadAllInvoicesFromDbbyDate(DateTime startDate, DateTime endDate)
         {
-            var invoicesDTOs = DataAccessManager.GetAllInvoicesbyDate(startDate, endDate);
+            var invoiceReportDTOs = DataAccessManager.GetAllInvoicesbyDate(startDate, endDate);
 
-            Invoices.Clear();
+            InvoiceReports.Clear();
 
-            foreach (var invoicesDTO in invoicesDTOs)
+            foreach (var invoicesReportDTO in invoiceReportDTOs)
             {
-                //Customer customer = new Customer(invoicesDTO);
-                Invoice invoice = new Invoice(invoicesDTO);
-                Invoices.Add(invoice);
+                InvoiceReport invoiceReport = new InvoiceReport(invoicesReportDTO);
+                InvoiceReports.Add(invoiceReport);
             }
         }
 

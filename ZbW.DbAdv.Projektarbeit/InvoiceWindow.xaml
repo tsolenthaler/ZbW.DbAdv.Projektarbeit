@@ -42,20 +42,20 @@
                   Grid.Column="1" 
                   x:Name="InvoiceDataGrid" 
                   BorderThickness="0,0,0,0" 
-                  ItemsSource="{Binding Path=Invoices}" 
+                  ItemsSource="{Binding Path=InvoiceReports}" 
                   AutoGenerateColumns="False" 
                   BeginningEdit="InvoiceDataGrid_BeginningEdit"
                   CanUserSortColumns="False"
                   CanUserAddRows="False" 
                   SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="KdNr" Binding="{Binding Path=Customer.Id}"/>
-                <DataGridTextColumn Header="Company" Binding="{Binding Path=Customer.Company}"/>
-                <DataGridTextColumn Header="Street" Binding="{Binding Path=Customer.Address.Street}"/>
-                <DataGridTextColumn Header="Street No" Binding="{Binding Path=Customer.Address.StreetNo}"/>
-                <DataGridTextColumn Header="PLZ" Binding="{Binding Path=Customer.Address.Plz}"/>
-                <DataGridTextColumn Header="City" Binding="{Binding Path=Customer.Address.City}"/>
-                <DataGridTextColumn Header="Country" Binding="{Binding Path=Customer.Address.Countryname}"/>
+                <DataGridTextColumn Header="KdNr" Binding="{Binding Path=CustomerId}"/>
+                <DataGridTextColumn Header="Company" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Street" Binding="{Binding Path=Street}"/>
+                <DataGridTextColumn Header="Street No" Binding="{Binding Path=StreetNo}"/>
+                <DataGridTextColumn Header="PLZ" Binding="{Binding Path=Plz}"/>
+                <DataGridTextColumn Header="City" Binding="{Binding Path=City}"/>
+                <DataGridTextColumn Header="Country" Binding="{Binding Path=Countryname}"/>
                 <DataGridTemplateColumn Header="Invocie Date">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

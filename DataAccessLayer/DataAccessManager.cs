@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Context;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
@@ -483,16 +484,48 @@ namespace DataAccessLayer.Models
         /// <summary>
         ///  READ all Invoices by Date
         /// </summary>
-        public InvoiceDTO[] GetAllInvoicesbyDate(DateTime startDate, DateTime endDate)
+        /*public InvoiceDTO[] GetAllInvoicesbyDate(DateTime startDate, DateTime endDate)
         {
             using var context = new SetupDB();
             //return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
-            var invoices = context.Invoices.TemporalAsOf(DateTime.UtcNow).Include(c => c.Customer).Include(a => a.Customer.Address).Where(x => x.Date >= startDate && x.Date <= endDate);
-            // public static IQueryable<Archive> BetweenDates(this IQueryable<Archive> archives,
-
-            //var VaildFrom = context.Entry(customers).Property("VaildFrom").CurrentValue;
-            //var VaildTo = context.Entry(customers).Property("VaildTo").CurrentValue;
+            //var invoices = context.Invoices.TemporalAsOf(DateTime.UtcNow).Include(c => c.Customer).Include(a => a.Customer.Address).Where(x => x.Date >= startDate && x.Date <= endDate);
+            var invoices = context.Invoices
+                .FromSqlRaw("SELECT [CustomerId], c.Company as Name, a.Street as Street, a.StreetNo as StreetNo, a.Plz as Plz, a.City as City, a.Countryname as Countryname,i.[Id],i.[Date] As Date,[Netto],[Brutto], i.ValidFrom as ValidFrom, i.ValidTo as ValidTo FROM [AuftragsverwaltungHistory].[dbo].[Invoices] i INNER JOIN dbo.Customer FOR SYSTEM_TIME ALL as c on i.customerid = c.id INNER JOIN dbo.Addresses FOR SYSTEM_TIME ALL as a on c.addressid = a.id WHERE i.Date BETWEEN '2021-01-01' and '2022-03-06' AND c.ValidFrom <= i.Date and c.ValidTo >= i.Date AND a.ValidFrom <= i.Date and a.ValidTo >= i.Date ORDER BY i.Date");
             return invoices.ToArray();
+        }*/
+
+        public List<InvoiceReportDTO> GetAllInvoicesbyDate(DateTime startDate, DateTime endDate)
+        {
+            var invoiceReports = new List<InvoiceReportDTO>();
+
+            String startDate2 = new DateTime(startDate.Year, startDate.Month, startDate.Day).ToString();
+            String endDate2 = new DateTime(endDate.Year, endDate.Month, endDate.Day).ToString();
+
+            using var context = new SetupDB();
+            using var command = context.Database.GetDbConnection().CreateCommand();
+            command.CommandText = $"SELECT [CustomerId], c.Company as Name, a.Street as Street, a.StreetNo as StreetNo, a.Plz as Plz, a.City as City, a.Countryname as Countryname,i.[Id],i.[Date] As Date,[Netto],[Brutto], i.ValidFrom as ValidFrom, i.ValidTo as ValidTo FROM [AuftragsverwaltungHistory].[dbo].[Invoices] i INNER JOIN dbo.Customer FOR SYSTEM_TIME ALL as c on i.customerid = c.id INNER JOIN dbo.Addresses FOR SYSTEM_TIME ALL as a on c.addressid = a.id WHERE i.Date BETWEEN '{startDate2}' and '{endDate2}' AND c.ValidFrom <= i.Date and c.ValidTo >= i.Date AND a.ValidFrom <= i.Date and a.ValidTo >= i.Date ORDER BY i.Date";
+            context.Database.OpenConnection();
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                InvoiceReportDTO invoiceReport = new InvoiceReportDTO()
+                {
+                    CustomerId = Convert.ToInt32(reader["CustomerId"]),
+                    Name = Convert.ToString(reader["Name"]),
+                    Street = Convert.ToString(reader["Street"]),
+                    StreetNo = Convert.ToString(reader["StreetNo"]),
+                    Plz = Convert.ToString(reader["Plz"]),
+                    City = Convert.ToString(reader["City"]),
+                    Id = Convert.ToInt32(reader["Id"]),
+                    Date = (DateTime)reader["Date"],
+                    Netto = (Double)reader["Netto"],
+                    Brutto = (Double)reader["Brutto"],
+                };
+
+                invoiceReports.Add(invoiceReport);
+            }
+
+            return invoiceReports;
         }
     }
 }

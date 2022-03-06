@@ -20,7 +20,7 @@ namespace PresentationLayer {
         private readonly List<int> _comboBoxColumnIndices = new List<int>() { };
         private readonly List<int> _datePickerColumnIndices = new List<int>() { };
 
-        public ObservableCollection<Invoice> Invoices { get => mainWindow.BusinessManager.Invoices; }
+        public ObservableCollection<InvoiceReport> InvoiceReports { get => mainWindow.BusinessManager.InvoiceReports; }
 
         public readonly MainWindow mainWindow;
         public BusinessManager BusinessManager { get => mainWindow.BusinessManager; }
@@ -35,8 +35,8 @@ namespace PresentationLayer {
             _dataGridChef = new DataGridChef(InvoiceDataGrid, _comboBoxColumnIndices, _datePickerColumnIndices);
             Resources["readOnlyColor"] = _dataGridChef.ReadOnlyFieldColor;
 
-            var startDate = DateTime.Now.AddMonths(-1);
-            var endDate = DateTime.Now;
+            DateTime startDate = DateTime.Now.AddMonths(-5);
+            DateTime endDate = DateTime.Now;
 
             DatePickerStartDate.SelectedDate = startDate;
             DatePickerEndDate.SelectedDate = endDate;
