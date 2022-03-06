@@ -157,25 +157,37 @@ namespace DataAccessLayer.Context
             return articleGroup;
         }
 
-        public List<ArticleDTO> GenerateArticleDTOs()
-        {
+        public List<ArticleDTO> GenerateArticleDTOs() {
             using var context = new SetupDB();
-            //var articleGroup = context.ArticelGroups.Where(c => c.Name == "T-Shirts").First();
-            var seedArticle = new List<ArticleDTO>();
+            var articleGroup = context.ArticelGroups.Where(c => c.Name == "T-Shirts").First();
+
+            var article = new List<ArticleDTO>()
+            {
+                new ArticleDTO() { Name = "Sonnen T-Shirt", Price = (decimal)14.50, ArticleGroupId = articleGroup.Id },
+                new ArticleDTO() { Name = "Mond T-Shirt", Price = (decimal)19.50, ArticleGroupId = articleGroup.Id },
+                new ArticleDTO() { Name = "Sterne T-Shirt", Price = (decimal)9.50, ArticleGroupId = articleGroup.Id }
+            };
+            return article;
 
 
-            using var command = context.Database.GetDbConnection().CreateCommand();
-            command.CommandText = SqlRawCommands.SeedArticle;
-            context.Database.OpenConnection();
+            //using var context = new SetupDB();
+            //var seedArticle = new List<ArticleDTO>();
 
-            //var article = new List<ArticleDTO>()
-            //{
-            //    new ArticleDTO() { Name = "Sonnen T-Shirt", Price = (decimal)14.50, ArticleGroupId = articleGroup.Id },
-            //    new ArticleDTO() { Name = "Mond T-Shirt", Price = (decimal)19.50, ArticleGroupId = articleGroup.Id },
-            //    new ArticleDTO() { Name = "Sterne T-Shirt", Price = (decimal)9.50, ArticleGroupId = articleGroup.Id }
-            //};
+            //using var command = context.Database.GetDbConnection().CreateCommand();
+            //command.CommandText = SqlRawCommands.SeedArticle;
+            //context.Database.OpenConnection();
 
-            return seedArticle;
+            //using var reader = command.ExecuteReader();
+            //while (reader.Read()) {
+            //    ArticleDTO articleDto = new ArticleDTO() {
+            //        Name = Convert.ToString(reader[0]),
+            //        Price = Convert.ToDecimal(reader[1]),
+            //        ArticleGroupId = Convert.ToInt32(reader[2]),
+            //    };
+
+            //    seedArticle.Add(articleDto);
+            //}
+            //return seedArticle;
         }
 
         public List<OrderPositionDTO> GenerateOrderPositionDTOs()
