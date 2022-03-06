@@ -194,6 +194,23 @@ VALUES
     '2020-04-05 00:00:00'
 );
 
+INSERT INTO dbo.Articles
+(
+    ArticleGroupId,
+    Price,
+    Name,
+    ValidFrom,
+    ValidTo
+)
+VALUES
+(
+	3,
+	'9.90',
+    'Blaue Jeans',
+    '2020-10-16 12:00:00',
+    '2020-04-05 00:00:00'
+);
+
 GO
 UPDATE dbo.Articles 
 SET ValidTo = '9999-12-31 23:59:59.9999999';
