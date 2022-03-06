@@ -24,9 +24,6 @@ namespace DataAccessLayer.Models
 
             // ADD INITIAL DATA 
             SeedingDatabase();
-
-            //Testing only
-            GetYearEndingData();
         }
 
         /// <summary>

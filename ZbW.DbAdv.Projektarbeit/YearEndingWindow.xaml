@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PresentationLayer"
+        d:DataContext="{d:DesignInstance local:YearEndingWindow}"
         mc:Ignorable="d"
-        Title="InvoiceWindow" Height="700" Width="1000" Closed="Window_Closed">
+        Title="YearEnding" Height="700" Width="1000" Closed="Window_Closed">
     <Window.Resources>
         <SolidColorBrush x:Key="readOnlyColor"/>
     </Window.Resources>
@@ -42,19 +43,39 @@
                   Grid.Column="1" 
                   x:Name="YearEndingDataGrid" 
                   BorderThickness="0,0,0,0" 
-                  ItemsSource="{Binding Path=Customers}" 
+                  ItemsSource="{Binding YearEndDataCollection}" 
                   AutoGenerateColumns="False" 
-                  BeginningEdit="YearEndingDataGrid_BeginningEdit"
                   CanUserSortColumns="False"
                   CanUserAddRows="False" 
-                  SelectionMode="Single">
+                  SelectionMode="Single"
+                  IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Category" Binding="{Binding Path=Company}"/>
-                <DataGridTextColumn Header="YOY" Binding="{Binding Path=FirstName}"/>
-                <DataGridTextColumn Header="Q4 2020" Binding="{Binding Path=LastName}"/>
-                <DataGridTextColumn Header="Q3 2020" Binding="{Binding Path=Address.Street}"/>
-                <DataGridTextColumn Header="Q2 2020" Binding="{Binding Path=Address.StreetNo}"/>
-                <DataGridTextColumn Header="Q1 2020" Binding="{Binding Path=Address.Plz}"/>
+                <DataGridTextColumn Header="Category" Binding="{Binding Category}"/>
+                
+                <DataGridTextColumn Header="YOY 2022" Binding="{Binding YOY2022}"/>
+                <DataGridTextColumn Header="Q4 2022" Binding="{Binding QuarterData[0]}"/>
+                <DataGridTextColumn Header="Q3 2022" Binding="{Binding QuarterData[1]}"/>
+                <DataGridTextColumn Header="Q2 2022" Binding="{Binding QuarterData[2]}"/>
+                <DataGridTextColumn Header="Q1 2022" Binding="{Binding QuarterData[3]}"/>
+
+                <DataGridTextColumn Header="YOY 2021" Binding="{Binding YOY2021}"/>
+                <DataGridTextColumn Header="Q4 2021" Binding="{Binding QuarterData[4]}"/>
+                <DataGridTextColumn Header="Q3 2021" Binding="{Binding QuarterData[5]}"/>
+                <DataGridTextColumn Header="Q2 2021" Binding="{Binding QuarterData[6]}"/>
+                <DataGridTextColumn Header="Q1 2021" Binding="{Binding QuarterData[7]}"/>
+
+                <DataGridTextColumn Header="YOY 2020" Binding="{Binding YOY2020}"/>
+                <DataGridTextColumn Header="Q4 2020" Binding="{Binding QuarterData[8]}"/>
+                <DataGridTextColumn Header="Q3 2020" Binding="{Binding QuarterData[9]}"/>
+                <DataGridTextColumn Header="Q2 2020" Binding="{Binding QuarterData[10]}"/>
+                <DataGridTextColumn Header="Q1 2020" Binding="{Binding QuarterData[11]}"/>
+
+                <DataGridTextColumn Header="YOY 2019" Binding="{Binding YOY2019}"/>
+                <DataGridTextColumn Header="Q4 2019" Binding="{Binding QuarterData[12]}"/>
+                <DataGridTextColumn Header="Q3 2019" Binding="{Binding QuarterData[13]}"/>
+                <DataGridTextColumn Header="Q2 2019" Binding="{Binding QuarterData[14]}"/>
+                <DataGridTextColumn Header="Q1 2019" Binding="{Binding QuarterData[15]}"/>
+
             </DataGrid.Columns>
         </DataGrid>
 

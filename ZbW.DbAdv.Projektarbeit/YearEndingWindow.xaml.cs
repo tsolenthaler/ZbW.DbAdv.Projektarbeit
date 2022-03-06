@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BusinessLayer;
+using BusinessLayer.Models;
 using ZbW.DbAdv.Projektarbeit;
 
 namespace PresentationLayer {
@@ -28,6 +30,9 @@ namespace PresentationLayer {
 
         public readonly MainWindow mainWindow;
 
+        public ObservableCollection<YearEndData> YearEndDataCollection { get => BusinessManager.YearEndDataCollection; }
+
+        public BusinessManager BusinessManager { get => mainWindow.BusinessManager; }
 
         public YearEndingWindow(MainWindow mainWindow)
         {
@@ -41,7 +46,7 @@ namespace PresentationLayer {
 
             try
             {
-                // BusinessManager.LoadAllInvoicesFromDb();
+                BusinessManager.LoadAllYearEndData();
             }
             catch (Exception ex)
             {
@@ -51,10 +56,7 @@ namespace PresentationLayer {
 
         private void Window_Closed(object sender, EventArgs e) {
             mainWindow.Show();
-        }
-
-        private void YearEndingDataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e) {
-            _dataGridChef.BlockReadOnlyRows(e);
+            YearEndDataCollection.Clear();
         }
     }
 }
