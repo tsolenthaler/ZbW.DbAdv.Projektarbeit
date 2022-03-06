@@ -26,13 +26,6 @@ namespace ZbW.DbAdv.Projektarbeit {
             InitializeComponent();
         }
 
-        public void ButtonsGrey()
-        {
-            Cmd_ArticleWindow.IsEnabled = false;
-            Cmd_CustomerWindow.IsEnabled = false;
-            Cmd_OrdersWindow.IsEnabled = false;
-        }
-
         private void Cmd_OrdersWindow_Click(object sender, RoutedEventArgs e) {
             OrderWindow orderWindow = new OrderWindow(this);
             orderWindow.Show();
@@ -52,8 +45,6 @@ namespace ZbW.DbAdv.Projektarbeit {
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
-            ButtonsGrey();
-
             try {
                 BusinessManager.DataAccessManager.MigrateDatabase();
             }
