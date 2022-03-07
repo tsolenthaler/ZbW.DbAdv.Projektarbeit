@@ -157,37 +157,22 @@ namespace DataAccessLayer.Context
             return articleGroup;
         }
 
-        public List<ArticleDTO> GenerateArticleDTOs() {
+        public void SeedArticleDTOsWithDatumInThePast()
+        {
+            //define context, open connection
             using var context = new SetupDB();
-            var articleGroup = context.ArticelGroups.Where(c => c.Name == "T-Shirts").First();
+            context.Database.OpenConnection();
 
-            var article = new List<ArticleDTO>()
+            //GO is specific for MS SQL -> therefore need to split commands in different batches
+            var text = SqlRawCommands.SeedArticle;
+            var parts = text.Split(new string[] { "GO" }, System.StringSplitOptions.None);
+            foreach (var part in parts)
             {
-                new ArticleDTO() { Name = "Sonnen T-Shirt", Price = (decimal)14.50, ArticleGroupId = articleGroup.Id },
-                new ArticleDTO() { Name = "Mond T-Shirt", Price = (decimal)19.50, ArticleGroupId = articleGroup.Id },
-                new ArticleDTO() { Name = "Sterne T-Shirt", Price = (decimal)9.50, ArticleGroupId = articleGroup.Id }
-            };
-            return article;
+                context.Database.ExecuteSqlRaw(part);
+            }
 
-
-            //using var context = new SetupDB();
-            //var seedArticle = new List<ArticleDTO>();
-
-            //using var command = context.Database.GetDbConnection().CreateCommand();
-            //command.CommandText = SqlRawCommands.SeedArticle;
-            //context.Database.OpenConnection();
-
-            //using var reader = command.ExecuteReader();
-            //while (reader.Read()) {
-            //    ArticleDTO articleDto = new ArticleDTO() {
-            //        Name = Convert.ToString(reader[0]),
-            //        Price = Convert.ToDecimal(reader[1]),
-            //        ArticleGroupId = Convert.ToInt32(reader[2]),
-            //    };
-
-            //    seedArticle.Add(articleDto);
-            //}
-            //return seedArticle;
+            //close connection
+            context.Database.CloseConnection();
         }
 
         public List<OrderPositionDTO> GenerateOrderPositionDTOs()
