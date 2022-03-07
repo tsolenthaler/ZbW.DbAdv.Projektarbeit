@@ -396,7 +396,7 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("DataAccessLayer.Models.CustomerDTO", "Customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Customer");
@@ -407,7 +407,7 @@ namespace DataAccessLayer.Migrations
                     b.HasOne("DataAccessLayer.Models.ArticleDTO", "Article")
                         .WithMany()
                         .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DataAccessLayer.Models.OrderDTO", "Order")
