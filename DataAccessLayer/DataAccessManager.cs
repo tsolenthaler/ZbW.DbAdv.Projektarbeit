@@ -528,6 +528,7 @@ namespace DataAccessLayer.Models
                 invoiceReports.Add(invoiceReport);
             }
 
+            context.Database.CloseConnection();
             return invoiceReports;
         }
     }
