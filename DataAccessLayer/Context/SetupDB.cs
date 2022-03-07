@@ -86,7 +86,7 @@ namespace DataAccessLayer
             orderposition.HasKey(x => x.Id);
             orderposition.Property(x => x.Quantity).IsRequired(true);
             orderposition.HasOne(x => x.Order).WithMany().HasForeignKey(x => x.OrderId); // Eine Position hat nur eine Order
-            orderposition.HasOne(x => x.Article).WithMany().HasForeignKey(x => x.ArticleId); // Eine Position hat nur einen Artikel
+            orderposition.HasOne(x => x.Article).WithMany().OnDelete(DeleteBehavior.Restrict).HasForeignKey(x => x.ArticleId); // Eine Position hat nur einen Artikel
         }
     }
 }
