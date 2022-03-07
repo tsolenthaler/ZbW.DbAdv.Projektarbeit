@@ -106,7 +106,7 @@ namespace DataAccessLayer
                 }));
             order.HasKey(x => x.Id); // Auftragsnummer
             order.Property(x => x.Date).IsRequired(true);
-            order.HasOne(x => x.Customer); // Eine Bestellung hat immer nur einen Kunden
+            order.HasOne(x => x.Customer).WithMany().OnDelete(DeleteBehavior.Restrict);
 
             var orderposition = modelBuilder.Entity<OrderPositionDTO>();
             orderposition.ToTable("OrderPositions", b => b.IsTemporal(
