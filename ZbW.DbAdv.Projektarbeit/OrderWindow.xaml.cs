@@ -334,7 +334,7 @@ namespace PresentationLayer {
             }
         }
         private void Cmd_DeleteOrderPos_Click(object sender, RoutedEventArgs e) {
-            int index = OrderDataGrid.SelectedIndex;
+            int index = OrderPositionDataGrid.SelectedIndex;
 
             try {
                 BusinessManager.DeleteSelectedOrderPos(index);
