@@ -29,15 +29,13 @@ namespace DataAccessLayer
                 //string Thomas: @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
                 //string Angelo: @"Server=KOLLEG-MPC\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;";
                 //string Corina: @"Server=.;Database=AuftragsverwaltungHistory;Trusted_Connection=True;";
+                
+                string connection = @"Server=KOLLEG-MPC\ZBW;Database=AuftragsverwaltungHistory;Trusted_Connection=True;";
 
-                string connection = @"Server=.;Database=AuftragsverwaltungHistory;Trusted_Connection=True;";
-                // https://docs.microsoft.com/de-de/ef/core/miscellaneous/connection-strings#winforms--wpf-applications
-                //optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["Auftragsverwaltung"].ConnectionString);
                 optionsBuilder.UseSqlServer(connection);
                 optionsBuilder.LogTo(Console.WriteLine);
             }
 
-            //optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
         }
 
         // Spezifikationen via FluentAPI und Create Testdaten (Seed)

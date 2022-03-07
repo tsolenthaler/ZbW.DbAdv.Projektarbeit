@@ -51,8 +51,7 @@ namespace DataAccessLayer.Models
             }
             if (!context.Articles.Any())
             {
-                context.AddRange(seedDb.GenerateArticleDTOs());
-                context.SaveChanges();
+                seedDb.SeedArticleDTOsWithDatumInThePast();
             }
             if (!context.Orders.Any())
             {
@@ -97,7 +96,7 @@ namespace DataAccessLayer.Models
 
                 yearEndStatistics.Add(yearEndStatisticDto);
             }
-
+            context.Database.CloseConnection();
             return yearEndStatistics;
         }
 
