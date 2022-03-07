@@ -80,7 +80,7 @@ namespace DataAccessLayer
             var order = modelBuilder.Entity<OrderDTO>();
             order.HasKey(x => x.Id); // Auftragsnummer
             order.Property(x => x.Date).IsRequired(true);
-            order.HasOne(x => x.Customer); // Eine Bestellung hat immer nur einen Kunden
+            order.HasOne(x => x.Customer).WithMany().OnDelete(DeleteBehavior.Restrict); // Eine Bestellung hat immer nur einen Kunden
 
             var orderposition = modelBuilder.Entity<OrderPositionDTO>();
             orderposition.HasKey(x => x.Id);
