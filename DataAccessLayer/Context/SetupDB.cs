@@ -25,7 +25,7 @@ namespace DataAccessLayer
             if (!optionsBuilder.IsConfigured)
             {
                 //string Thomas: @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
-                //string Angelo: @"Server=KOLLEG-MPC\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;"; @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
+                //string Angelo: @"Server=KOLLEG-MPC\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;"; @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";;
                 //string Corina: @"Server=DESKTOP-94QDIHG;Database=Auftragsverwaltung;Trusted_Connection=True;";
 
 
