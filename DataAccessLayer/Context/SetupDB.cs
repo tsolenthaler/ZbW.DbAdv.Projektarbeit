@@ -28,21 +28,15 @@ namespace DataAccessLayer
                 //string Angelo: @"Server=KOLLEG-MPC\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;"; @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
                 //string Corina: @"Server=DESKTOP-94QDIHG;Database=Auftragsverwaltung;Trusted_Connection=True;";
 
+
+                //DATABASE MUSS ZWINGEND - Auftragsverwaltung - HEISSEN!
                 string connection = @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
-                // https://docs.microsoft.com/de-de/ef/core/miscellaneous/connection-strings#winforms--wpf-applications
+
+
                 optionsBuilder.UseSqlServer(connection);
                 optionsBuilder.LogTo(Console.WriteLine);
             }
 
-            // install-package Microsoft.Extensions.Configuration.Json
-
-            //IConfigurationRoot configuration = new ConfigurationBuilder()
-            //    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-            //    .AddJsonFile("appsettings.json")
-            //    .Build();
-            //optionsBuilder.UseSqlServer(configuration.GetConnectionString("Auftragsverwaltung"));
-
-            //optionsBuilder.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
         }
 
         // Spezifikationen via FluentAPI und Create Testdaten (Seed)
