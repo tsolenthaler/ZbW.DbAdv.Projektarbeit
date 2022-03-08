@@ -445,8 +445,10 @@ namespace BusinessLayer
                 return;
             }
             else {
+                var orderIndex = OrderPositions[index].OrderId;
                 DataAccessManager.DeleteOrderPosById(OrderPositions[index].Id);
                 LoadAllOrdersFromDb();
+                LoadOrderPositionsForSpecificOrder(orderIndex);
             }
         }
 

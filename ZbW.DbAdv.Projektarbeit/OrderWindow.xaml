@@ -161,7 +161,7 @@
                 <DataGridTemplateColumn Header="Date">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Path=Date,StringFormat=MM/dd/yyyy hh:mm:ss}"></TextBlock>
+                            <TextBlock Text="{Binding Path=Date,StringFormat=MM/dd/yyyy}"></TextBlock>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.CellEditingTemplate>

@@ -124,31 +124,121 @@ namespace DataAccessLayer.Context
             return article;
         }
 
-        public List<OrderPositionDTO> GenerateOrderPositionDTOs()
-        {
+        public List<OrderPositionDTO> GenerateOrderPositionDTOs() {
             using var context = new SetupDB();
-            var articleFirst = context.Articles.First();
-            //var articleLast = context.Articles.Last();
-            var order = context.Orders.First();
+
+            var articles = new DataAccessManager().GetAllArticle();
+            var orders = new DataAccessManager().GetAllOrders();
+
             var orderposition = new List<OrderPositionDTO>
             {
-                new OrderPositionDTO() { Quantity = 5, ArticleId = articleFirst.Id, OrderId = order.Id},
-                new OrderPositionDTO() { Quantity = 2, ArticleId = articleFirst.Id, OrderId = order.Id },
-                new OrderPositionDTO() { Quantity = 11, ArticleId = articleFirst.Id,  OrderId = order.Id }
+                new OrderPositionDTO() { Quantity = 5, ArticleId = articles[0].Id, OrderId = orders[0].Id},
+                new OrderPositionDTO() { Quantity = 2, ArticleId = articles[1].Id, OrderId = orders[0].Id},
+                new OrderPositionDTO() { Quantity = 11, ArticleId = articles[2].Id, OrderId = orders[0].Id},
+
+                new OrderPositionDTO() { Quantity = 14, ArticleId = articles[0].Id, OrderId = orders[1].Id},
+                new OrderPositionDTO() { Quantity = 3, ArticleId = articles[2].Id, OrderId = orders[1].Id},
+
+                new OrderPositionDTO() { Quantity = 7, ArticleId = articles[0].Id, OrderId = orders[2].Id},
+                new OrderPositionDTO() { Quantity = 23, ArticleId = articles[1].Id, OrderId = orders[2].Id},
+                new OrderPositionDTO() { Quantity = 2, ArticleId = articles[2].Id, OrderId = orders[2].Id},
+
+                new OrderPositionDTO() { Quantity = 5, ArticleId = articles[1].Id, OrderId = orders[3].Id},
+                new OrderPositionDTO() { Quantity = 11, ArticleId = articles[2].Id, OrderId = orders[3].Id},
+
+                new OrderPositionDTO() { Quantity = 12, ArticleId = articles[0].Id, OrderId = orders[4].Id},
+                new OrderPositionDTO() { Quantity = 21, ArticleId = articles[1].Id, OrderId = orders[4].Id},
+                new OrderPositionDTO() { Quantity = 23, ArticleId = articles[2].Id, OrderId = orders[4].Id},
+
+                new OrderPositionDTO() { Quantity = 4, ArticleId = articles[0].Id, OrderId = orders[5].Id},
+                new OrderPositionDTO() { Quantity = 12, ArticleId = articles[1].Id, OrderId = orders[5].Id},
+                new OrderPositionDTO() { Quantity = 5, ArticleId = articles[2].Id, OrderId = orders[5].Id},
+
+                new OrderPositionDTO() { Quantity = 9, ArticleId = articles[0].Id, OrderId = orders[6].Id},
+                new OrderPositionDTO() { Quantity = 34, ArticleId = articles[1].Id, OrderId = orders[6].Id},
+                new OrderPositionDTO() { Quantity = 23, ArticleId = articles[2].Id, OrderId = orders[6].Id},
+
+                new OrderPositionDTO() { Quantity = 11, ArticleId = articles[0].Id, OrderId = orders[7].Id},
+                new OrderPositionDTO() { Quantity = 13, ArticleId = articles[1].Id, OrderId = orders[7].Id},
+                new OrderPositionDTO() { Quantity = 3, ArticleId = articles[2].Id, OrderId = orders[7].Id},
+
+                new OrderPositionDTO() { Quantity = 7, ArticleId = articles[0].Id, OrderId = orders[8].Id},
+                new OrderPositionDTO() { Quantity = 13, ArticleId = articles[1].Id, OrderId = orders[8].Id},
+                new OrderPositionDTO() { Quantity = 9, ArticleId = articles[2].Id, OrderId = orders[8].Id},
+
+                new OrderPositionDTO() { Quantity = 23, ArticleId = articles[0].Id, OrderId = orders[9].Id},
+                new OrderPositionDTO() { Quantity = 3, ArticleId = articles[2].Id, OrderId = orders[9].Id},
+
+                new OrderPositionDTO() { Quantity = 7, ArticleId = articles[0].Id, OrderId = orders[10].Id},
+                new OrderPositionDTO() { Quantity = 22, ArticleId = articles[1].Id, OrderId = orders[10].Id},
+                new OrderPositionDTO() { Quantity = 8, ArticleId = articles[2].Id, OrderId = orders[10].Id},
+
+                new OrderPositionDTO() { Quantity = 15, ArticleId = articles[1].Id, OrderId = orders[11].Id},
+                new OrderPositionDTO() { Quantity = 24, ArticleId = articles[2].Id, OrderId = orders[11].Id},
+
+                new OrderPositionDTO() { Quantity = 12, ArticleId = articles[0].Id, OrderId = orders[12].Id},
+                new OrderPositionDTO() { Quantity = 17, ArticleId = articles[1].Id, OrderId = orders[12].Id},
+                new OrderPositionDTO() { Quantity = 8, ArticleId = articles[2].Id, OrderId = orders[12].Id},
+
+                new OrderPositionDTO() { Quantity = 9, ArticleId = articles[0].Id, OrderId = orders[13].Id},
+                new OrderPositionDTO() { Quantity = 5, ArticleId = articles[1].Id, OrderId = orders[13].Id},
+                new OrderPositionDTO() { Quantity = 13, ArticleId = articles[2].Id, OrderId = orders[13].Id},
+
+                new OrderPositionDTO() { Quantity = 13, ArticleId = articles[0].Id, OrderId = orders[14].Id},
+                new OrderPositionDTO() { Quantity = 20, ArticleId = articles[1].Id, OrderId = orders[14].Id},
+                new OrderPositionDTO() { Quantity = 9, ArticleId = articles[2].Id, OrderId = orders[14].Id},
+
+                new OrderPositionDTO() { Quantity = 12, ArticleId = articles[0].Id, OrderId = orders[15].Id},
+                new OrderPositionDTO() { Quantity = 16, ArticleId = articles[1].Id, OrderId = orders[15].Id},
+
+                new OrderPositionDTO() { Quantity = 11, ArticleId = articles[0].Id, OrderId = orders[16].Id},
+                new OrderPositionDTO() { Quantity = 42, ArticleId = articles[1].Id, OrderId = orders[16].Id},
+                new OrderPositionDTO() { Quantity = 6, ArticleId = articles[2].Id, OrderId = orders[16].Id},
+
+                new OrderPositionDTO() { Quantity = 16, ArticleId = articles[0].Id, OrderId = orders[16].Id},
+                new OrderPositionDTO() { Quantity = 31, ArticleId = articles[1].Id, OrderId = orders[16].Id},
+                new OrderPositionDTO() { Quantity = 7, ArticleId = articles[2].Id, OrderId = orders[16].Id},
+
+                new OrderPositionDTO() { Quantity = 23, ArticleId = articles[1].Id, OrderId = orders[17].Id},
+                new OrderPositionDTO() { Quantity = 6, ArticleId = articles[2].Id, OrderId = orders[17].Id},
+
+                new OrderPositionDTO() { Quantity = 17, ArticleId = articles[0].Id, OrderId = orders[18].Id},
+                new OrderPositionDTO() { Quantity = 13, ArticleId = articles[1].Id, OrderId = orders[18].Id},
+                new OrderPositionDTO() { Quantity = 61, ArticleId = articles[2].Id, OrderId = orders[18].Id},
             };
             return orderposition;
         }
 
-        public List<OrderDTO> GenerateOrderDTOs()
-        {
+        public List<OrderDTO> GenerateOrderDTOs() {
             using var context = new SetupDB();
-            var customerFirst = context.Customers.First();
-            //var customerLast = context.Customers.Last();
+
+            var customers = new DataAccessManager().GetAllCustomers();
+
             var order = new List<OrderDTO>
             {
-                new OrderDTO { Date = new DateTime(2021, 3, 15), CustomerId = customerFirst.Id },
-                new OrderDTO { Date = new DateTime(2022, 1, 15), CustomerId = customerFirst.Id},
-                new OrderDTO { Date = new DateTime(2022, 1, 30), CustomerId = customerFirst.Id}
+                /* --------- Customer 1 --------- */
+                new OrderDTO() { Date = new DateTime(2019, 4, 25), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2019, 7, 5), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2020, 2, 11), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2020, 8, 21), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2020, 12, 25), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2021, 2, 6), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2021, 6, 12), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2021, 9, 22), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2022, 1, 2), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2022, 3, 14), CustomerId = customers[0].Id},
+              
+                /* --------- Customer 2 --------- */
+                new OrderDTO() { Date = new DateTime(2019, 3, 23), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2019, 6, 2), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2020, 1, 13), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2020, 7, 17), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2021, 2, 25), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2021, 9, 11), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2021, 11, 29), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2022, 2, 17), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2022, 3, 3), CustomerId = customers[1].Id}
+
             };
             return order;
         }
