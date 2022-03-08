@@ -69,13 +69,13 @@ namespace DataAccessLayer.Context
                 new CustomerDTO{
                     Firstname = "Hansruedi",
                     Lastname = "Arpa",
-                    Company = "Arpanet AG",
+                    Company = "Isernet AG",
                     Address = new AddressDTO
                     {
                         Street = "Aprastrasse",
                         StreetNo = "15",
-                        Plz = "8000",
-                        City = "Zürich",
+                        Plz = "9000",
+                        City = "St.Gallen",
                         Countryname = AddressDTO.Country.Schweiz
                     }
                 },
@@ -300,7 +300,7 @@ namespace DataAccessLayer.Context
         {
             using var context = new SetupDB();
             var customerFirst = context.Customers.First();
-            var customerArpanet = context.Customers.Where(c => c.Company == "Arpanet AG" || c.Company == "Isernet AG").First();
+            var customerArpanet = context.Customers.Where(c => c.Company == "Isernet AG").First();
             var invoice = new List<InvoiceDTO>
             {
                 new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerFirst.Id, Netto = 999.00, Brutto = 1078.92 },
@@ -316,21 +316,65 @@ namespace DataAccessLayer.Context
         public List<InvoiceDTO> ChangeCustomerDTOs()
         {
             using var context = new SetupDB();
-            var customer = context.Customers.Where(c => c.Company == "Arpanet AG" || c.Company == "Isernet AG").First();
+            var customer = context.Customers.Where(c => c.Company == "Isernet AG").First();
             var customerRemove = context.Customers.Where(c => c.Company == "Nest AG").First();
 
-            customer.Company = "Isernet AG";
+            var address = context.Addresses.Where(c => c.Street == "Aprastrasse").First();
+
+            address.Street = "Zürcherstrasse";
+            address.StreetNo = "908";
+            address.City = "Zürich";
+            address.Plz = "8000";
+            customer.Company = "Arpanet AG";
             context.Remove(customerRemove);
             context.SaveChanges();
 
-            var customerIsernet = context.Customers.Where(c => c.Company == "Isernet AG").First();
+            //var customerIsernet = context.Customers.Where(c => c.Company == "Isernet AG").First();
             var invoice = new List<InvoiceDTO>
             {
-                new InvoiceDTO { Date = DateTime.Now, CustomerId = customerIsernet.Id, Netto = 1205.00, Brutto = 1301.40},
-                new InvoiceDTO { Date = DateTime.Now, CustomerId = customerIsernet.Id, Netto = 340.00, Brutto = 367.20}
+                new InvoiceDTO { Date = DateTime.Now.AddDays(-2), CustomerId = customer.Id, Netto = 1205.00, Brutto = 1301.40},
+                new InvoiceDTO { Date = DateTime.Now.AddDays(-10), CustomerId = customer.Id, Netto = 3205.00, Brutto = 2301.40},
+                new InvoiceDTO { Date = DateTime.Now, CustomerId = customer.Id, Netto = 340.00, Brutto = 367.20},
+                new InvoiceDTO { Date = DateTime.Now.AddDays(2), CustomerId = customer.Id, Netto = 102.20, Brutto = 104.20}
             };
 
             return invoice;
+        }
+
+        public void SeedCustomerHistory()
+        {
+            //define context, open connection
+            using var context = new SetupDB();
+            context.Database.OpenConnection();
+
+            //GO is specific for MS SQL -> therefore need to split commands in different batches
+            var text = SqlRawCommands.SeedCustomer;
+            var parts = text.Split(new string[] { "GO" }, System.StringSplitOptions.None);
+            foreach (var part in parts)
+            {
+                context.Database.ExecuteSqlRaw(part);
+            }
+
+            //close connection
+            context.Database.CloseConnection();
+        }
+
+        public void SeedAddressesHistory()
+        {
+            //define context, open connection
+            using var context = new SetupDB();
+            context.Database.OpenConnection();
+
+            //GO is specific for MS SQL -> therefore need to split commands in different batches
+            var text = SqlRawCommands.SeedAddresses;
+            var parts = text.Split(new string[] { "GO" }, System.StringSplitOptions.None);
+            foreach (var part in parts)
+            {
+                context.Database.ExecuteSqlRaw(part);
+            }
+
+            //close connection
+            context.Database.CloseConnection();
         }
     }
 }

@@ -228,8 +228,48 @@ namespace DataAccessLayer
                          (HISTORY_TABLE=dbo.[ArticlesHistory],DATA_CONSISTENCY_CHECK=ON)
                         )";
 
+        public static string SeedCustomer => @"USE AuftragsverwaltungHistory;
+                        ALTER TABLE dbo.Customer SET (SYSTEM_VERSIONING = OFF);
+                        GO
+                        ALTER TABLE dbo.Customer DROP PERIOD FOR SYSTEM_TIME;
+                        GO
+                        
+                        UPDATE dbo.Customer
+                        SET Company = 'Isernet AG', ValidFrom = dateadd(DD, -30, cast(getdate() as date))
+                        WHERE Company = 'Isernet AG';                 
+                        GO
 
-		public static string YearEndingRequest => @"USE AuftragsverwaltungHistory;
+                        UPDATE dbo.Customer
+                        SET ValidTo = '9999-12-31 23:59:59.9999999';
+                        GO
+
+                        ALTER TABLE dbo.Customer ADD PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo);
+                        GO
+                        ALTER TABLE dbo.Customer SET (SYSTEM_VERSIONING = ON
+                         (HISTORY_TABLE=dbo.[CustomerHistory],DATA_CONSISTENCY_CHECK=ON)
+                        )";
+
+        public static string SeedAddresses => @"USE AuftragsverwaltungHistory;
+                        ALTER TABLE dbo.Addresses SET (SYSTEM_VERSIONING = OFF);
+                        GO
+                        ALTER TABLE dbo.Addresses DROP PERIOD FOR SYSTEM_TIME;
+                        GO
+                        
+                        UPDATE dbo.Addresses
+                        SET ValidFrom = dateadd(DD, -30, cast(getdate() as date))
+                        WHERE Street = 'Aprastrasse';                        
+
+                        GO
+                        UPDATE dbo.Addresses
+                        SET ValidTo = '9999-12-31 23:59:59.9999999';
+                        GO
+                        ALTER TABLE dbo.Addresses ADD PERIOD FOR SYSTEM_TIME (ValidFrom, ValidTo);
+                        GO
+                        ALTER TABLE dbo.Addresses SET (SYSTEM_VERSIONING = ON
+                         (HISTORY_TABLE=dbo.[AddressesHistory],DATA_CONSISTENCY_CHECK=ON)
+                        )";
+
+        public static string YearEndingRequest => @"USE AuftragsverwaltungHistory;
 
                         Declare @Y1 int = 2019
                         Declare @Y2 int = 2022

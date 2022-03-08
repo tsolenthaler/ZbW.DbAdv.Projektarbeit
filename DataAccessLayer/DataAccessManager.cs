@@ -67,6 +67,8 @@ namespace DataAccessLayer.Models
             {
                 context.AddRange(seedDb.GenerateInvoiceDTOs());
                 context.SaveChanges();
+                seedDb.SeedCustomerHistory();
+                seedDb.SeedAddressesHistory();
                 context.AddRange(seedDb.ChangeCustomerDTOs());
                 context.SaveChanges();
             }
