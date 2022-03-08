@@ -71,7 +71,12 @@ Declare @Y2 int = 2022
 			SELECT AVG(Year) AS Year, AVG(Quarter) AS Quarter, AVG(TotalOrdersPerQuarter) AS TotalOrdersPerQuarter, AVG(AvgArticleQtySumPerOrderPerQuarter) AS AvgArticleQtySumPerOrderPerQuarter, AVG(AvgSumSalesPerCustomerPerQuarter) AS AvgSumSalesPerCustomerPerQuarter, AVG(SalesTotalPerQuarter) AS SalesTotalPerQuarter, AVG(TotalArticlesInTheSystem) AS TotalArticlesInTheSystem 
 			FROM CTE_AllStatisticsBeforeGrouping
 			GROUP BY Year, Quarter
+			),
+	CTE_AllStatisticsGroupedRollSumArticles
+		AS (
+			SELECT Year, Quarter, TotalOrdersPerQuarter, AvgArticleQtySumPerOrderPerQuarter, AvgSumSalesPerCustomerPerQuarter, SalesTotalPerQuarter, SUM(TotalArticlesInTheSystem) OVER (ORDER BY Year, Quarter) AS RollSumArticlesInTheSystem 
+			FROM CTE_AllStatisticsGrouped
 			)
 
-SELECT * FROM CTE_AllStatisticsGrouped 			
+SELECT * FROM CTE_AllStatisticsGroupedRollSumArticles			
 ORDER BY Year DESC, Quarter DESC
