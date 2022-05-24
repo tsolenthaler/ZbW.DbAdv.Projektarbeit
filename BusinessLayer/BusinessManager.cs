@@ -18,7 +18,9 @@ namespace BusinessLayer
         public ObservableCollection<ArticleGroup> ArticleGroups { get; set; } = new ObservableCollection<ArticleGroup>();
         public ObservableCollection<Order> Orders { get; set; } = new ObservableCollection<Order>();
         public ObservableCollection<OrderPosition> OrderPositions { get; set; } = new ObservableCollection<OrderPosition>();
+        public ObservableCollection<InvoiceReport> InvoiceReports { get; set; } = new ObservableCollection<InvoiceReport>();
 
+        public ObservableCollection<YearEndData> YearEndDataCollection { get; set; } = new ObservableCollection<YearEndData>();
 
         public DataAccessManager DataAccessManager { get; set; } = new DataAccessManager();
 
@@ -594,7 +596,94 @@ namespace BusinessLayer
                 articleGroups.Add(new ArticleGroup(articleGroupDto));
             }
 
-            return articleGroups;
+        public void LoadAllInvoicesFromDbbyDate(DateTime startDate, DateTime endDate)
+        {
+            var invoiceReportDTOs = DataAccessManager.GetAllInvoicesbyDate(startDate, endDate);
+
+            InvoiceReports.Clear();
+
+            foreach (var invoicesReportDTO in invoiceReportDTOs)
+            {
+                InvoiceReport invoiceReport = new InvoiceReport(invoicesReportDTO);
+                InvoiceReports.Add(invoiceReport);
+            }
+        }
+
+        public void LoadAllYearEndData()
+        {
+            //Prepare YearEndDataCollection with all Categories
+            YearEndDataCollection.Add(new YearEndData()
+            {
+                Category = "Total Orders"
+            });
+            YearEndDataCollection.Add(new YearEndData()
+            {
+                Category = "Average Article Quantity per Order"
+            });
+            YearEndDataCollection.Add(new YearEndData()
+            {
+                Category = "Average Sales per Customer"
+            });
+            YearEndDataCollection.Add(new YearEndData()
+            {
+                Category = "Total Sales"
+            });
+            YearEndDataCollection.Add(new YearEndData()
+            {
+                Category = "Total Articles in the System"
+            });
+
+            List<YearEndStatisticDTO> yearEndStatisticDTOs = DataAccessManager.GetYearEndingData();
+
+            //Convert YearEndStatisticDTO into YearEndData (basically pivot)
+            foreach(var yearEndStatisticDTO in yearEndStatisticDTOs)
+            {
+                //Make sure all fields are either filled or at least a "0"
+                if(yearEndStatisticDTO.TotalOrdersPerQuarter == null || yearEndStatisticDTO.TotalOrdersPerQuarter == String.Empty)
+                {
+                    YearEndDataCollection[0].QuarterData.Add("0");
+                }
+                else
+                {
+                    YearEndDataCollection[0].QuarterData.Add(yearEndStatisticDTO.TotalOrdersPerQuarter);
+                }
+
+                if (yearEndStatisticDTO.AvgArticleQtySumPerOrderPerQuarter == null || yearEndStatisticDTO.AvgArticleQtySumPerOrderPerQuarter == String.Empty)
+                {
+                    YearEndDataCollection[1].QuarterData.Add("0");
+                }
+                else
+                {
+                    YearEndDataCollection[1].QuarterData.Add(yearEndStatisticDTO.AvgArticleQtySumPerOrderPerQuarter);
+                }
+
+                if (yearEndStatisticDTO.AvgSumSalesPerCustomerPerQuarter == null || yearEndStatisticDTO.AvgSumSalesPerCustomerPerQuarter == String.Empty)
+                {
+                    YearEndDataCollection[2].QuarterData.Add("0");
+                }
+                else
+                {
+                    YearEndDataCollection[2].QuarterData.Add(yearEndStatisticDTO.AvgSumSalesPerCustomerPerQuarter);
+                }
+
+                if (yearEndStatisticDTO.SalesTotalPerQuarter == null || yearEndStatisticDTO.SalesTotalPerQuarter == String.Empty)
+                {
+                    YearEndDataCollection[3].QuarterData.Add("0");
+                }
+                else
+                {
+                    YearEndDataCollection[3].QuarterData.Add(yearEndStatisticDTO.SalesTotalPerQuarter);
+                }
+
+                if (yearEndStatisticDTO.TotalArticlesInTheSystem == null || yearEndStatisticDTO.TotalArticlesInTheSystem == String.Empty)
+                {
+                    YearEndDataCollection[4].QuarterData.Add("0");
+                }
+                else
+                {
+                    YearEndDataCollection[4].QuarterData.Add(yearEndStatisticDTO.TotalArticlesInTheSystem);
+                }
+            }
         }
 
     }

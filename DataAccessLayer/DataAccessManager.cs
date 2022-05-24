@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Context;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 
@@ -12,6 +14,8 @@ namespace DataAccessLayer.Models
 {
     public class DataAccessManager
     {
+
+        
 
         public void MigrateDatabase()
         {
@@ -47,8 +51,7 @@ namespace DataAccessLayer.Models
             }
             if (!context.Articles.Any())
             {
-                context.AddRange(seedDb.GenerateArticleDTOs());
-                context.SaveChanges();
+                seedDb.SeedArticleDTOsWithDatumInThePast();
             }
             if (!context.Orders.Any())
             {
@@ -60,7 +63,46 @@ namespace DataAccessLayer.Models
                 context.AddRange(seedDb.GenerateOrderPositionDTOs());
                 context.SaveChanges();
             }
+            if (!context.Invoices.Any())
+            {
+                context.AddRange(seedDb.GenerateInvoiceDTOs());
+                context.SaveChanges();
+                seedDb.SeedCustomerHistory();
+                seedDb.SeedAddressesHistory();
+                context.AddRange(seedDb.ChangeCustomerDTOs());
+                context.SaveChanges();
+            }
         }
+
+        public List<YearEndStatisticDTO> GetYearEndingData()
+        {
+            var yearEndStatistics = new List<YearEndStatisticDTO>();
+
+            using var context = new SetupDB();
+            using var command = context.Database.GetDbConnection().CreateCommand();
+            command.CommandText = SqlRawCommands.YearEndingRequest;
+            context.Database.OpenConnection();
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                YearEndStatisticDTO yearEndStatisticDto = new YearEndStatisticDTO()
+                {
+                    Year = Convert.ToString(reader[0]),
+                    Quarter = Convert.ToString(reader[1]),
+                    TotalOrdersPerQuarter = Convert.ToString(reader[2]),
+                    AvgArticleQtySumPerOrderPerQuarter = Convert.ToString(reader[3]),
+                    AvgSumSalesPerCustomerPerQuarter = Convert.ToString(reader[4]),
+                    SalesTotalPerQuarter = Convert.ToString(reader[5]),
+                    TotalArticlesInTheSystem = Convert.ToString(reader[6]),
+                };
+
+                yearEndStatistics.Add(yearEndStatisticDto);
+            }
+            context.Database.CloseConnection();
+            return yearEndStatistics;
+        }
+
+
 
         /// <summary>
         ///  READ all Customers
@@ -87,6 +129,21 @@ namespace DataAccessLayer.Models
         }
 
         /// <summary>
+        ///  READ Customer by ID and ValidDate
+        /// </summary>
+        public CustomerDTO GetCustomerByIdValidDate(int id, DateTime date)
+        {
+            using var context = new SetupDB();
+            //var customer = context.Customers.Find(id);
+            var customer = context.Customers
+                .TemporalAsOf(date)
+                .Include(c => c.Address)
+                .Where(c => c.Id == id).ToArray();
+
+            return customer[0];
+        }
+
+        /// <summary>
         ///  UPDATE Customer without Address!! --> need Testing
         /// </summary>
         public void UpdateCustomer(CustomerDTO customerDto)
@@ -97,6 +154,7 @@ namespace DataAccessLayer.Models
             //customer = customerDto funktioniert nicht -> man muss Werte einzeln hinzufügen
             if(customer != null)
             {
+                customer.Company = customerDto.Company;
                 customer.Firstname = customerDto.Firstname;
                 customer.Lastname = customerDto.Lastname;
                 customer.Website = customerDto.Website;
@@ -150,6 +208,16 @@ namespace DataAccessLayer.Models
         {
             using var context = new SetupDB();
             var address = context.Addresses.Find(id);
+            return address;
+        }
+
+        /// <summary>
+        ///  READ Address by ID and Valid Date
+        /// </summary>
+        public AddressDTO GetAddressByIdValidDate(int id, DateTime date)
+        {
+            using var context = new SetupDB();
+            var address = context.Addresses.TemporalAsOf(date).Single(address => address.Id == id);
             return address;
         }
 
@@ -408,17 +476,72 @@ namespace DataAccessLayer.Models
             context.SaveChanges();
         }
 
-        public ArticleGroupDTO[] GetAllArticleGroupsRecursiveCte()
+        /// <summary>
+        ///  READ all Invoices
+        /// </summary>
+        public InvoiceDTO[] GetAllInvoices()
         {
-            string sqlCommand = "WITH CTE_ARTICLEGROUPS (Id, Name, ParentArticleGroupId ) AS (SELECT Id, Name, ParentArticleGroupId " +
-                "FROM dbo.ArticelGroups WHERE ParentArticleGroupId = 0 UNION ALL " +
-                "SELECT pn.Id,pn.Name, pn.ParentArticleGroupId FROM dbo.ArticelGroups AS " +
-                "pn INNER JOIN CTE_ARTICLEGROUPS AS p1 ON p1.Id = pn.ParentArticleGroupId) SELECT	" +
-                "Id,Name, ParentArticleGroupId FROM CTE_ARTICLEGROUPS ORDER BY ParentArticleGroupId";
             using var context = new SetupDB();
-            var articleGroups = context.ArticelGroups.FromSqlRaw(sqlCommand);
-            return articleGroups.ToArray();
+            //return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
+            var invoices = context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address);
+            var customers = context.Customers.Include(a => a.Address);
+            var customersEntry = context.Entry(customers);
+
+            //var VaildFrom = context.Entry(customers).Property("VaildFrom").CurrentValue;
+            //var VaildTo = context.Entry(customers).Property("VaildTo").CurrentValue;
+            return invoices.ToArray();
         }
 
+        /// <summary>
+        ///  READ all Invoices by Date
+        /// </summary>
+        /*public InvoiceDTO[] GetAllInvoicesbyDate(DateTime startDate, DateTime endDate)
+        {
+            using var context = new SetupDB();
+            //return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
+            //var invoices = context.Invoices.TemporalAsOf(DateTime.UtcNow).Include(c => c.Customer).Include(a => a.Customer.Address).Where(x => x.Date >= startDate && x.Date <= endDate);
+            var invoices = context.Invoices
+                .FromSqlRaw("SELECT [CustomerId], c.Company as Name, a.Street as Street, a.StreetNo as StreetNo, a.Plz as Plz, a.City as City, a.Countryname as Countryname,i.[Id],i.[Date] As Date,[Netto],[Brutto], i.ValidFrom as ValidFrom, i.ValidTo as ValidTo FROM [AuftragsverwaltungHistory].[dbo].[Invoices] i INNER JOIN dbo.Customer FOR SYSTEM_TIME ALL as c on i.customerid = c.id INNER JOIN dbo.Addresses FOR SYSTEM_TIME ALL as a on c.addressid = a.id WHERE i.Date BETWEEN '2021-01-01' and '2022-03-06' AND c.ValidFrom <= i.Date and c.ValidTo >= i.Date AND a.ValidFrom <= i.Date and a.ValidTo >= i.Date ORDER BY i.Date");
+            return invoices.ToArray();
+        }*/
+
+        public List<InvoiceReportDTO> GetAllInvoicesbyDate(DateTime startDate, DateTime endDate)
+        {
+            var invoiceReports = new List<InvoiceReportDTO>();
+
+            DateTime startDate2 = new DateTime(startDate.Year, startDate.Month, startDate.Day);
+            DateTime endDate2 = new DateTime(endDate.Year, endDate.Month, endDate.Day);
+
+            string startDateFormat = startDate.ToString("s");
+            string endDateFormat = endDate.ToString("s");
+
+            using var context = new SetupDB();
+            using var command = context.Database.GetDbConnection().CreateCommand();
+            command.CommandText = $"SELECT [CustomerId], c.Company as Name, a.Street as Street, a.StreetNo as StreetNo, a.Plz as Plz, a.City as City, a.Countryname as Countryname,i.[Id],i.[Date] As Date,[Netto],[Brutto], i.ValidFrom as ValidFrom, i.ValidTo as ValidTo FROM [AuftragsverwaltungHistory].[dbo].[Invoices] i INNER JOIN dbo.Customer FOR SYSTEM_TIME ALL as c on i.customerid = c.id INNER JOIN dbo.Addresses FOR SYSTEM_TIME ALL as a on c.addressid = a.id WHERE i.Date BETWEEN '{startDateFormat}' and '{endDateFormat}' AND c.ValidFrom <= i.Date and c.ValidTo >= i.Date AND a.ValidFrom <= i.Date and a.ValidTo >= i.Date ORDER BY i.Date";
+
+            context.Database.OpenConnection();
+            using var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                InvoiceReportDTO invoiceReport = new InvoiceReportDTO()
+                {
+                    CustomerId = Convert.ToInt32(reader["CustomerId"]),
+                    Name = Convert.ToString(reader["Name"]),
+                    Street = Convert.ToString(reader["Street"]),
+                    StreetNo = Convert.ToString(reader["StreetNo"]),
+                    Plz = Convert.ToString(reader["Plz"]),
+                    City = Convert.ToString(reader["City"]),
+                    Id = Convert.ToInt32(reader["Id"]),
+                    Date = (DateTime)reader["Date"],
+                    Netto = (Double)reader["Netto"],
+                    Brutto = (Double)reader["Brutto"],
+                };
+
+                invoiceReports.Add(invoiceReport);
+            }
+
+            context.Database.CloseConnection();
+            return invoiceReports;
+        }
     }
 }

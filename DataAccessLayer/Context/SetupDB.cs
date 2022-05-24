@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DataAccessLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 //using Microsoft.Extensions.Configuration;
 
@@ -19,19 +20,18 @@ namespace DataAccessLayer
         public virtual DbSet<CustomerDTO> Customers { get; set; }
         public virtual DbSet<OrderDTO> Orders { get; set; }
         public virtual DbSet<OrderPositionDTO> OrderPositions { get; set; }
-        
+        public virtual DbSet<InvoiceDTO> Invoices { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 //string Thomas: @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
-                //string Angelo: @"Server=KOLLEG-MPC\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;"; @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";;
-                //string Corina: @"Server=DESKTOP-94QDIHG;Database=Auftragsverwaltung;Trusted_Connection=True;";
+                //string Angelo: @"Server=KOLLEG-MPC\ZBW;Database=Auftragsverwaltung;Trusted_Connection=True;";
+                //string Corina: @"Server=.;Database=AuftragsverwaltungHistory;Trusted_Connection=True;";
 
-
-                //DATABASE MUSS ZWINGEND - Auftragsverwaltung - HEISSEN!
-                string connection = @"Server=.;Database=Auftragsverwaltung;Trusted_Connection=True;";
-
+                //DATABASE MUSS ZWINGEND - AuftragsverwaltungHistory - HEISSEN!
+                string connection = @"Server=.;Database=AuftragsverwaltungHistory;Trusted_Connection=True;";
 
                 optionsBuilder.UseSqlServer(connection);
                 optionsBuilder.LogTo(Console.WriteLine);
@@ -43,7 +43,14 @@ namespace DataAccessLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var customer = modelBuilder.Entity<CustomerDTO>();
+            customer.ToTable("Customer", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             customer.HasKey(x => x.Id); // Id hinterlegen
+            customer.Property(x => x.Company).IsRequired(true);
             customer.Property(x => x.Firstname).IsRequired(true); //Pflichtfeld
             customer.Property(x => x.Lastname).IsRequired(true); //Pflichtfeld
             customer.Property(x => x.EMail).IsRequired(false); 
@@ -54,6 +61,12 @@ namespace DataAccessLayer
                      //.WithMany(x => x.Customer); // Eine Adresse kann mehrere Kunden haben.
 
             var address = modelBuilder.Entity<AddressDTO>();
+            address.ToTable("Addresses", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             address.HasKey(x => x.Id);
             address.Property(x => x.Street).IsRequired(true);
             address.Property(x => x.StreetNo).IsRequired(false);
@@ -61,26 +74,61 @@ namespace DataAccessLayer
             address.Property(x => x.Plz).IsRequired(false);
 
             var article = modelBuilder.Entity<ArticleDTO>();
+            article.ToTable("Articles", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             article.HasKey(x => x.Id);
             article.Property(x => x.Name).IsRequired(true);
             article.Property(x => x.Price).IsRequired(true);   
             article.HasOne(x => x.ArticleGroup); // Artikel hat eine Artikelgruppe
 
             var articlegroup = modelBuilder.Entity<ArticleGroupDTO>();
+            articlegroup.ToTable("ArticelGroups", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             articlegroup.HasKey(x => x.Id);
             articlegroup.Property(x => x.Name).IsRequired(true);
             articlegroup.Property(x => x.ParentArticleGroupId).IsRequired(true);
 
             var order = modelBuilder.Entity<OrderDTO>();
+            order.ToTable("Orders", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             order.HasKey(x => x.Id); // Auftragsnummer
             order.Property(x => x.Date).IsRequired(true);
-            order.HasOne(x => x.Customer).WithMany().OnDelete(DeleteBehavior.Restrict); // Eine Bestellung hat immer nur einen Kunden
+            order.HasOne(x => x.Customer).WithMany().OnDelete(DeleteBehavior.Restrict);
 
             var orderposition = modelBuilder.Entity<OrderPositionDTO>();
+            orderposition.ToTable("OrderPositions", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
             orderposition.HasKey(x => x.Id);
             orderposition.Property(x => x.Quantity).IsRequired(true);
             orderposition.HasOne(x => x.Order).WithMany().HasForeignKey(x => x.OrderId); // Eine Position hat nur eine Order
-            orderposition.HasOne(x => x.Article).WithMany().OnDelete(DeleteBehavior.Restrict).HasForeignKey(x => x.ArticleId); // Eine Position hat nur einen Artikel
+            orderposition.HasOne(x => x.Article).WithMany().HasForeignKey(x => x.ArticleId); // Eine Position hat nur einen Artikel
+
+            var invoice = modelBuilder.Entity<InvoiceDTO>();
+            invoice.ToTable("Invoices", b => b.IsTemporal(
+                b =>
+                {
+                    b.HasPeriodStart("ValidFrom");
+                    b.HasPeriodEnd("ValidTo");
+                }));
+            invoice.HasKey(x => x.Id); // Rechnungsnummer
+            invoice.Property(x => x.Date).IsRequired(true);
+            invoice.HasOne(x => x.Customer);
         }
     }
 }

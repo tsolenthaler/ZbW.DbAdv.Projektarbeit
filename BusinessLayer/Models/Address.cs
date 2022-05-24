@@ -8,6 +8,15 @@ namespace BusinessLayer.Models
 {
     public class Address : BusinessModelBase
     {
+        public enum Country
+        {
+            Schweiz,
+            Lichtenstein,
+            Deutschland,
+            Österreich,
+            Italien,
+            Frankreich
+        }
         private string street;
         public string Street
         {
@@ -36,6 +45,13 @@ namespace BusinessLayer.Models
             set => Set(ref plz, value);
         }
 
+        private Country countryname;
+        public Country Countryname
+        {
+            get => countryname;
+            set => Set(ref countryname, value);
+        }
+
         public Address(AddressDTO addressDto)
         {
             Id = addressDto.Id;
@@ -43,6 +59,7 @@ namespace BusinessLayer.Models
             StreetNo = addressDto.StreetNo;
             City = addressDto.City;
             Plz = addressDto.Plz;
+            Countryname = (Country)addressDto.Countryname;
         }
 
         public Address()
@@ -58,6 +75,7 @@ namespace BusinessLayer.Models
             addressDto.StreetNo = StreetNo;
             addressDto.City = City;
             addressDto.Plz = Plz;
+            addressDto.Countryname = (AddressDTO.Country)Countryname;
             return addressDto;
         }
     }

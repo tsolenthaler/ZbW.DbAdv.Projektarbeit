@@ -16,46 +16,93 @@ namespace DataAccessLayer.Context
                 {
                     Firstname = "Hans",
                     Lastname = "Muster",
+                    Company = "ABC AG",
                     AddressId = 1,
                     Address = new AddressDTO
                     {
                         Street = "Rorschacherstrasse",
                         StreetNo = "11",
                         Plz = "9000",
-                        City = "St.Gallen"
+                        City = "St.Gallen",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
                 new CustomerDTO{
                     Firstname = "Kurt",
                     Lastname = "Lörrer",
+                    Company = "Lörrer GmbH",
                     Address = new AddressDTO
                     {
                         Street = "Bahnhofstrasse",
                         StreetNo = "5",
                         Plz = "8000",
-                        City = "Zürich"
+                        City = "Zürich",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
                 new CustomerDTO{
                     Firstname = "Simone",
                     Lastname = "Stadler",
+                    Company = "Stadler AG",
                     Address = new AddressDTO
                     {
                         Street = "Wiesenstrasse",
                         StreetNo = "21",
                         Plz = "3000",
-                        City = "Bern"
+                        City = "Bern",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
                 new CustomerDTO{
                     Firstname = "Peeetraa",
                     Lastname = "Sturzenegger",
+                    Company = "Sturzenegger & Co. AG",
                     Address = new AddressDTO
                     {
                         Street = "Hauptstrasse",
                         StreetNo = "1",
                         Plz = "9500",
-                        City = "Wil"
+                        City = "Wil",
+                        Countryname = AddressDTO.Country.Schweiz
+                    }
+                },
+                new CustomerDTO{
+                    Firstname = "Hansruedi",
+                    Lastname = "Arpa",
+                    Company = "Isernet AG",
+                    Address = new AddressDTO
+                    {
+                        Street = "Aprastrasse",
+                        StreetNo = "15",
+                        Plz = "9000",
+                        City = "St.Gallen",
+                        Countryname = AddressDTO.Country.Schweiz
+                    }
+                },
+                new CustomerDTO{
+                    Firstname = "Stan",
+                    Lastname = "Rich",
+                    Company = "Rich AG",
+                    Address = new AddressDTO
+                    {
+                        Street = "Richterstrasse",
+                        StreetNo = "258",
+                        Plz = "8000",
+                        City = "Zürich",
+                        Countryname = AddressDTO.Country.Schweiz
+                    }
+                },
+                new CustomerDTO{
+                    Firstname = "Jack",
+                    Lastname = "Nest",
+                    Company = "Nest AG",
+                    Address = new AddressDTO
+                    {
+                        Street = "Neststrasse",
+                        StreetNo = "43",
+                        Plz = "8000",
+                        City = "Zürich",
+                        Countryname = AddressDTO.Country.Schweiz
                     }
                 },
             };
@@ -110,21 +157,26 @@ namespace DataAccessLayer.Context
             return articleGroup;
         }
 
-        public List<ArticleDTO> GenerateArticleDTOs()
+        public void SeedArticleDTOsWithDatumInThePast()
         {
+            //define context, open connection
             using var context = new SetupDB();
-            var articleGroup = context.ArticelGroups.Where(c => c.Name == "T-Shirts").First();
+            context.Database.OpenConnection();
 
-            var article = new List<ArticleDTO>()
+            //GO is specific for MS SQL -> therefore need to split commands in different batches
+            var text = SqlRawCommands.SeedArticle;
+            var parts = text.Split(new string[] { "GO" }, System.StringSplitOptions.None);
+            foreach (var part in parts)
             {
-                new ArticleDTO() { Name = "Sonnen T-Shirt", Price = (decimal)14.50, ArticleGroupId = articleGroup.Id },
-                new ArticleDTO() { Name = "Mond T-Shirt", Price = (decimal)19.50, ArticleGroupId = articleGroup.Id },
-                new ArticleDTO() { Name = "Sterne T-Shirt", Price = (decimal)9.50, ArticleGroupId = articleGroup.Id }
-            };
-            return article;
+                context.Database.ExecuteSqlRaw(part);
+            }
+
+            //close connection
+            context.Database.CloseConnection();
         }
 
-        public List<OrderPositionDTO> GenerateOrderPositionDTOs() {
+        public List<OrderPositionDTO> GenerateOrderPositionDTOs()
+        {
             using var context = new SetupDB();
 
             var articles = new DataAccessManager().GetAllArticle();
@@ -220,7 +272,7 @@ namespace DataAccessLayer.Context
                 new OrderDTO() { Date = new DateTime(2019, 4, 25), CustomerId = customers[0].Id},
                 new OrderDTO() { Date = new DateTime(2019, 7, 5), CustomerId = customers[0].Id},
                 new OrderDTO() { Date = new DateTime(2020, 2, 11), CustomerId = customers[0].Id},
-                new OrderDTO() { Date = new DateTime(2020, 8, 21), CustomerId = customers[0].Id},
+                new OrderDTO() { Date = new DateTime(2020, 8, 21), CustomerId = customers[0].Id},                
                 new OrderDTO() { Date = new DateTime(2020, 12, 25), CustomerId = customers[0].Id},
                 new OrderDTO() { Date = new DateTime(2021, 2, 6), CustomerId = customers[0].Id},
                 new OrderDTO() { Date = new DateTime(2021, 6, 12), CustomerId = customers[0].Id},
@@ -231,7 +283,7 @@ namespace DataAccessLayer.Context
                 /* --------- Customer 2 --------- */
                 new OrderDTO() { Date = new DateTime(2019, 3, 23), CustomerId = customers[1].Id},
                 new OrderDTO() { Date = new DateTime(2019, 6, 2), CustomerId = customers[1].Id},
-                new OrderDTO() { Date = new DateTime(2020, 1, 13), CustomerId = customers[1].Id},
+                new OrderDTO() { Date = new DateTime(2020, 1, 13), CustomerId = customers[1].Id},                
                 new OrderDTO() { Date = new DateTime(2020, 7, 17), CustomerId = customers[1].Id},
                 new OrderDTO() { Date = new DateTime(2021, 2, 25), CustomerId = customers[1].Id},
                 new OrderDTO() { Date = new DateTime(2021, 9, 11), CustomerId = customers[1].Id},
@@ -241,6 +293,87 @@ namespace DataAccessLayer.Context
 
             };
             return order;
+        }
+
+        public List<InvoiceDTO> GenerateInvoiceDTOs()
+        {
+            using var context = new SetupDB();
+            var customerFirst = context.Customers.First();
+            var customerArpanet = context.Customers.Where(c => c.Company == "Isernet AG").First();
+            var invoice = new List<InvoiceDTO>
+            {
+                new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerFirst.Id, Netto = 999.00, Brutto = 1078.92 },
+                new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerFirst.Id, Netto = 1480.50, Brutto = 1598.94},
+                new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerFirst.Id, Netto = 200.10, Brutto = 216.10},
+                new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerArpanet.Id, Netto = 343.40, Brutto = 370.90},
+                new InvoiceDTO { Date = DateTime.Now.AddMonths(-1), CustomerId = customerArpanet.Id, Netto = 560.30, Brutto = 605.10}
+            };
+
+            return invoice;
+        }
+
+        public List<InvoiceDTO> ChangeCustomerDTOs()
+        {
+            using var context = new SetupDB();
+            var customer = context.Customers.Where(c => c.Company == "Isernet AG").First();
+            var customerRemove = context.Customers.Where(c => c.Company == "Nest AG").First();
+
+            var address = context.Addresses.Where(c => c.Street == "Aprastrasse").First();
+
+            address.Street = "Zürcherstrasse";
+            address.StreetNo = "908";
+            address.City = "Zürich";
+            address.Plz = "8000";
+            customer.Company = "Arpanet AG";
+            context.Remove(customerRemove);
+            context.SaveChanges();
+
+            //var customerIsernet = context.Customers.Where(c => c.Company == "Isernet AG").First();
+            var invoice = new List<InvoiceDTO>
+            {
+                new InvoiceDTO { Date = DateTime.Now.AddDays(-2), CustomerId = customer.Id, Netto = 1205.00, Brutto = 1301.40},
+                new InvoiceDTO { Date = DateTime.Now.AddDays(-10), CustomerId = customer.Id, Netto = 3205.00, Brutto = 2301.40},
+                new InvoiceDTO { Date = DateTime.Now, CustomerId = customer.Id, Netto = 340.00, Brutto = 367.20},
+                new InvoiceDTO { Date = DateTime.Now.AddDays(2), CustomerId = customer.Id, Netto = 102.20, Brutto = 104.20}
+            };
+
+            return invoice;
+        }
+
+        public void SeedCustomerHistory()
+        {
+            //define context, open connection
+            using var context = new SetupDB();
+            context.Database.OpenConnection();
+
+            //GO is specific for MS SQL -> therefore need to split commands in different batches
+            var text = SqlRawCommands.SeedCustomer;
+            var parts = text.Split(new string[] { "GO" }, System.StringSplitOptions.None);
+            foreach (var part in parts)
+            {
+                context.Database.ExecuteSqlRaw(part);
+            }
+
+            //close connection
+            context.Database.CloseConnection();
+        }
+
+        public void SeedAddressesHistory()
+        {
+            //define context, open connection
+            using var context = new SetupDB();
+            context.Database.OpenConnection();
+
+            //GO is specific for MS SQL -> therefore need to split commands in different batches
+            var text = SqlRawCommands.SeedAddresses;
+            var parts = text.Split(new string[] { "GO" }, System.StringSplitOptions.None);
+            foreach (var part in parts)
+            {
+                context.Database.ExecuteSqlRaw(part);
+            }
+
+            //close connection
+            context.Database.CloseConnection();
         }
     }
 }
