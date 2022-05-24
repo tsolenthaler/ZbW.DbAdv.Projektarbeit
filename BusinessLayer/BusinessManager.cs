@@ -595,6 +595,7 @@ namespace BusinessLayer
             {
                 articleGroups.Add(new ArticleGroup(articleGroupDto));
             }
+        }
 
         public void LoadAllInvoicesFromDbbyDate(DateTime startDate, DateTime endDate)
         {
