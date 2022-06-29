@@ -17,3 +17,16 @@ DbAdv Projektarbeit
 ## Lieferergebnisse
 * Dokumentation (PDF)
 * Arbeitsjournal (PDF)
+
+
+
+## RegEx
+
+### KundenNr
+
+### E-Mail-Adresse
+* [RFC 5322](https://www.rfc-editor.org/rfc/rfc5322) - https://regex101.com/r/XEnnnF/2 (noch nicht bereit für C#)
+
+### Webseite
+
+### Passwort
