@@ -438,18 +438,5 @@
         </DataGrid>
         <Button Grid.Column="10" Content="Button" HorizontalAlignment="Left" Margin="282,15,0,0" Grid.RowSpan="2" Grid.Row="13" VerticalAlignment="Top" Width="0"/>
         <Button x:Name="CmdTreeView" Grid.Column="9" Content="TreeView" HorizontalAlignment="Left" Margin="37,86,0,0" Grid.Row="14" VerticalAlignment="Top" Click="CmdTreeView_Click"/>
-
-
-        <Label Grid.Column="1"
-               Grid.Row="7"
-               Grid.RowSpan="5"
-               Grid.ColumnSpan="9"
-               Content="Wurde nicht getestet und zählt daher nicht zur Abgabe!"
-               FontSize="26"
-               Background="Red"
-               FontWeight="Bold" 
-               Foreground="White" 
-               VerticalContentAlignment="Center"
-               HorizontalContentAlignment="Center"/>
     </Grid>
 </Window>
