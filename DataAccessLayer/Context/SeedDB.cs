@@ -261,8 +261,7 @@ namespace DataAccessLayer.Context
             return orderposition;
         }
 
-        public List<OrderDTO> GenerateOrderDTOs()
-        {
+        public List<OrderDTO> GenerateOrderDTOs() {
             using var context = new SetupDB();
 
             var customers = new DataAccessManager().GetAllCustomers();

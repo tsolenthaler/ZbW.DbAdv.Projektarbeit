@@ -7,10 +7,14 @@
         d:DataContext="{d:DesignInstance local:OrderWindow}"
         mc:Ignorable="d"
         Title="OrderWindow" Height="700" Width="1000" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Window.Resources>
+        <CollectionViewSource x:Key="CustomerDropDown" Source="{Binding Customers}"></CollectionViewSource>
+        <CollectionViewSource x:Key="ArticleDropDown" Source="{Binding Articles}"></CollectionViewSource>
+    </Window.Resources>
     <Grid Width="1000" Height="700">
 
 
-               <!--Grid-->
+        <!--Grid-->
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>    <!--0-->
             <RowDefinition Height="30"/>    <!--1-->
@@ -45,13 +49,35 @@
 
         <!--TextBox Search-->
         <TextBox Grid.Row="1"
-                 Grid.Column="1" 
-                 Grid.ColumnSpan="2"
-                 x:Name="Txt_SearchOrders"
-                 TextWrapping="Wrap"
-                 Text="Search Orders"
-                 FontSize="16"
-                 BorderThickness="0,0,0,1"/>
+                        Grid.Column="1"
+                        Grid.ColumnSpan="3"
+                        x:Name="Txt_SearchOrders"
+                        TextWrapping="Wrap"
+                        FontSize="16"
+                        BorderThickness="0,0,0,1">
+                   <TextBox.Style>
+                       <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                           <Style.Resources>
+                               <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                   <VisualBrush.Visual>
+                                       <Label Content="Search" Foreground="LightGray" />
+                                   </VisualBrush.Visual>
+                               </VisualBrush>
+                           </Style.Resources>
+                           <Style.Triggers>
+                               <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                   <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                               </Trigger>
+                               <Trigger Property="Text" Value="{x:Null}">
+                                   <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                               </Trigger>
+                               <Trigger Property="IsKeyboardFocused" Value="True">
+                                   <Setter Property="Background" Value="White" />
+                               </Trigger>
+                           </Style.Triggers>
+                       </Style>
+                   </TextBox.Style>
+               </TextBox>
 
         <!--Button Search-->
         <Button Grid.Row="1" 
@@ -82,7 +108,6 @@
                  FontStretch="Medium"
                  FontWeight="Bold"
                  TextAlignment="Center"
-                 Background="Ivory"
                  BorderThickness="0,0,0,0">
             Order
         </TextBox>
@@ -99,7 +124,8 @@
                   BeginningEdit="OrderDataGrid_BeginningEdit"
                   CanUserSortColumns="False"
                   CanUserAddRows="False" 
-                  SelectionMode="Single" SelectionChanged="OrderDataGrid_SelectionChanged">
+                  SelectionMode="Single"
+                  SelectionChanged="OrderDataGrid_SelectionChanged">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" IsReadOnly="True">
@@ -118,8 +144,32 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Customer"  Binding="{Binding Path=Customer}"/>
-                <DataGridTextColumn Header="Date" Binding="{Binding Path=Date}"/>
+                <DataGridTemplateColumn Header="Customer" x:Name="Customer" Width="100" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="CustomerColumnTemplateTextBlock"
+                                       Text="{Binding Customer}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource CustomerDropDown}}" SelectedValue="{Binding Customer}">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Date,StringFormat=MM/dd/yyyy}"></TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding Path=Date}"></DatePicker>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -229,7 +279,6 @@
                  FontStretch="Medium"
                  FontWeight="Bold"
                  TextAlignment="Center"
-                 Background="Ivory"
                  BorderThickness="0,0,0,0">
             OrderPosition
         </TextBox>
@@ -255,7 +304,21 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Article"  Binding="{Binding Path=Article}"/>
+                <!--<DataGridTextColumn Header="Article"  Binding="{Binding Path=Article}"/>-->
+                <DataGridTemplateColumn Header="Article" x:Name="Article" Width="100" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="ArticleColumnTemplateTextBlock"
+                                       Text="{Binding Article}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource ArticleDropDown}}" SelectedValue="{Binding Article}">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Path=Quantity}"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -310,7 +373,7 @@
                 Padding="1,1,1,1" 
                 UseLayoutRounding="False" BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black">
+                Foreground="Black" Click="Cmd_ModifyOrderPos_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -329,7 +392,7 @@
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black">
+                Foreground="Black" Click="Cmd_CancelOrderPos_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -348,7 +411,7 @@
                 UseLayoutRounding="False" 
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
-                Foreground="Black">
+                Foreground="Black" Click="Cmd_DeleteOrderPos_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>

@@ -385,7 +385,7 @@ namespace DataAccessLayer.Models
         public OrderDTO GetOrderByID(int id)
         {
             using var context = new SetupDB();
-            return context.Orders.Include(c => c.Customer).Where(c => c.Id == id).ToArray()[0];
+            return context.Orders.Include(c => c.Customer).Include(a => a.Customer.Address).Where(c => c.Id == id).ToArray()[0];
         }
 
         /// <summary>
@@ -415,6 +415,16 @@ namespace DataAccessLayer.Models
         }
 
         /// <summary>
+        ///  DELETE OrderPos by ID
+        /// </summary>
+        public void DeleteOrderPosById(int id) {
+            using var context = new SetupDB();
+            var orderPos = context.OrderPositions.Find(id);
+            context.OrderPositions.Remove(orderPos);
+            context.SaveChanges();
+        }
+
+        /// <summary>
         ///  CREATE OrderPosition
         /// </summary>
         public void NewOrderPosition(OrderPositionDTO orderPositionDTO)
@@ -436,7 +446,7 @@ namespace DataAccessLayer.Models
         public OrderPositionDTO GetOrderPositionByID(int id)
         {
             using var context = new SetupDB();
-            return context.OrderPositions.Include(c => c.Article).Where(x => x.Id == id).ToArray()[0];
+            return context.OrderPositions.Include(c => c.Article).Where(x => x.Id == id).Include(g => g.Article.ArticleGroup).ToArray()[0];
         }
 
         /// <summary>
@@ -533,5 +543,17 @@ namespace DataAccessLayer.Models
             context.Database.CloseConnection();
             return invoiceReports;
         }
+        public ArticleGroupDTO[] GetAllArticleGroupsRecursiveCte()
+        {
+            string sqlCommand = "WITH CTE_ARTICLEGROUPS (Id, Name, ParentArticleGroupId ) AS (SELECT Id, Name, ParentArticleGroupId " +
+                "FROM dbo.ArticelGroups WHERE ParentArticleGroupId = 0 UNION ALL " +
+                "SELECT pn.Id,pn.Name, pn.ParentArticleGroupId FROM dbo.ArticelGroups AS " +
+                "pn INNER JOIN CTE_ARTICLEGROUPS AS p1 ON p1.Id = pn.ParentArticleGroupId) SELECT	" +
+                "Id,Name, ParentArticleGroupId FROM CTE_ARTICLEGROUPS ORDER BY ParentArticleGroupId";
+            using var context = new SetupDB();
+            var articleGroups = context.ArticelGroups.FromSqlRaw(sqlCommand);
+            return articleGroups.ToArray();
+        }
+
     }
 }

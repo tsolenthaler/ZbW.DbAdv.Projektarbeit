@@ -39,6 +39,7 @@ namespace BusinessLayer.Models
 
         }
 
+        public List<string> DropDownOptions = new List<string>() { "string1", "string2" };
 
         public Article(ArticleDTO articleDto)
         {

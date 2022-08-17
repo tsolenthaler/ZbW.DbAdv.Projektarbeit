@@ -7,26 +7,45 @@
         d:DataContext="{d:DesignInstance local:ArticleWindow}"
         mc:Ignorable="d"
         Title="ArticleWindow" Height="700" Width="1000" Loaded="Window_Loaded" Closed="Window_Closed">
+    <Window.Resources>
+        <CollectionViewSource x:Key="ArticleGroupDropDown" Source="{Binding ArticleGroups}"></CollectionViewSource>
+    </Window.Resources>
     <Grid>
 
         <!--Grid-->
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>    <!--0-->
-            <RowDefinition Height="30"/>    <!--1-->
-            <RowDefinition Height="30"/>    <!--2-->
-            <RowDefinition Height="30"/>    <!--3-->
-            <RowDefinition Height="10"/>    <!--4-->
-            <RowDefinition Height="30"/>    <!--5-->
-            <RowDefinition Height="10"/>    <!--6-->
-            <RowDefinition Height="30"/>    <!--7-->
-            <RowDefinition Height="10"/>    <!--8-->
-            <RowDefinition Height="30"/>    <!--9-->
-            <RowDefinition Height="10"/>    <!--11-->
-            <RowDefinition Height="30"/>    <!--12-->
-            <RowDefinition Height="10"/>    <!--13-->
-            <RowDefinition Height="30"/>    <!--14-->
-            <RowDefinition/>                <!--15-->
-            <RowDefinition Height="50"/>    <!--16-->
+            <RowDefinition Height="50"/>
+            <!--0-->
+            <RowDefinition Height="30"/>
+            <!--1-->
+            <RowDefinition Height="30"/>
+            <!--2-->
+            <RowDefinition Height="30"/>
+            <!--3-->
+            <RowDefinition Height="10"/>
+            <!--4-->
+            <RowDefinition Height="30"/>
+            <!--5-->
+            <RowDefinition Height="10"/>
+            <!--6-->
+            <RowDefinition Height="30"/>
+            <!--7-->
+            <RowDefinition Height="10"/>
+            <!--8-->
+            <RowDefinition Height="30"/>
+            <!--9-->
+            <RowDefinition Height="10"/>
+            <!--11-->
+            <RowDefinition Height="30"/>
+            <!--12-->
+            <RowDefinition Height="10"/>
+            <!--13-->
+            <RowDefinition Height="30"/>
+            <!--14-->
+            <RowDefinition/>
+            <!--15-->
+            <RowDefinition Height="50"/>
+            <!--16-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -44,13 +63,36 @@
 
         <!--TextBox Search-->
         <TextBox Grid.Row="1"
-                 Grid.Column="1" 
-                 Grid.ColumnSpan="2"
-                 x:Name="Txt_SearchArticle" 
-                 TextWrapping="Wrap" 
-                 Text="Search Article" 
-                 FontSize="16" 
-                 BorderThickness="0,0,0,1"/>
+                 Grid.Column="1"
+                 Grid.ColumnSpan="3"
+                 x:Name="Txt_SearchArticle"
+                 TextWrapping="Wrap"
+                 FontSize="16"
+                 BorderThickness="0,0,0,1">
+            <TextBox.Style>
+                <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                    <Style.Resources>
+                        <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                            <VisualBrush.Visual>
+                                <Label Content="Search" Foreground="LightGray" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Null}">
+                            <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Background" Value="White" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+
 
         <!--Button Search-->
         <Button Grid.Row="1" 
@@ -81,8 +123,7 @@
                  FontStretch="Medium"
                  FontWeight="Bold"
                  TextAlignment="Center"
-                 Background="Ivory"
-                 BorderThickness="0,0,0,0">
+                 BorderThickness="0,0,0,0" Background="Ivory">
             Article
         </TextBox>
 
@@ -117,8 +158,20 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Name"  Binding="{Binding Path=Name}"/>
-                <DataGridTextColumn Header="Article Group" Binding="{Binding Path=ArticleGroup}"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Path=Price}"/>
+                <DataGridTemplateColumn Header="Article Group" x:Name="ArticleGroup" Width="100" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="ArticleGroupColumnTemplateTextBlock"
+                                       Text="{Binding ArticleGroup}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource ArticleGroupDropDown}}" SelectedValue="{Binding ArticleGroup}">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -332,8 +385,7 @@
                  FontStretch="Medium"
                  FontWeight="Bold"
                  TextAlignment="Center"
-                 Background="Ivory"
-                 BorderThickness="0,0,0,0">
+                 BorderThickness="0,0,0,0" Background="Ivory">
             ArticleGroup
         </TextBox>
 
@@ -367,9 +419,25 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Name"  Binding="{Binding Path= Name}"/>
-                <DataGridTextColumn Header="Parent Article Group"  Binding="{Binding Path= ParentArticleGroup}"/>
+                <!--<DataGridTextColumn Header="Parent Article Group"  Binding="{Binding Path= ParentArticleGroup}"/>-->
+                <DataGridTemplateColumn Header="Parent Article Group" x:Name="ParentArticleGroup" Width="100" IsReadOnly="False">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock x:Name="ArticleGroupColumnTemplateTextBlock"
+                                       Text="{Binding ParentArticleGroup}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Source={StaticResource ArticleGroupDropDown}}" SelectedValue="{Binding ParentArticleGroup}">
+                            </ComboBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <Button Grid.Column="10" Content="Button" HorizontalAlignment="Left" Margin="282,15,0,0" Grid.RowSpan="2" Grid.Row="13" VerticalAlignment="Top" Width="0"/>
+        <Button x:Name="CmdTreeView" Grid.Column="9" Content="TreeView" HorizontalAlignment="Left" Margin="37,86,0,0" Grid.Row="14" VerticalAlignment="Top" Click="CmdTreeView_Click"/>
 
 
         <Label Grid.Column="1"

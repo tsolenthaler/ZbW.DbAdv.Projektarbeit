@@ -301,7 +301,9 @@ namespace BusinessLayer
                 if (itemList[index].Id == 0)
                 {
                     //not known by database yet
-                    DataAccessManager.NewArticle(itemList[index].ToArticleDto());
+                    var articleDto = itemList[index].ToArticleDto();
+                    articleDto.ArticleGroup = null;
+                    DataAccessManager.NewArticle(articleDto);
                 }
                 else
                 {
@@ -370,6 +372,11 @@ namespace BusinessLayer
             Orders.Add(new Order() { ReadOnly = false });
         }
 
+        public void CreateLocalOrderPos()
+        {
+            OrderPositions.Add(new OrderPosition() { ReadOnly = false });
+        }
+
         public void CancelModificationOrder(ObservableCollection<Order> itemList)
         {
             int index = GetIndexOfModifiableDataGridChild(itemList);
@@ -407,14 +414,15 @@ namespace BusinessLayer
                 if (itemList[index].Id == 0)
                 {
                     //not known by database yet
-                    DataAccessManager.NewOrder(itemList[index].ToOrderDto());
+                    var newOrder = itemList[index].ToOrderDto();
+                    newOrder.Customer = null;
+                    DataAccessManager.NewOrder(newOrder);
                 }
                 else
                 {
                     //known by database
                     DataAccessManager.UpdateOrder(itemList[index].ToOrderDto());
                 }
-
                 LoadAllOrdersFromDb();
             }
         }
@@ -430,6 +438,19 @@ namespace BusinessLayer
             {
                 DataAccessManager.DeleteOrderById(Orders[index].Id);
                 LoadAllOrdersFromDb();
+            }
+        }
+
+        public void DeleteSelectedOrderPos(int index) {
+            if (index == -1) {
+                //Item not found
+                return;
+            }
+            else {
+                var orderIndex = OrderPositions[index].OrderId;
+                DataAccessManager.DeleteOrderPosById(OrderPositions[index].Id);
+                LoadAllOrdersFromDb();
+                LoadOrderPositionsForSpecificOrder(orderIndex);
             }
         }
 
@@ -452,7 +473,7 @@ namespace BusinessLayer
                 else
                 {
                     //none of the fields had the searchText -> remove from list
-                    Articles.RemoveAt(i);
+                    Orders.RemoveAt(i);
                 }
             }
         }
@@ -474,6 +495,30 @@ namespace BusinessLayer
         public void CreateLocalOrderPosition()
         {
             OrderPositions.Add(new OrderPosition() { ReadOnly = false });
+        }
+
+        public void SaveModifiedOrderPos(ObservableCollection<OrderPosition> itemList, int selectedOrderId) {
+            int index = GetIndexOfModifiableDataGridChild(itemList);
+
+            if (index == -1) {
+                //Item not found
+                return;
+            }
+            else {
+                if (itemList[index].Id == 0) {
+                    //not known by database yet
+                    var orderPosition = itemList[index].ToOrderPositionDto();
+                    orderPosition.Article = null;
+                    orderPosition.OrderId = selectedOrderId;
+                    DataAccessManager.NewOrderPosition(orderPosition);
+                }
+                else {
+                    //known by database
+                    DataAccessManager.UpdateOrderPosition(itemList[index].ToOrderPositionDto());
+                }
+
+                LoadOrderPositionsForSpecificOrder(index);
+            }
         }
 
         public void CancelModificationOrderPosition(ObservableCollection<OrderPosition> itemList)
@@ -540,6 +585,16 @@ namespace BusinessLayer
                 LoadOrderPositionsForSpecificOrder(orderId);
             }
         }
+
+        public List<ArticleGroup> GetArticleGroupsRecursiveCte()
+        {
+            ArticleGroupDTO[] articleGroupDtos = DataAccessManager.GetAllArticleGroupsRecursiveCte();
+            var articleGroups = new List<ArticleGroup>();
+
+            foreach (ArticleGroupDTO articleGroupDto in articleGroupDtos)
+            {
+                articleGroups.Add(new ArticleGroup(articleGroupDto));
+            }
 
         public void LoadAllInvoicesFromDbbyDate(DateTime startDate, DateTime endDate)
         {
@@ -629,6 +684,8 @@ namespace BusinessLayer
                     YearEndDataCollection[4].QuarterData.Add(yearEndStatisticDTO.TotalArticlesInTheSystem);
                 }
             }
+        }
+            return articleGroups;
         }
 
     }
