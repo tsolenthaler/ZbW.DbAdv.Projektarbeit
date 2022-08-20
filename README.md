@@ -23,10 +23,30 @@ DbAdv Projektarbeit
 ## RegEx
 
 ### KundenNr
+Die Adressnummer muss zwingend mit dem Präfix «CU» beginnen (CU=Customer). Anschliessend soll eine 5stellige Nummer folgen.
 
 ### E-Mail-Adresse
+Implementieren Sie eine Validierung für Email-Adressen. Wenn Ihre Validierung nicht alle
+Fälle gemäss RFC 5322 abdeckt (weil z.B. das RegEx-Pattern für die letzten 1% Spezialfälle
+zu kompliziert würde) dokumentieren Sie, welche Fälle nicht abgedeckt sind.
 * [RFC 5322](https://www.rfc-editor.org/rfc/rfc5322) - https://regex101.com/r/XEnnnF/2 (noch nicht bereit für C#)
 
 ### Webseite
+Die Validierung für die Eingabe der Website soll folgende Formate zulassen:
+www.google.com
+http://www.google.com
+https://www.google.com
+google.com
+
+Wahlweise soll eine Subdomain angegeben werden können (gilt für alle vier Formate) –
+bspw.: https://policies.google.com
+Die Adresse soll auch beliebig mit einem Pfad sowie Parameter ergänzt werden können
+(dies auch wieder für alle Formate) – bspw.:
+https://policies.google.com/technologies/voice?hl=de&gl=ch
 
 ### Passwort
+Für Passwörter gelten die folgenden Regeln:
+• Min. 8 Zeichen
+• Zwingend einen Gross- sowie einen Kleinbuchstaben
+• Zwingend eine Zahl
+• usw.
