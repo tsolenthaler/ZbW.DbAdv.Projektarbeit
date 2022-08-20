@@ -265,17 +265,5 @@
                 </Style>
             </Button.Resources>
         </Button>
-
-        <Label Grid.Column="1"
-               Grid.Row="7"
-               Grid.RowSpan="5"
-               Grid.ColumnSpan="9"
-               Content="Wurde nicht getestet und zählt daher nicht zur Abgabe!"
-               FontSize="26"
-               Background="Red"
-               FontWeight="Bold" 
-               Foreground="White" 
-               VerticalContentAlignment="Center"
-               HorizontalContentAlignment="Center"/>
     </Grid>
 </Window>

@@ -595,6 +595,7 @@ namespace BusinessLayer
             {
                 articleGroups.Add(new ArticleGroup(articleGroupDto));
             }
+            return articleGroups;
         }
 
         public void LoadAllInvoicesFromDbbyDate(DateTime startDate, DateTime endDate)
@@ -608,6 +609,7 @@ namespace BusinessLayer
                 InvoiceReport invoiceReport = new InvoiceReport(invoicesReportDTO);
                 InvoiceReports.Add(invoiceReport);
             }
+
         }
 
         public void LoadAllYearEndData()
@@ -686,6 +688,7 @@ namespace BusinessLayer
                 }
             }
         }
+
 
     }
 }
