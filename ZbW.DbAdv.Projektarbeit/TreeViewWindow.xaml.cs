@@ -14,7 +14,6 @@ using System.Windows.Shapes;
 using PresentationLayer;
 using BusinessLayer;
 using BusinessLayer.Models;
-using ZbW.DbAdv.Projektarbeit;
 
 namespace PresentationLayer
 {

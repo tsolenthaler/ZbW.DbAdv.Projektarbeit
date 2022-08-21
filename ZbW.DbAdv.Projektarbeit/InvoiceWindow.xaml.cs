@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using ZbW.DbAdv.Projektarbeit;
 using BusinessLayer;
 using BusinessLayer.Models;
 using System.Collections.ObjectModel;

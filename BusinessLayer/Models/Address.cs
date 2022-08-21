@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DataAccessLayer.Customer;
 using DataAccessLayer.Models;
 
 namespace BusinessLayer.Models

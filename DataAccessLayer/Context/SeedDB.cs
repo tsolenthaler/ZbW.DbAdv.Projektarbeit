@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DataAccessLayer.Article;
+using DataAccessLayer.ArticleGroup;
+using DataAccessLayer.Customer;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer.Models;
+using DataAccessLayer.Order;
+using DataAccessLayer.OrderPosition;
 
 namespace DataAccessLayer.Context
 {
@@ -179,8 +184,8 @@ namespace DataAccessLayer.Context
         {
             using var context = new SetupDB();
 
-            var articles = new DataAccessManager().GetAllArticle();
-            var orders = new DataAccessManager().GetAllOrders();
+            var articles = new ArticleRepository(new SetupDB()).GetAll();
+            var orders = new OrderRepository(new SetupDB()).GetAll();
 
             var orderposition = new List<OrderPositionDTO>
             {
@@ -264,7 +269,7 @@ namespace DataAccessLayer.Context
         public List<OrderDTO> GenerateOrderDTOs() {
             using var context = new SetupDB();
 
-            var customers = new DataAccessManager().GetAllCustomers();
+            var customers = new CustomerRepository(new SetupDB()).GetAll();
 
             var order = new List<OrderDTO>
             {

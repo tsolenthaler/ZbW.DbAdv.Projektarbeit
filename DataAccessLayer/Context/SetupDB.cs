@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAccessLayer.Article;
+using DataAccessLayer.ArticleGroup;
+using DataAccessLayer.Customer;
 using DataAccessLayer.Models;
+using DataAccessLayer.Order;
+using DataAccessLayer.OrderPosition;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+
 //using Microsoft.Extensions.Configuration;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Context
 {
     public class SetupDB : DbContext
     {
@@ -129,6 +127,10 @@ namespace DataAccessLayer
             invoice.HasKey(x => x.Id); // Rechnungsnummer
             invoice.Property(x => x.Date).IsRequired(true);
             invoice.HasOne(x => x.Customer);
+
+            modelBuilder.Entity<ArticleDTO>().Navigation(a => a.ArticleGroup).AutoInclude();
+            modelBuilder.Entity<CustomerDTO>().Navigation(c => c.Address).AutoInclude();
+            modelBuilder.Entity<OrderDTO>().Navigation(o => o.Customer).AutoInclude();
         }
     }
 }

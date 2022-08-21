@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
+﻿using DataAccessLayer.Models;
+using DataAccessLayer.RepositoryBase;
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.Customer
 {
-    public class CustomerDTO
+    public class CustomerDTO : TEntity
     {
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Company { get; set; }
         public string Lastname { get; set; }
         public string Firstname { get; set; }

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
+using DataAccessLayer;
+using DataAccessLayer.Article;
+using DataAccessLayer.ArticleGroup;
+using DataAccessLayer.Context;
 using DataAccessLayer.Models;
 
 namespace BusinessLayer.Models
@@ -19,7 +23,7 @@ namespace BusinessLayer.Models
         private ArticleGroup parentArticleGroup;
         public ArticleGroup ParentArticleGroup
         {
-            get => GetParentArticleGroup(new DataAccessManager());
+            get => GetParentArticleGroup(new ArticleGroupRepository(new SetupDB()));
             set
             {
                 Set(ref parentArticleGroup, value);
@@ -46,7 +50,7 @@ namespace BusinessLayer.Models
             ParentArticleGroupId = articleGroupDto.ParentArticleGroupId;
         }
 
-        private ArticleGroup GetParentArticleGroup(DataAccessManager dataAccessManager)
+        private ArticleGroup GetParentArticleGroup(IArticleGroupRepository articleGroupRepository)
         {
             if (ParentArticleGroupId == 0)
             {
@@ -58,7 +62,7 @@ namespace BusinessLayer.Models
             }
             else
             {
-                return new ArticleGroup(dataAccessManager.GetArticleGroupById(ParentArticleGroupId));
+                return new ArticleGroup(articleGroupRepository.GetSingle(ParentArticleGroupId));
             }
         }
 

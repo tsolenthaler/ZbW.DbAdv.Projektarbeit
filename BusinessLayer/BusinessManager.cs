@@ -7,7 +7,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
+using DataAccessLayer;
+using DataAccessLayer.Article;
+using DataAccessLayer.ArticleGroup;
+using DataAccessLayer.Customer;
 using DataAccessLayer.Models;
+using DataAccessLayer.Order;
+using DataAccessLayer.OrderPosition;
 
 namespace BusinessLayer
 {
@@ -23,6 +29,22 @@ namespace BusinessLayer
         public ObservableCollection<YearEndData> YearEndDataCollection { get; set; } = new ObservableCollection<YearEndData>();
 
         public DataAccessManager DataAccessManager { get; set; } = new DataAccessManager();
+
+        public ICustomerRepository CustomerRepository { get; }
+        public IArticleRepository ArticleRepository { get; }
+        public IArticleGroupRepository ArticleGroupRepository { get; }
+        public IOrderRepository OrderRepository { get; }
+        public IOrderPositionRepository OrderPositionRepository { get; }
+
+        public BusinessManager(ICustomerRepository customerRepository, IArticleRepository articleRepository, 
+            IArticleGroupRepository articleGroupRepository, IOrderRepository orderRepository, IOrderPositionRepository orderPositionRepository)
+        {
+            CustomerRepository = customerRepository;
+            ArticleRepository = articleRepository;
+            ArticleGroupRepository = articleGroupRepository;
+            OrderRepository = orderRepository;
+            OrderPositionRepository = orderPositionRepository;
+        }
 
         //Generic
         public void ModifySelected<T>(ObservableCollection<T> itemList, int index) where T : BusinessModelBase
@@ -52,7 +74,7 @@ namespace BusinessLayer
         //Customer
         public void LoadAllCustomersFromDb()
         {
-            var customerDTOs = DataAccessManager.GetAllCustomers();
+            var customerDTOs = CustomerRepository.GetAll();
 
             Customers.Clear();
 
@@ -86,7 +108,7 @@ namespace BusinessLayer
                 else
                 {
                     //Item known by database
-                    itemList[index] = new Customer(DataAccessManager.GetCustomerById(itemList[index].Id));
+                    itemList[index] = new Customer(CustomerRepository.GetSingle(itemList[index].Id));
                 }
             }
         }
@@ -106,12 +128,12 @@ namespace BusinessLayer
                 if (itemList[index].Id == 0)
                 {
                     //not known by database yet
-                    DataAccessManager.NewCustomer(itemList[index].ToCustomerDto());               
+                    CustomerRepository.Add(itemList[index].ToCustomerDto());
                 }
                 else
                 {
                     //known by database
-                    DataAccessManager.UpdateCustomer(itemList[index].ToCustomerDto());
+                    CustomerRepository.Update(itemList[index].ToCustomerDto());
                 }
 
                 LoadAllCustomersFromDb();
@@ -127,7 +149,7 @@ namespace BusinessLayer
             }
             else
             {
-                DataAccessManager.DeleteCustomerById(Customers[index].Id);
+                CustomerRepository.Delete(Customers[index].ToCustomerDto());
                 LoadAllCustomersFromDb();
             }
         }
@@ -166,7 +188,7 @@ namespace BusinessLayer
         //ArticleGroup
         public void LoadAllArticleGroupsFromDb()
         {
-            var articleGroupDTOs = DataAccessManager.GetAllArticleGroup();
+            var articleGroupDTOs = ArticleGroupRepository.GetAll();
 
             ArticleGroups.Clear();
 
@@ -200,7 +222,7 @@ namespace BusinessLayer
                 else
                 {
                     //Item known by database
-                    itemList[index] = new ArticleGroup(DataAccessManager.GetArticleGroupById(itemList[index].Id));
+                    itemList[index] = new ArticleGroup(ArticleGroupRepository.GetSingle(itemList[index].Id));
                 }
             }
         }
@@ -219,12 +241,12 @@ namespace BusinessLayer
                 if (itemList[index].Id == 0)
                 {
                     //not known by database yet
-                    DataAccessManager.NewArticleGroup(itemList[index].ToArticleGroupDto());
+                    ArticleGroupRepository.Add(itemList[index].ToArticleGroupDto());
                 }
                 else
                 {
                     //known by database
-                    DataAccessManager.UpdateArticleGroup(itemList[index].ToArticleGroupDto());
+                    ArticleGroupRepository.Add(itemList[index].ToArticleGroupDto());
                 }
 
                 LoadAllArticleGroupsFromDb();
@@ -240,7 +262,8 @@ namespace BusinessLayer
             }
             else
             {
-                DataAccessManager.DeleteArticleGroup(ArticleGroups[index].Id);
+                
+                ArticleGroupRepository.Delete(ArticleGroups[index].ToArticleGroupDto());
                 LoadAllArticleGroupsFromDb();
             }
         }
@@ -248,7 +271,7 @@ namespace BusinessLayer
         //Article
         public void LoadAllArticlesFromDb()
         {
-            var articleDTOs = DataAccessManager.GetAllArticle();
+            var articleDTOs = ArticleRepository.GetAll();
 
             Articles.Clear();
 
@@ -282,7 +305,7 @@ namespace BusinessLayer
                 else
                 {
                     //Item known by database
-                    itemList[index] = new Article(DataAccessManager.GetArticleById(itemList[index].Id));
+                    itemList[index] = new Article(ArticleRepository.GetSingle(itemList[index].Id));
                 }
             }
         }
@@ -303,12 +326,12 @@ namespace BusinessLayer
                     //not known by database yet
                     var articleDto = itemList[index].ToArticleDto();
                     articleDto.ArticleGroup = null;
-                    DataAccessManager.NewArticle(articleDto);
+                    ArticleRepository.Add(articleDto);
                 }
                 else
                 {
                     //known by database
-                    DataAccessManager.UpdateArticle(itemList[index].ToArticleDto());
+                    ArticleRepository.Update(itemList[index].ToArticleDto());
                 }
 
                 LoadAllArticlesFromDb();
@@ -324,7 +347,7 @@ namespace BusinessLayer
             }
             else
             {
-                DataAccessManager.DeleteArticleById(Articles[index].Id);
+                ArticleRepository.Delete(Articles[index].ToArticleDto());
                 LoadAllArticlesFromDb();
             }
         }
@@ -356,7 +379,7 @@ namespace BusinessLayer
         //Order
         public void LoadAllOrdersFromDb()
         {
-            var orderDTOs = DataAccessManager.GetAllOrders();
+            var orderDTOs = OrderRepository.GetAll();
 
             Orders.Clear();
 
@@ -395,7 +418,7 @@ namespace BusinessLayer
                 else
                 {
                     //Item known by database
-                    itemList[index] = new Order(DataAccessManager.GetOrderByID(itemList[index].Id));
+                    itemList[index] = new Order(OrderRepository.GetSingle(itemList[index].Id));
                 }
             }
         }
@@ -416,12 +439,12 @@ namespace BusinessLayer
                     //not known by database yet
                     var newOrder = itemList[index].ToOrderDto();
                     newOrder.Customer = null;
-                    DataAccessManager.NewOrder(newOrder);
+                    OrderRepository.Add(newOrder);
                 }
                 else
                 {
                     //known by database
-                    DataAccessManager.UpdateOrder(itemList[index].ToOrderDto());
+                    OrderRepository.Update(itemList[index].ToOrderDto());
                 }
                 LoadAllOrdersFromDb();
             }
@@ -436,7 +459,7 @@ namespace BusinessLayer
             }
             else
             {
-                DataAccessManager.DeleteOrderById(Orders[index].Id);
+                OrderRepository.Delete(Orders[index].ToOrderDto());
                 LoadAllOrdersFromDb();
             }
         }
@@ -448,7 +471,8 @@ namespace BusinessLayer
             }
             else {
                 var orderIndex = OrderPositions[index].OrderId;
-                DataAccessManager.DeleteOrderPosById(OrderPositions[index].Id);
+
+                OrderPositionRepository.Delete(OrderPositions[index].ToOrderPositionDto());
                 LoadAllOrdersFromDb();
                 LoadOrderPositionsForSpecificOrder(orderIndex);
             }
@@ -481,7 +505,7 @@ namespace BusinessLayer
         //OrderPosition
         public void LoadOrderPositionsForSpecificOrder(int orderId)
         {
-            var orderPositionDTOs = DataAccessManager.GetOrderPositionByOrderID(orderId);
+            var orderPositionDTOs = OrderPositionRepository.GetAllByOrderId(orderId);
 
             OrderPositions.Clear();
 
@@ -510,11 +534,11 @@ namespace BusinessLayer
                     var orderPosition = itemList[index].ToOrderPositionDto();
                     orderPosition.Article = null;
                     orderPosition.OrderId = selectedOrderId;
-                    DataAccessManager.NewOrderPosition(orderPosition);
+                    OrderPositionRepository.Add(orderPosition);
                 }
                 else {
                     //known by database
-                    DataAccessManager.UpdateOrderPosition(itemList[index].ToOrderPositionDto());
+                    OrderPositionRepository.Update(itemList[index].ToOrderPositionDto());
                 }
 
                 LoadOrderPositionsForSpecificOrder(index);
@@ -539,7 +563,7 @@ namespace BusinessLayer
                 else
                 {
                     //Item known by database
-                    itemList[index] = new OrderPosition(DataAccessManager.GetOrderPositionByID(itemList[index].Id));                    
+                    itemList[index] = new OrderPosition(OrderPositionRepository.GetSingle(itemList[index].Id));                    
                 }
             }
         }
@@ -558,12 +582,12 @@ namespace BusinessLayer
                 if (itemList[index].Id == 0)
                 {
                     //not known by database yet
-                    DataAccessManager.NewOrderPosition(itemList[index].ToOrderPositionDto());
+                    OrderPositionRepository.Add(itemList[index].ToOrderPositionDto());
                 }
                 else
                 {
                     //known by database
-                    DataAccessManager.UpdateOrderPosition(itemList[index].ToOrderPositionDto());
+                    OrderPositionRepository.Update(itemList[index].ToOrderPositionDto());
                 }
 
                 LoadOrderPositionsForSpecificOrder(itemList[index].OrderId);
@@ -581,14 +605,14 @@ namespace BusinessLayer
             {
                 int orderId = OrderPositions[index].OrderId;
 
-                DataAccessManager.DeleteOrderPositionById(OrderPositions[index].Id);
+                OrderPositionRepository.Delete(OrderPositions[index].ToOrderPositionDto());
                 LoadOrderPositionsForSpecificOrder(orderId);
             }
         }
 
         public List<ArticleGroup> GetArticleGroupsRecursiveCte()
         {
-            ArticleGroupDTO[] articleGroupDtos = DataAccessManager.GetAllArticleGroupsRecursiveCte();
+            ArticleGroupDTO[] articleGroupDtos = ArticleGroupRepository.GetAllArticleGroupsRecursiveCte();
             var articleGroups = new List<ArticleGroup>();
 
             foreach (ArticleGroupDTO articleGroupDto in articleGroupDtos)
