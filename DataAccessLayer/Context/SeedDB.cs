@@ -19,6 +19,7 @@ namespace DataAccessLayer.Context
             var customers = new List<CustomerDTO>{
                 new CustomerDTO
                 {
+                    Clientnr = "CU10000",
                     Firstname = "Hans",
                     Lastname = "Muster",
                     Company = "ABC AG",
@@ -33,6 +34,7 @@ namespace DataAccessLayer.Context
                     }
                 },
                 new CustomerDTO{
+                    Clientnr = "CU10001",
                     Firstname = "Kurt",
                     Lastname = "Lörrer",
                     Company = "Lörrer GmbH",
@@ -46,6 +48,7 @@ namespace DataAccessLayer.Context
                     }
                 },
                 new CustomerDTO{
+                    Clientnr = "CU10002",
                     Firstname = "Simone",
                     Lastname = "Stadler",
                     Company = "Stadler AG",
@@ -59,6 +62,7 @@ namespace DataAccessLayer.Context
                     }
                 },
                 new CustomerDTO{
+                    Clientnr = "CU10003",
                     Firstname = "Peeetraa",
                     Lastname = "Sturzenegger",
                     Company = "Sturzenegger & Co. AG",
@@ -72,6 +76,7 @@ namespace DataAccessLayer.Context
                     }
                 },
                 new CustomerDTO{
+                    Clientnr = "CU10004",
                     Firstname = "Hansruedi",
                     Lastname = "Arpa",
                     Company = "Isernet AG",
@@ -85,6 +90,7 @@ namespace DataAccessLayer.Context
                     }
                 },
                 new CustomerDTO{
+                    Clientnr = "CU10005",
                     Firstname = "Stan",
                     Lastname = "Rich",
                     Company = "Rich AG",
@@ -98,6 +104,7 @@ namespace DataAccessLayer.Context
                     }
                 },
                 new CustomerDTO{
+                    Clientnr = "CU10006",
                     Firstname = "Jack",
                     Lastname = "Nest",
                     Company = "Nest AG",
