@@ -12,7 +12,13 @@ using Microsoft.Extensions.Primitives;
 namespace BusinessLayer.Models
 {
     public class Customer : BusinessModelBase
-    { 
+    {
+        private string clientnr;
+        public string Clientnr
+        {
+            get => clientnr;
+            set => Set(ref clientnr, value);
+        }
         private string company;
         public string Company
         {
@@ -71,6 +77,7 @@ namespace BusinessLayer.Models
         public Customer(CustomerDTO customerDto)
         {
             Id = customerDto.Id;
+            Clientnr = customerDto.Clientnr;
             Company = customerDto.Company;
             FirstName = customerDto.Firstname;
             LastName = customerDto.Lastname;
@@ -95,6 +102,7 @@ namespace BusinessLayer.Models
         {
             CustomerDTO customerDto = new CustomerDTO();
             customerDto.Id = Id;
+            customerDto.Clientnr = Clientnr;
             customerDto.Company = Company;
             customerDto.Firstname = FirstName;
             customerDto.Lastname = LastName;

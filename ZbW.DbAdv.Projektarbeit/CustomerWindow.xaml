@@ -152,6 +152,7 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="Clientnr" Binding="{Binding Path=Clientnr}"/>
                 <DataGridTextColumn Header="Name / Company" Binding="{Binding Path=Company}"/>
                 <DataGridTextColumn Header="First Name" Binding="{Binding Path=FirstName}"/>
                 <DataGridTextColumn Header="Last Name" Binding="{Binding Path=LastName}"/>

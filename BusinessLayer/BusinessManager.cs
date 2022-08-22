@@ -164,6 +164,7 @@ namespace BusinessLayer
                 var customer = Customers[i];
 
                 if (customer.Id.ToString().Contains(searchText)
+                    || customer.Clientnr != null && customer.Clientnr.Contains(searchText)
                     || customer.FirstName != null && customer.FirstName.Contains(searchText)
                     || customer.LastName != null && customer.LastName.Contains(searchText)
                     || customer.EMail != null && customer.EMail.Contains(searchText)
