@@ -24,7 +24,7 @@ DbAdv Projektarbeit
 
 ### KundenNr ✔️
 Die Adressnummer muss zwingend mit dem Präfix «CU» beginnen (CU=Customer). Anschliessend soll eine 5stellige Nummer folgen.
-Regex Rule: https://regex101.com/r/pQDccg/1 
+* Regex Rule: https://regex101.com/r/pQDccg/1 
 
 ### E-Mail-Adresse ❌
 Implementieren Sie eine Validierung für Email-Adressen. Wenn Ihre Validierung nicht alle
@@ -34,20 +34,21 @@ zu kompliziert würde) dokumentieren Sie, welche Fälle nicht abgedeckt sind.
 
 ### Webseite ❌
 Die Validierung für die Eingabe der Website soll folgende Formate zulassen:
-www.google.com
-http://www.google.com
-https://www.google.com
-google.com
+* www.google.com
+* http://www.google.com
+* https://www.google.com
+* google.com
 
-Wahlweise soll eine Subdomain angegeben werden können (gilt für alle vier Formate) –
-bspw.: https://policies.google.com
-Die Adresse soll auch beliebig mit einem Pfad sowie Parameter ergänzt werden können
-(dies auch wieder für alle Formate) – bspw.:
-https://policies.google.com/technologies/voice?hl=de&gl=ch
+Wahlweise soll eine Subdomain angegeben werden können (gilt für alle vier Formate) – bspw.: https://policies.google.com
+Die Adresse soll auch beliebig mit einem Pfad sowie Parameter ergänzt werden können(dies auch wieder für alle Formate) – bspw.: https://policies.google.com/technologies/voice?hl=de&gl=ch
 
-### Passwort ❌
+* Regex Rule: https://regex101.com/r/dHfnxP/1
+
+### Passwort ✔️
 Für Passwörter gelten die folgenden Regeln:
-* Min. 8 Zeichen
+* Min. 8 Zeichen (bis 12 Zeichen)
 * Zwingend einen Gross- sowie einen Kleinbuchstaben
 * Zwingend eine Zahl
-* usw.
+* usw. + Sonderzeichen
+
+* Regex Rule: https://regex101.com/r/7eDnhK/1
