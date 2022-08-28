@@ -126,6 +126,39 @@
                   CanUserAddRows="False" 
                   SelectionMode="Single"
         >
+            <DataGrid.Resources>
+                <Style x:Key="errorStyle" TargetType="{x:Type TextBox}">
+                    <Setter Property="Padding" Value="-2"/>
+                    <Style.Triggers>
+                        <Trigger Property="Validation.HasError" Value="True">
+                            <Setter Property="Background" Value="Red"/>
+                            <Setter Property="ToolTip" 
+          Value="{Binding RelativeSource={RelativeSource Self},
+            Path=(Validation.Errors)[0].ErrorContent}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+
+                <ControlTemplate x:Key="validationTemplate">
+                    <DataGridCell>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="Red" />
+                        </Style>
+                    </DataGridCell>
+                </ControlTemplate>
+
+                <ControlTemplate x:Key="errorStyle2">
+                    <StackPanel>
+                        <AdornedElementPlaceholder x:Name="placeholder" />
+                        <Popup HorizontalAlignment="Left" PopupAnimation="Fade" Placement="Bottom" IsOpen="true">
+                            <Grid Background="White">
+                                <TextBlock Text="{Binding [0].ErrorContent}"/>
+                            </Grid>
+                        </Popup>
+                    </StackPanel>
+                </ControlTemplate>
+            </DataGrid.Resources>
             <!--<DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Style.Triggers>
@@ -152,9 +185,27 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Clientnr" Binding="{Binding Path=Clientnr}"/>
+                <DataGridTextColumn Header="Clientnr" EditingElementStyle="{StaticResource errorStyle}" Validation.ErrorTemplate="{StaticResource validationTemplate}" Binding="{Binding Path=Clientnr, ValidatesOnExceptions=True}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="true">
+                                    <Setter Property="Background" Value="Red" />
+                                    <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self},Path=(Validation.Errors)[0].ErrorContent}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Name / Company" Binding="{Binding Path=Company}"/>
-                <DataGridTextColumn Header="First Name" Binding="{Binding Path=FirstName}"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding Path=FirstName}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Background" 
+                                    Value="Red" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Last Name" Binding="{Binding Path=LastName}"/>
                 <DataGridTextColumn Header="Street" Binding="{Binding Path=Address.Street}"/>
                 <DataGridTextColumn Header="StreetNo" Binding="{Binding Path=Address.StreetNo}"/>
@@ -164,6 +215,26 @@
                 <DataGridTextColumn Header="Website" Binding="{Binding Path=Website}"/>
                 <DataGridTextColumn Header="Password" Binding="{Binding Path=Password}"/>
             </DataGrid.Columns>
+
+            <DataGrid.RowValidationRules>
+                <local:CustomerValidationRule ValidationStep="RawProposedValue"/>
+            </DataGrid.RowValidationRules>
+
+            <DataGrid.RowValidationErrorTemplate>
+                <ControlTemplate>
+                    <Grid Margin="0,-2,0,-2" ToolTip="{Binding RelativeSource={RelativeSource
+            FindAncestor, AncestorType={x:Type DataGridRow}},
+            Path=(Validation.Errors)[0].ErrorContent}">
+                        <Ellipse StrokeThickness="0" Fill="Red" 
+              Width="{TemplateBinding FontSize}" 
+              Height="{TemplateBinding FontSize}" />
+                        <TextBlock Text="!" FontSize="{TemplateBinding FontSize}" 
+              FontWeight="Bold" Foreground="White" 
+              HorizontalAlignment="Center"  />
+                    </Grid>
+                </ControlTemplate>
+            </DataGrid.RowValidationErrorTemplate>
+
         </DataGrid>
 
 
