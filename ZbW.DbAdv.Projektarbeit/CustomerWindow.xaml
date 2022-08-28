@@ -185,7 +185,7 @@
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Clientnr" EditingElementStyle="{StaticResource errorStyle}" Validation.ErrorTemplate="{StaticResource validationTemplate}" Binding="{Binding Path=Clientnr, ValidatesOnExceptions=True}">
+                <DataGridTextColumn Header="Clientnr" Binding="{Binding Path=Clientnr, ValidatesOnExceptions=True}" EditingElementStyle="{StaticResource errorStyle}" Validation.ErrorTemplate="{StaticResource validationTemplate}" >
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="DataGridCell">
                             <Style.Triggers>
