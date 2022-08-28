@@ -53,3 +53,7 @@ Für Passwörter gelten die folgenden Regeln:
 
 
 * Regex Rule: https://regex101.com/r/7eDnhK/1
+
+
+### Validierung im DataGrid
+https://docs.microsoft.com/de-de/dotnet/desktop/wpf/controls/how-to-implement-validation-with-the-datagrid-control?redirectedfrom=MSDN&view=netframeworkdesktop-4.8
