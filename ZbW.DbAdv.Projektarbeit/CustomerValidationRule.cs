@@ -17,11 +17,21 @@ namespace PresentationLayer
             System.Globalization.CultureInfo cultureInfo)
         {
             Customer customer = (value as BindingGroup).Items[0] as Customer;
-            string pattern = @"^CU\d{5}$";
-            if (!Regex.IsMatch(customer.Clientnr, pattern))
+            string cliennrPattern = @"^CU\d{5}$";
+            if (!Regex.IsMatch(customer.Clientnr, cliennrPattern))
             {
                 return new ValidationResult(false,
                     "Clientnr muss mit 'CU' anfangen und 5 Zahlen enthalten");
+            }
+            else
+            {
+                return ValidationResult.ValidResult;
+            }
+            string emailPattern = @"^((?:[A-Za-z0-9!#$%&'*+\\-\\/=?^_`{|}~]|(?<=^|\\.)'|'(?=$|\\.|@)|(?<='.*)[ .](?=.*')|(?<!\\.)\\.){1,64})(@)((?:[A-Za-z0-9.\\-])*(?:[A-Za-z0-9])\\.(?:[A-Za-z0-9]){2,})$";
+            if (!Regex.IsMatch(customer.EMail, emailPattern))
+            {
+                return new ValidationResult(false,
+                    "Die E-Mailadresse ist ungültig.");
             }
             else
             {

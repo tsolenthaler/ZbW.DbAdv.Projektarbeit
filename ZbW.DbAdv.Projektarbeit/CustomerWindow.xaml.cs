@@ -1,5 +1,6 @@
 ﻿using BusinessLayer;
 using BusinessLayer.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -105,6 +106,7 @@ namespace PresentationLayer
 
         private void Cmd_AddCustomer_Click(object sender, RoutedEventArgs e)
         {
+            
             try
             {
                 BusinessManager.CreateLocalCustomer();

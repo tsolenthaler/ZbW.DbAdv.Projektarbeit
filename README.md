@@ -30,7 +30,7 @@ Die Adressnummer muss zwingend mit dem Präfix «CU» beginnen (CU=Customer). An
 Implementieren Sie eine Validierung für Email-Adressen. Wenn Ihre Validierung nicht alle
 Fälle gemäss RFC 5322 abdeckt (weil z.B. das RegEx-Pattern für die letzten 1% Spezialfälle
 zu kompliziert würde) dokumentieren Sie, welche Fälle nicht abgedeckt sind.
-* [RFC 5322](https://www.rfc-editor.org/rfc/rfc5322) - https://regex101.com/r/XEnnnF/2 (noch nicht bereit für C#)
+* [RFC 5322](https://www.rfc-editor.org/rfc/rfc5322) - https://regex101.com/r/XEnnnF/3 (noch nicht bereit für C#)
 
 ### Webseite ❌
 Die Validierung für die Eingabe der Website soll folgende Formate zulassen:
