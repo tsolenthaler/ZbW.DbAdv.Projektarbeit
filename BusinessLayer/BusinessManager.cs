@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BusinessLayer.Models;
+using Castle.Core.Resource;
 using DataAccessLayer;
 using DataAccessLayer.Article;
 using DataAccessLayer.ArticleGroup;
@@ -125,18 +128,26 @@ namespace BusinessLayer
             }
             else
             {
-                if (itemList[index].Id == 0)
+                if (IsValidCustomer(itemList[index]))
                 {
-                    //not known by database yet
-                    CustomerRepository.Add(itemList[index].ToCustomerDto());
+                    if (itemList[index].Id == 0)
+                    {
+
+                        //not known by database yet
+                        CustomerRepository.Add(itemList[index].ToCustomerDto());
+                    }
+                    else
+                    {
+                        //known by database
+                        CustomerRepository.Update(itemList[index].ToCustomerDto());
+                    }
                 }
                 else
                 {
-                    //known by database
-                    CustomerRepository.Update(itemList[index].ToCustomerDto());
+                    throw new Exception("Not Valid");
                 }
 
-                LoadAllCustomersFromDb();
+                    LoadAllCustomersFromDb();
             }
         }
 
@@ -712,6 +723,35 @@ namespace BusinessLayer
                     YearEndDataCollection[4].QuarterData.Add(yearEndStatisticDTO.TotalArticlesInTheSystem);
                 }
             }
+        }
+
+        public Boolean IsValidCustomer(Customer customer)
+        {
+            string cliennrPattern = @"^CU\d{5}$";
+            string emailPattern = @"^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)'|'(?=$|\.|@)|(?<='.*)[ .](?=.*')|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$";
+            string urlPattern = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
+            string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!”#$%&'()*+,-./:;<=>?]).{8,12}$";
+            if (!Regex.IsMatch(customer.Clientnr, cliennrPattern))
+            {
+                return false;
+            }
+
+            if (!Regex.IsMatch(customer.EMail, emailPattern))
+            {
+                return false;
+            }
+
+            if (!Regex.IsMatch(customer.Website, urlPattern))
+            {
+                return false;
+            }
+
+            if (!Regex.IsMatch(customer.Password, passwordPattern))
+            {
+                return false;
+            }
+
+            return true;
         }
 
 

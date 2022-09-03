@@ -26,13 +26,15 @@ DbAdv Projektarbeit
 Die Adressnummer muss zwingend mit dem Präfix «CU» beginnen (CU=Customer). Anschliessend soll eine 5stellige Nummer folgen.
 * Regex Rule: https://regex101.com/r/pQDccg/1 
 
-### E-Mail-Adresse ❌
+### E-Mail-Adresse ✔️
 Implementieren Sie eine Validierung für Email-Adressen. Wenn Ihre Validierung nicht alle
 Fälle gemäss RFC 5322 abdeckt (weil z.B. das RegEx-Pattern für die letzten 1% Spezialfälle
 zu kompliziert würde) dokumentieren Sie, welche Fälle nicht abgedeckt sind.
-* [RFC 5322](https://www.rfc-editor.org/rfc/rfc5322) - https://regex101.com/r/XEnnnF/3 (noch nicht bereit für C#)
+* [RFC 5322](https://www.rfc-editor.org/rfc/rfc5322)
+* https://regex101.com/r/XEnnnF/5
 
-### Webseite ❌
+
+### Webseite ✔️
 Die Validierung für die Eingabe der Website soll folgende Formate zulassen:
 * www.google.com
 * http://www.google.com
@@ -42,7 +44,7 @@ Die Validierung für die Eingabe der Website soll folgende Formate zulassen:
 Wahlweise soll eine Subdomain angegeben werden können (gilt für alle vier Formate) – bspw.: https://policies.google.com
 Die Adresse soll auch beliebig mit einem Pfad sowie Parameter ergänzt werden können(dies auch wieder für alle Formate) – bspw.: https://policies.google.com/technologies/voice?hl=de&gl=ch
 
-* Regex Rule: https://regex101.com/r/dHfnxP/1
+* Regex Rule: https://regex101.com/r/dHfnxP/2
 
 ### Passwort ✔️
 Für Passwörter gelten die folgenden Regeln:
@@ -52,7 +54,7 @@ Für Passwörter gelten die folgenden Regeln:
 * usw. + Sonderzeichen
 
 
-* Regex Rule: https://regex101.com/r/7eDnhK/1
+* Regex Rule: https://regex101.com/r/7eDnhK/2
 
 
 ### Validierung im DataGrid

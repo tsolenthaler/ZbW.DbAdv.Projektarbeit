@@ -218,7 +218,7 @@
             </DataGrid.Columns>
 
             <DataGrid.RowValidationRules>
-                <local:CustomerValidationRule ValidationStep="RawProposedValue"/>
+                <local:CustomerValidationRule ValidationStep="CommittedValue"/>
             </DataGrid.RowValidationRules>
 
             <DataGrid.RowValidationErrorTemplate>
