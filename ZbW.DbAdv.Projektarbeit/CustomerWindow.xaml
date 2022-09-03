@@ -28,8 +28,10 @@
             <RowDefinition Height="30"/>    <!--12-->
             <RowDefinition Height="10"/>    <!--13-->
             <RowDefinition Height="30"/>    <!--14-->
-            <RowDefinition/>                <!--15-->
-            <RowDefinition Height="50"/>    <!--16-->
+            <RowDefinition Height="10"/>    <!--15-->
+            <RowDefinition Height="30"/>    <!--16-->
+            <RowDefinition Height="10"/>    <!--17-->
+            <RowDefinition Height="30"/>    <!--18-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -332,6 +334,46 @@
                 Background="#FFD6D6D6" 
                 Foreground="Black" 
                 Click="Cmd_DeleteCustomer_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <!--Button Export -->
+        <Button Grid.Row="15" 
+                Grid.Column="9" 
+                x:Name="Cmd_Export" 
+                Content="Export" 
+                FontSize="12" 
+                FlowDirection="LeftToRight" 
+                Padding="1,1,1,1" 
+                UseLayoutRounding="False" 
+                BorderThickness="0,0,0,0" 
+                Background="#FFD6D6D6" 
+                Foreground="Black" 
+                Click="Cmd_Export_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <!--Button Import -->
+        <Button Grid.Row="17" 
+                Grid.Column="9" 
+                x:Name="Cmd_Import" 
+                Content="Import" 
+                FontSize="12" 
+                FlowDirection="LeftToRight" 
+                Padding="1,1,1,1" 
+                UseLayoutRounding="False" 
+                BorderThickness="0,0,0,0" 
+                Background="#FFD6D6D6" 
+                Foreground="Black" 
+                Click="Cmd_Import_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>

@@ -240,5 +240,15 @@ namespace PresentationLayer
                 Cmd_SearchCustomers.Content = "Reset";
             }
         }
+
+        private void Cmd_Import_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Cmd_Export_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
