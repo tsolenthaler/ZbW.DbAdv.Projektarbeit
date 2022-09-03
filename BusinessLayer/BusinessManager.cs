@@ -773,10 +773,10 @@ namespace BusinessLayer
         {
             string fileName = @"c:/temp/Customer.xml";
 
-            var serializer = new XmlSerializer(typeof(Customer));
+            var serializer = new XmlSerializer(typeof(ObservableCollection<Customer>));
             var writer = new StringWriter();
 
-            System.IO.FileStream file = System.IO.File.Create(fileName);
+            //System.IO.FileStream file = System.IO.File.Create(fileName);
             serializer.Serialize(writer, Customers);
             var serializedXml = writer.ToString();
             File.WriteAllText(fileName, serializedXml);
