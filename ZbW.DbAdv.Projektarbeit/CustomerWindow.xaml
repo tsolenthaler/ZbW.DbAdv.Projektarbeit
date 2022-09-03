@@ -32,6 +32,10 @@
             <RowDefinition Height="30"/>    <!--16-->
             <RowDefinition Height="10"/>    <!--17-->
             <RowDefinition Height="30"/>    <!--18-->
+            <RowDefinition Height="10"/>    <!--19-->
+            <RowDefinition Height="30"/>    <!--20-->
+            <RowDefinition Height="10"/>    <!--21-->
+            <RowDefinition Height="30"/>    <!--22-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -341,11 +345,11 @@
             </Button.Resources>
         </Button>
 
-        <!--Button Export -->
+        <!--Button Export JSON -->
         <Button Grid.Row="15" 
                 Grid.Column="9" 
-                x:Name="Cmd_Export" 
-                Content="Export" 
+                x:Name="Cmd_Export_Json" 
+                Content="Export Json" 
                 FontSize="12" 
                 FlowDirection="LeftToRight" 
                 Padding="1,1,1,1" 
@@ -353,7 +357,7 @@
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
                 Foreground="Black" 
-                Click="Cmd_Export_Click">
+                Click="Cmd_ExportJson_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>
@@ -361,11 +365,11 @@
             </Button.Resources>
         </Button>
 
-        <!--Button Import -->
+        <!--Button Export XML -->
         <Button Grid.Row="17" 
                 Grid.Column="9" 
-                x:Name="Cmd_Import" 
-                Content="Import" 
+                x:Name="Cmd_Export_Xml" 
+                Content="Export XML" 
                 FontSize="12" 
                 FlowDirection="LeftToRight" 
                 Padding="1,1,1,1" 
@@ -373,7 +377,47 @@
                 BorderThickness="0,0,0,0" 
                 Background="#FFD6D6D6" 
                 Foreground="Black" 
-                Click="Cmd_Import_Click">
+                Click="Cmd_ExportXml_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <!--Button Import Json -->
+        <Button Grid.Row="19" 
+                Grid.Column="9" 
+                x:Name="Cmd_Import_Json" 
+                Content="Import Json" 
+                FontSize="12" 
+                FlowDirection="LeftToRight" 
+                Padding="1,1,1,1" 
+                UseLayoutRounding="False" 
+                BorderThickness="0,0,0,0" 
+                Background="#FFD6D6D6" 
+                Foreground="Black" 
+                Click="Cmd_ImportJson_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <!--Button Import XML -->
+        <Button Grid.Row="21" 
+                Grid.Column="9" 
+                x:Name="Cmd_Import_Xml" 
+                Content="Import XML" 
+                FontSize="12" 
+                FlowDirection="LeftToRight" 
+                Padding="1,1,1,1" 
+                UseLayoutRounding="False" 
+                BorderThickness="0,0,0,0" 
+                Background="#FFD6D6D6" 
+                Foreground="Black" 
+                Click="Cmd_ImportXml_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="5"/>

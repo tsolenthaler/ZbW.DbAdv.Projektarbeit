@@ -241,14 +241,42 @@ namespace PresentationLayer
             }
         }
 
-        private void Cmd_Import_Click(object sender, RoutedEventArgs e)
+        private void Cmd_ExportJson_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Export JSON");
+            try
+            {
+                BusinessManager.SerialzationJSON();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
         }
 
-        private void Cmd_Export_Click(object sender, RoutedEventArgs e)
+        private void Cmd_ExportXml_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("Export XML");
+            try
+            {
+                BusinessManager.SerialzationXML();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }
+        }
 
+        private void Cmd_ImportJson_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Import Json");
+        }
+
+        private void Cmd_ImportXml_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Import Xml");
         }
     }
 }

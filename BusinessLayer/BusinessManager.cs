@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using BusinessLayer.Models;
 using Castle.Core.Resource;
 using DataAccessLayer;
@@ -754,6 +758,28 @@ namespace BusinessLayer
             return true;
         }
 
+        public async void SerialzationJSON()
+        {
+            string fileName = @"c:/temp/Customer.json";
+            /*string jsonString = JsonSerializer.Serialize(Customers);
+            File.WriteAllText(fileName, jsonString);*/
 
+            using FileStream createStream = File.Create(fileName);
+            await JsonSerializer.SerializeAsync(createStream, Customers);
+            await createStream.DisposeAsync();
+        }
+
+        public  void SerialzationXML()
+        {
+            string fileName = @"c:/temp/Customer.xml";
+
+            var serializer = new XmlSerializer(typeof(Customer));
+            var writer = new StringWriter();
+
+            System.IO.FileStream file = System.IO.File.Create(fileName);
+            serializer.Serialize(writer, Customers);
+            var serializedXml = writer.ToString();
+            File.WriteAllText(fileName, serializedXml);
+        }
     }
 }
