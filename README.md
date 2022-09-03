@@ -20,7 +20,7 @@ DbAdv Projektarbeit
 
 
 
-## RegEx
+## Thema RegEx
 
 ### KundenNr ✔️
 Die Adressnummer muss zwingend mit dem Präfix «CU» beginnen (CU=Customer). Anschliessend soll eine 5stellige Nummer folgen.
@@ -55,3 +55,44 @@ Für Passwörter gelten die folgenden Regeln:
 
 Regex Rule:
 * https://regex101.com/r/7eDnhK/2
+
+## Thema Serialization
+
+Kundendaten sollen importiert und bezogen auf einen bestimmten Zeitpunkt (temporal)
+exportiert werden können. Dafür soll im UI für jede dieser Funktionen eine Schaltfläche
+zur Verfügung stehen. Wird der Export gestartet, kann der Benutzer Datum/Zeit wählen.
+Diese Eingabe wird dann verwendet um die Daten entsprechend zu ermitteln.
+Die Daten sollen im JSON- und XML-Format importiert und exportiert werden können. Der
+Aufbau der entsprechenden Dateien ist nachfolgend aufgezeigt:
+JSON:
+```json
+[{
+    "customerNr": "CU1234",
+    "name": "Hans Muster",
+    "address": {
+        "street": "Musterweg 1",
+        "postalCode": 1234
+    },
+    "email": "hans@muster.ch",
+    "website": "www.hansmuster.ch",
+    "password": "hiddensecret"
+}]
+```
+XML:
+```xml
+<Kunden>
+    <Kunde CustomerNr="CU1234">
+        <Name>Hans Muster</Name>
+            <Address>
+                <Street>Musterweg 1</Street>
+                <PostalCode>1234</PostalCode>
+            </Address>
+        <EMail>hans@muster.ch</EMail>
+        <Website>www.hansmuster.ch</Website>
+        <Password>hiddensecret</Password>
+    </Kunde>
+</Kunden>
+```
+Überlegen Sie sich im Zusammenhang mit dieser Anforderung ebenfalls, wie Sie ein
+Passwort sicher exportieren können. D.h. wenn jemand die exportierte Datei öffnet, darf
+es unter keinen Umständen möglich sein, das Passwort im Klartext auslesen zu können.
