@@ -8,6 +8,8 @@ using System.Text;
 using DataAccessLayer.Customer;
 using DataAccessLayer.Models;
 using Microsoft.Extensions.Primitives;
+using System.Security.Cryptography;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace BusinessLayer.Models
 {
@@ -66,7 +68,7 @@ namespace BusinessLayer.Models
         public string Password 
         {
             get => password;
-            set => Set(ref password, value);
+            set => Set(ref password, HashString(value));
         }
 
         public Customer()
@@ -112,6 +114,29 @@ namespace BusinessLayer.Models
             customerDto.Address = Address.ToAddressDto();
             customerDto.AddressId = Address.Id;
             return customerDto;
+        }
+
+        static string HashString(string text, string salt = "")
+        {
+            if (String.IsNullOrEmpty(text))
+            {
+                return String.Empty;
+            }
+
+            // Uses SHA256 to create the hash
+            using (var sha = new System.Security.Cryptography.SHA256Managed())
+            {
+                // Convert the string to a byte array first, to be processed
+                byte[] textBytes = System.Text.Encoding.UTF8.GetBytes(text + salt);
+                byte[] hashBytes = sha.ComputeHash(textBytes);
+
+                // Convert back to a string, removing the '-' that BitConverter adds
+                string hash = BitConverter
+                    .ToString(hashBytes)
+                    .Replace("-", String.Empty);
+
+                return hash;
+            }
         }
     }
 }

@@ -64,6 +64,7 @@ zur Verfügung stehen. Wird der Export gestartet, kann der Benutzer Datum/Zeit w
 Diese Eingabe wird dann verwendet um die Daten entsprechend zu ermitteln.
 Die Daten sollen im JSON- und XML-Format importiert und exportiert werden können. Der
 Aufbau der entsprechenden Dateien ist nachfolgend aufgezeigt:
+
 JSON:
 ```json
 [{
