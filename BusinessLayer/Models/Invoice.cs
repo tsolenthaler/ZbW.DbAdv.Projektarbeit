@@ -1,7 +1,7 @@
 ﻿using System.Net.Mail;
 using System.Runtime.CompilerServices;
 using System.Text;
-using DataAccessLayer.Models;
+using DataAccessLayer.Invoice;
 using Microsoft.Extensions.Primitives;
 
 namespace BusinessLayer.Models

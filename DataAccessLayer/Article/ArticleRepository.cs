@@ -10,9 +10,6 @@ namespace DataAccessLayer.Article
 {
     public class ArticleRepository : RepositoryBase<ArticleDTO>, IArticleRepository
     {
-        public ArticleRepository(SetupDB context) : base(context)
-        {
-        }
 
 
     }

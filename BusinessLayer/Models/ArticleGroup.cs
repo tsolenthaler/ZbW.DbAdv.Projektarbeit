@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using DataAccessLayer;
-using DataAccessLayer.Article;
-using DataAccessLayer.ArticleGroup;
+﻿using DataAccessLayer.ArticleGroup;
 using DataAccessLayer.Context;
-using DataAccessLayer.Models;
 
 namespace BusinessLayer.Models
 {
@@ -23,7 +15,7 @@ namespace BusinessLayer.Models
         private ArticleGroup parentArticleGroup;
         public ArticleGroup ParentArticleGroup
         {
-            get => GetParentArticleGroup(new ArticleGroupRepository(new SetupDB()));
+            get => GetParentArticleGroup(new ArticleGroupRepository());
             set
             {
                 Set(ref parentArticleGroup, value);

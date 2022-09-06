@@ -10,10 +10,6 @@ namespace DataAccessLayer.Order
 {
     public class OrderRepository : RepositoryBase<OrderDTO>, IOrderRepository
     {
-        public OrderRepository(SetupDB context) : base(context)
-        {
-        }
-
 
     }
 }

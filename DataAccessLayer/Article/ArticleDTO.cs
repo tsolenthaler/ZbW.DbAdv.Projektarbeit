@@ -1,5 +1,4 @@
 ﻿using DataAccessLayer.ArticleGroup;
-using DataAccessLayer.Models;
 using DataAccessLayer.RepositoryBase;
 
 namespace DataAccessLayer.Article

@@ -1,76 +1,16 @@
-﻿using DataAccessLayer.Article;
-using DataAccessLayer.ArticleGroup;
-using DataAccessLayer.Context;
-using DataAccessLayer.Customer;
-using DataAccessLayer.Models;
-using DataAccessLayer.Order;
-using DataAccessLayer.OrderPosition;
+﻿using DataAccessLayer.Context;
+using DataAccessLayer.RepositoryBase;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace DataAccessLayer
+namespace DataAccessLayer.Invoice
 {
-    public class DataAccessManager
+    public class InvoiceRepository : RepositoryBase<InvoiceDTO>, IInvoiceRepository
     {
-
-        
-
-        public void MigrateDatabase()
-        {
-            using var context = new SetupDB();
-
-            context.Database.Migrate();
-
-            // ADD INITIAL DATA 
-            SeedingDatabase();
-        }
-
-        /// <summary>
-        ///  INITAL DATA / Seed Data / Testdata to Database
-        /// </summary>
-        public void SeedingDatabase()
-        {
-            using var context = new SetupDB();
-            var seedDb = new SeedDB();
-
-            if (!context.Customers.Any())
-            {
-                context.AddRange(seedDb.GenerateCustomerDTOs());
-                context.SaveChanges();
-            }
-            if (!context.ArticelGroups.Any())
-            {
-                context.AddRange(seedDb.GenerateFirstArticleGroupDTOs());
-                context.SaveChanges();
-                context.AddRange(seedDb.GenerateSecondArticleGroupDTOs());
-                context.SaveChanges();
-                context.AddRange(seedDb.GenerateThirdArticleGroupDTOs());
-                context.SaveChanges();
-            }
-            if (!context.Articles.Any())
-            {
-                seedDb.SeedArticleDTOsWithDatumInThePast();
-            }
-            if (!context.Orders.Any())
-            {
-                context.AddRange(seedDb.GenerateOrderDTOs());
-                context.SaveChanges();
-            }
-            if (!context.OrderPositions.Any())
-            {
-                context.AddRange(seedDb.GenerateOrderPositionDTOs());
-                context.SaveChanges();
-            }
-            if (!context.Invoices.Any())
-            {
-                context.AddRange(seedDb.GenerateInvoiceDTOs());
-                context.SaveChanges();
-                seedDb.SeedCustomerHistory();
-                seedDb.SeedAddressesHistory();
-                context.AddRange(seedDb.ChangeCustomerDTOs());
-                context.SaveChanges();
-            }
-        }
-
         public List<YearEndStatisticDTO> GetYearEndingData()
         {
             var yearEndStatistics = new List<YearEndStatisticDTO>();
@@ -99,38 +39,18 @@ namespace DataAccessLayer
             return yearEndStatistics;
         }
 
-
-
- 
-
         /// <summary>
         ///  READ all Invoices
         /// </summary>
         public InvoiceDTO[] GetAllInvoices()
         {
             using var context = new SetupDB();
-            //return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
             var invoices = context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address);
             var customers = context.Customers.Include(a => a.Address);
             var customersEntry = context.Entry(customers);
-
-            //var VaildFrom = context.Entry(customers).Property("VaildFrom").CurrentValue;
-            //var VaildTo = context.Entry(customers).Property("VaildTo").CurrentValue;
             return invoices.ToArray();
         }
 
-        /// <summary>
-        ///  READ all Invoices by Date
-        /// </summary>
-        /*public InvoiceDTO[] GetAllInvoicesbyDate(DateTime startDate, DateTime endDate)
-        {
-            using var context = new SetupDB();
-            //return context.Invoices.Include(c => c.Customer).Include(a => a.Customer.Address).ToArray();
-            //var invoices = context.Invoices.TemporalAsOf(DateTime.UtcNow).Include(c => c.Customer).Include(a => a.Customer.Address).Where(x => x.Date >= startDate && x.Date <= endDate);
-            var invoices = context.Invoices
-                .FromSqlRaw("SELECT [CustomerId], c.Company as Name, a.Street as Street, a.StreetNo as StreetNo, a.Plz as Plz, a.City as City, a.Countryname as Countryname,i.[Id],i.[Date] As Date,[Netto],[Brutto], i.ValidFrom as ValidFrom, i.ValidTo as ValidTo FROM [AuftragsverwaltungHistory].[dbo].[Invoices] i INNER JOIN dbo.Customer FOR SYSTEM_TIME ALL as c on i.customerid = c.id INNER JOIN dbo.Addresses FOR SYSTEM_TIME ALL as a on c.addressid = a.id WHERE i.Date BETWEEN '2021-01-01' and '2022-03-06' AND c.ValidFrom <= i.Date and c.ValidTo >= i.Date AND a.ValidFrom <= i.Date and a.ValidTo >= i.Date ORDER BY i.Date");
-            return invoices.ToArray();
-        }*/
 
         public List<InvoiceReportDTO> GetAllInvoicesbyDate(DateTime startDate, DateTime endDate)
         {

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayer.Customer;
+using DataAccessLayer.RepositoryBase;
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.Invoice
 {
-    public class InvoiceDTO
+    public class InvoiceDTO : TEntity
     {
-        public int Id { get; set; }
         public DateTime? Date { get; set; }
         public int CustomerId { get; set; }
         public virtual CustomerDTO Customer { get; set; }

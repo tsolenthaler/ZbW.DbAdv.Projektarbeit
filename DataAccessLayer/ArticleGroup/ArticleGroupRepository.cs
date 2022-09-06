@@ -10,11 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace DataAccessLayer.ArticleGroup
 {
     public class ArticleGroupRepository : RepositoryBase<ArticleGroupDTO>, IArticleGroupRepository
-    {
-        public ArticleGroupRepository(SetupDB context) : base(context)
-        {
-        }
-
+    { 
         public ArticleGroupDTO[] GetAllArticleGroupsRecursiveCte()
         {
             string sqlCommand = "WITH CTE_ARTICLEGROUPS (Id, Name, ParentArticleGroupId, ValidFrom, ValidTo ) AS (SELECT Id, Name, ParentArticleGroupId, ValidFrom, ValidTo " +

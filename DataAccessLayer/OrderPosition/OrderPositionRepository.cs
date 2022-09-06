@@ -11,10 +11,6 @@ namespace DataAccessLayer.OrderPosition
 {
     public class OrderPositionRepository : RepositoryBase<OrderPositionDTO>, IOrderPositionRepository
     {
-        public OrderPositionRepository(SetupDB context) : base(context)
-        {
-        }
-
         public OrderPositionDTO[] GetAllByOrderId(int id)
         {
             using var context = new SetupDB();

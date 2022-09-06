@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Net.Mail;
-using System.Runtime.CompilerServices;
-using System.Text;
-using DataAccessLayer.Customer;
-using DataAccessLayer.Models;
-using Microsoft.Extensions.Primitives;
-using System.Security.Cryptography;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using DataAccessLayer.Customer;
 
 namespace BusinessLayer.Models
 {

@@ -18,7 +18,7 @@ using DataAccessLayer;
 using DataAccessLayer.Article;
 using DataAccessLayer.ArticleGroup;
 using DataAccessLayer.Customer;
-using DataAccessLayer.Models;
+using DataAccessLayer.Invoice;
 using DataAccessLayer.Order;
 using DataAccessLayer.OrderPosition;
 
@@ -35,22 +35,28 @@ namespace BusinessLayer
 
         public ObservableCollection<YearEndData> YearEndDataCollection { get; set; } = new ObservableCollection<YearEndData>();
 
-        public DataAccessManager DataAccessManager { get; set; } = new DataAccessManager();
-
         public ICustomerRepository CustomerRepository { get; }
         public IArticleRepository ArticleRepository { get; }
         public IArticleGroupRepository ArticleGroupRepository { get; }
         public IOrderRepository OrderRepository { get; }
         public IOrderPositionRepository OrderPositionRepository { get; }
+        public IInvoiceRepository InvoiceRepository { get; }
 
         public BusinessManager(ICustomerRepository customerRepository, IArticleRepository articleRepository, 
-            IArticleGroupRepository articleGroupRepository, IOrderRepository orderRepository, IOrderPositionRepository orderPositionRepository)
+            IArticleGroupRepository articleGroupRepository, IOrderRepository orderRepository, 
+            IOrderPositionRepository orderPositionRepository, IInvoiceRepository invoiceRepository)
         {
             CustomerRepository = customerRepository;
             ArticleRepository = articleRepository;
             ArticleGroupRepository = articleGroupRepository;
             OrderRepository = orderRepository;
             OrderPositionRepository = orderPositionRepository;
+            InvoiceRepository = invoiceRepository;
+        }
+
+        public void MigrateDatabase()
+        {
+            new DataAccessManager().MigrateDatabase();
         }
 
         //Generic
@@ -640,7 +646,7 @@ namespace BusinessLayer
 
         public void LoadAllInvoicesFromDbbyDate(DateTime startDate, DateTime endDate)
         {
-            var invoiceReportDTOs = DataAccessManager.GetAllInvoicesbyDate(startDate, endDate);
+            var invoiceReportDTOs = InvoiceRepository.GetAllInvoicesbyDate(startDate, endDate);
 
             InvoiceReports.Clear();
 
@@ -676,7 +682,7 @@ namespace BusinessLayer
                 Category = "Total Articles in the System"
             });
 
-            List<YearEndStatisticDTO> yearEndStatisticDTOs = DataAccessManager.GetYearEndingData();
+            List<YearEndStatisticDTO> yearEndStatisticDTOs = InvoiceRepository.GetYearEndingData();
 
             //Convert YearEndStatisticDTO into YearEndData (basically pivot)
             foreach(var yearEndStatisticDTO in yearEndStatisticDTOs)

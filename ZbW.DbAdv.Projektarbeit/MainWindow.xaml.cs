@@ -1,24 +1,31 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
+using Autofac;
 using BusinessLayer;
+using DataAccessLayer.Customer;
 using DataAccessLayer.Article;
 using DataAccessLayer.ArticleGroup;
-using DataAccessLayer.Context;
 using DataAccessLayer.Customer;
+using DataAccessLayer.Invoice;
 using DataAccessLayer.Order;
 using DataAccessLayer.OrderPosition;
 
-namespace PresentationLayer {
+namespace PresentationLayer
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        public BusinessManager BusinessManager { get; } = new BusinessManager(new CustomerRepository(new SetupDB()), 
-            new ArticleRepository(new SetupDB()), new ArticleGroupRepository(new SetupDB()),
-            new OrderRepository(new SetupDB()), new OrderPositionRepository(new SetupDB()));
+
+        private readonly Autofac.IContainer container;
+
+        public BusinessManager BusinessManager { get; }
 
         public MainWindow() {
             InitializeComponent();
+            container = new IoCSetup().SetupContainer();
+            BusinessManager = container.Resolve<BusinessManager>();
         }
 
         private void Cmd_OrdersWindow_Click(object sender, RoutedEventArgs e) {
@@ -41,7 +48,7 @@ namespace PresentationLayer {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             try {
-                BusinessManager.DataAccessManager.MigrateDatabase();
+                BusinessManager.MigrateDatabase();
             }
             catch (Exception ex) {
                 MessageBox.Show("Not able to migrate database - maybe you haven't configured the connection string yet? \r\n \r\nConfigure it in file DataAccessLayer/Context/SetupDB.cs \r\n \r\nError Message: \r\n" + ex.Message + " Inner Exception: " + ex.InnerException?.Message);

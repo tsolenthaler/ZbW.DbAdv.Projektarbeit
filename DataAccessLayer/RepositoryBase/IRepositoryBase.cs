@@ -1,5 +1,4 @@
-﻿using DataAccessLayer.Models;
-
+﻿
 namespace DataAccessLayer.RepositoryBase
 {
     public interface IRepositoryBase<M> where M : TEntity

@@ -1,5 +1,4 @@
-﻿using DataAccessLayer.Models;
-using DataAccessLayer.RepositoryBase;
+﻿using DataAccessLayer.RepositoryBase;
 
 namespace DataAccessLayer.Customer
 {
