@@ -138,7 +138,8 @@ namespace BusinessLayer
             }
             else
             {
-                if (IsValidCustomer(itemList[index]))
+                String validMassage = IsValidCustomer(itemList[index]);
+                if (validMassage == null)
                 {
                     if (itemList[index].Id == 0)
                     {
@@ -154,7 +155,7 @@ namespace BusinessLayer
                 }
                 else
                 {
-                    throw new Exception("Not Valid");
+                    throw new Exception("Not Valid \r\n " + validMassage);
                 }
 
                     LoadAllCustomersFromDb();
@@ -735,33 +736,36 @@ namespace BusinessLayer
             }
         }
 
-        public Boolean IsValidCustomer(Customer customer)
+        public String IsValidCustomer(Customer customer)
         {
             string cliennrPattern = @"^CU\d{5}$";
             string emailPattern = @"^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)'|'(?=$|\.|@)|(?<='.*)[ .](?=.*')|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$";
             string urlPattern = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
             string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!”#$%&'()*+,-./:;<=>?]).{8,12}$";
+
+            string validMessage = "";
+
             if (!Regex.IsMatch(customer.Clientnr, cliennrPattern))
             {
-                return false;
+                validMessage += "Clientnr ist nicht gültig!";
             }
 
             if (!Regex.IsMatch(customer.EMail, emailPattern))
             {
-                return false;
+                validMessage += "\r\n E-Mailadresse ist nicht gültig!";
             }
 
             if (!Regex.IsMatch(customer.Website, urlPattern))
             {
-                return false;
+                validMessage += "\r\n Webseite ist nicht gültig!";
             }
 
             if (!Regex.IsMatch(customer.Password, passwordPattern))
             {
-                return false;
+                validMessage += "\r\n Passwort ist nicht gültig!";
             }
 
-            return true;
+            return validMessage;
         }
 
         public async void SerialzationJSON()
