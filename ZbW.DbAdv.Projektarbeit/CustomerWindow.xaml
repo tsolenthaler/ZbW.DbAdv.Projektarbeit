@@ -28,7 +28,7 @@
             <RowDefinition Height="30"/>    <!--12-->
             <RowDefinition Height="10"/>    <!--13-->
             <RowDefinition Height="30"/>    <!--14-->
-            <RowDefinition Height="10"/>    <!--15-->
+            <RowDefinition Height="30"/>    <!--15-->
             <RowDefinition Height="30"/>    <!--16-->
             <RowDefinition Height="10"/>    <!--17-->
             <RowDefinition Height="30"/>    <!--18-->
@@ -36,6 +36,8 @@
             <RowDefinition Height="30"/>    <!--20-->
             <RowDefinition Height="10"/>    <!--21-->
             <RowDefinition Height="30"/>    <!--22-->
+            <RowDefinition Height="10"/>    <!--23-->
+            <RowDefinition Height="30"/>    <!--24-->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -287,8 +289,12 @@
             </Button.Resources>
         </Button>
 
+        <DatePicker Grid.Column="9" 
+                    Grid.Row="15"
+                    HorizontalAlignment="Left" Name="DatePickerDate" SelectedDateChanged="Cmd_SelectedDate"/>
+
         <!--Button Export JSON -->
-        <Button Grid.Row="15" 
+        <Button Grid.Row="17" 
                 Grid.Column="9" 
                 x:Name="Cmd_Export_Json" 
                 Content="Export Json" 
@@ -308,7 +314,7 @@
         </Button>
 
         <!--Button Export XML -->
-        <Button Grid.Row="17" 
+        <Button Grid.Row="19" 
                 Grid.Column="9" 
                 x:Name="Cmd_Export_Xml" 
                 Content="Export XML" 
@@ -328,7 +334,7 @@
         </Button>
 
         <!--Button Import Json -->
-        <Button Grid.Row="19" 
+        <Button Grid.Row="21" 
                 Grid.Column="9" 
                 x:Name="Cmd_Import_Json" 
                 Content="Import Json" 
@@ -348,7 +354,7 @@
         </Button>
 
         <!--Button Import XML -->
-        <Button Grid.Row="21" 
+        <Button Grid.Row="23" 
                 Grid.Column="9" 
                 x:Name="Cmd_Import_Xml" 
                 Content="Import XML" 

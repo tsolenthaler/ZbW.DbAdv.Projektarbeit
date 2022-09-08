@@ -278,5 +278,10 @@ namespace PresentationLayer
         {
             MessageBox.Show("Import Xml");
         }
+
+        private void Cmd_SelectedDate(object sender, SelectionChangedEventArgs e)
+        {
+            DateTime? startDate = DatePickerDate.SelectedDate;
+        }
     }
 }
