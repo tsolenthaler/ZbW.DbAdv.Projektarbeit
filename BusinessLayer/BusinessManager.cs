@@ -769,7 +769,7 @@ namespace BusinessLayer
             return validMessage;
         }
 
-        public async void SerialzationJSON()
+        public async void SerialzationJSON(DateTime startDate)
         {
             string fileName = @"c:/temp/Customer.json";
 
@@ -779,6 +779,7 @@ namespace BusinessLayer
             };
 
             using FileStream createStream = File.Create(fileName);
+            var exportJsonCustomer = CustomerRepository.GetAllCustomersByValidDate(startDate);
             await JsonSerializer.SerializeAsync(createStream, Customers, options);
             await createStream.DisposeAsync();
         }

@@ -30,5 +30,16 @@ namespace DataAccessLayer.Customer
 
             return customer[0];
         }
+
+        public CustomerDTO[] GetAllCustomersByValidDate(DateTime date)
+        {
+            using var context = new SetupDB();
+            //var customer = context.Customers.Find(id);
+            var customers = context.Customers
+                .TemporalAsOf(date)
+                .Include(c => c.Address).ToArray();
+
+            return customers;
+        }
     }
 }

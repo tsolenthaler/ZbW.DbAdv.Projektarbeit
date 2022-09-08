@@ -243,9 +243,10 @@ namespace PresentationLayer
 
         private void Cmd_ExportJson_Click(object sender, RoutedEventArgs e)
         {
+            DateTime? startDate = DatePickerDate.SelectedDate;
             try
             {
-                BusinessManager.SerialzationJSON();
+                BusinessManager.SerialzationJSON((DateTime)startDate);
                 MessageBox.Show("Export JSON erfolgreich!");
             }
             catch (Exception ex)
