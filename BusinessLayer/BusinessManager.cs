@@ -744,7 +744,7 @@ namespace BusinessLayer
             string urlPattern = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
             string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!”#$%&'()*+,-./:;<=>?]).{8,12}$";
 
-            string validMessage = "";
+            string validMessage = null;
 
             if (!Regex.IsMatch(customer.Clientnr, cliennrPattern))
             {
@@ -760,11 +760,11 @@ namespace BusinessLayer
             {
                 validMessage += "\r\n Webseite ist nicht gültig!";
             }
-
+            /*
             if (!Regex.IsMatch(customer.Password, passwordPattern))
             {
                 validMessage += "\r\n Passwort ist nicht gültig!";
-            }
+            }*/
 
             return validMessage;
         }
@@ -781,6 +781,37 @@ namespace BusinessLayer
             using FileStream createStream = File.Create(fileName);
             await JsonSerializer.SerializeAsync(createStream, Customers, options);
             await createStream.DisposeAsync();
+        }
+
+        public void DeserialzationJSON()
+        {
+            string fileName = @"c:/temp/ImportCustomer.json";
+            string jsonString = File.ReadAllText(fileName);
+            ObservableCollection <Customer> importJsonCustomers = JsonSerializer.Deserialize<ObservableCollection<Customer>>(jsonString)!;
+
+            foreach (var importCustomer in importJsonCustomers)
+            {
+                    String validMassage = IsValidCustomer(importCustomer);
+                    if (validMassage == null)
+                    {
+                        if (importCustomer.Id == 0)
+                        {
+                            //not known by database yet
+                            CustomerRepository.Add(importCustomer.ToCustomerDto());
+                        }
+                        else
+                        {
+                            //known by database
+                            CustomerRepository.Update(importCustomer.ToCustomerDto());
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Not Valid \r\n " + validMassage);
+                    }
+
+                    LoadAllCustomersFromDb();
+            }
         }
 
         public  void SerialzationXML()

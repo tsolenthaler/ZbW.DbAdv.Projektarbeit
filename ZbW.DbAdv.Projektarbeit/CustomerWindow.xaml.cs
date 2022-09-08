@@ -271,7 +271,18 @@ namespace PresentationLayer
 
         private void Cmd_ImportJson_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Import Json");
+            BusinessManager.DeserialzationJSON();
+            /*
+            try
+            {
+                BusinessManager.DeserialzationJSON();
+                MessageBox.Show("Import Json erfolgreich!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                return;
+            }*/
         }
 
         private void Cmd_ImportXml_Click(object sender, RoutedEventArgs e)
