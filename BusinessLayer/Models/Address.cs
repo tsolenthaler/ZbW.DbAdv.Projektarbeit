@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Customer;
+using System.Text.Json.Serialization;
 
 namespace BusinessLayer.Models
 {
@@ -14,6 +15,7 @@ namespace BusinessLayer.Models
             Frankreich
         }
         private string street;
+        [JsonIgnore]
         public string Street
         {
             get => street;
@@ -21,13 +23,20 @@ namespace BusinessLayer.Models
         }
 
         private string streetno;
+        [JsonIgnore]
         public string StreetNo
         {
             get => streetno;
             set => Set(ref streetno, value);
         }
+        [JsonPropertyName("street")]
+        public string streetWithNo
+        {
+            get => street + " " + streetno;
+        }
 
         private string city;
+        [JsonIgnore]
         public string City
         {
             get => city;
@@ -35,6 +44,7 @@ namespace BusinessLayer.Models
         }
 
         private string plz;
+        [JsonPropertyName("postalCode")]
         public string Plz
         {
             get => plz;
@@ -42,6 +52,7 @@ namespace BusinessLayer.Models
         }
 
         private Country countryname;
+        [JsonIgnore]
         public Country Countryname
         {
             get => countryname;

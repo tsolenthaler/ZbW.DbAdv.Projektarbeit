@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -771,11 +772,14 @@ namespace BusinessLayer
         public async void SerialzationJSON()
         {
             string fileName = @"c:/temp/Customer.json";
-            /*string jsonString = JsonSerializer.Serialize(Customers);
-            File.WriteAllText(fileName, jsonString);*/
+
+            JsonSerializerOptions options = new()
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+            };
 
             using FileStream createStream = File.Create(fileName);
-            await JsonSerializer.SerializeAsync(createStream, Customers);
+            await JsonSerializer.SerializeAsync(createStream, Customers, options);
             await createStream.DisposeAsync();
         }
 
@@ -786,7 +790,6 @@ namespace BusinessLayer
             var serializer = new XmlSerializer(typeof(ObservableCollection<Customer>));
             var writer = new StringWriter();
 
-            //System.IO.FileStream file = System.IO.File.Create(fileName);
             serializer.Serialize(writer, Customers);
             var serializedXml = writer.ToString();
             File.WriteAllText(fileName, serializedXml);

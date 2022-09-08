@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace BusinessLayer.Models
@@ -12,6 +13,7 @@ namespace BusinessLayer.Models
     {
         //used for wpf datagrid manipulation
         private bool readOnly;
+        [JsonIgnore]
         public bool ReadOnly
         {
             get => readOnly;
@@ -19,6 +21,7 @@ namespace BusinessLayer.Models
         }
 
         private int id;
+        [JsonIgnore]
         public int Id 
         { 
             get => id;

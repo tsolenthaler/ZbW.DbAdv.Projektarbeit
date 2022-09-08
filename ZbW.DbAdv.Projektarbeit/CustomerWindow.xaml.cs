@@ -243,10 +243,10 @@ namespace PresentationLayer
 
         private void Cmd_ExportJson_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Export JSON");
             try
             {
                 BusinessManager.SerialzationJSON();
+                MessageBox.Show("Export JSON erfolgreich!");
             }
             catch (Exception ex)
             {
@@ -257,10 +257,10 @@ namespace PresentationLayer
 
         private void Cmd_ExportXml_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Export XML");
             try
             {
                 BusinessManager.SerialzationXML();
+                MessageBox.Show("Export XML erfolgreich!");
             }
             catch (Exception ex)
             {
