@@ -13,7 +13,6 @@ namespace BusinessLayer.Models
     {
         //used for wpf datagrid manipulation
         private bool readOnly;
-        [JsonIgnore]
         public bool ReadOnly
         {
             get => readOnly;
@@ -21,7 +20,6 @@ namespace BusinessLayer.Models
         }
 
         private int id;
-        [JsonIgnore]
         public int Id 
         { 
             get => id;

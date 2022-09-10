@@ -6,14 +6,12 @@ namespace BusinessLayer.Models
     public class Customer : BusinessModelBase
     {
         private string clientnr;
-        [JsonPropertyName("customerNr")]
         public string Clientnr
         {
             get => clientnr;
             set => Set(ref clientnr, value);
         }
         private string company;
-        [JsonIgnore]
         public string Company
         {
             get => company;
@@ -21,7 +19,6 @@ namespace BusinessLayer.Models
         }
 
         private string lastName;
-        [JsonIgnore]
         public string LastName
         {
             get => lastName;
@@ -29,7 +26,6 @@ namespace BusinessLayer.Models
         }
 
         private string firstName;
-        [JsonIgnore]
         public string FirstName
         {
             get => firstName;
@@ -42,7 +38,6 @@ namespace BusinessLayer.Models
         }
 
         private Address address = new Address();
-        [JsonPropertyName("address")]
         public Address Address
         {
             get => address;
@@ -50,7 +45,6 @@ namespace BusinessLayer.Models
         }
 
         private string email;
-        [JsonPropertyName("email")]
         public string EMail 
         {
             get => email;
@@ -58,7 +52,6 @@ namespace BusinessLayer.Models
         }
 
         private string website;
-        [JsonPropertyName("website")]
         public string Website 
         {
             get => website;
@@ -67,7 +60,6 @@ namespace BusinessLayer.Models
 
         //to be defined exactly how passwords are handled
         private string password;
-        [JsonPropertyName("password")]
         public string Password 
         {
             get => password;

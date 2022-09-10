@@ -29,6 +29,7 @@ namespace BusinessLayer
     public class BusinessManager
     {
         public ObservableCollection<Customer> Customers { get; set; } = new ObservableCollection<Customer>();
+        public ObservableCollection<Client> ExportClients { get; set; } = new ObservableCollection<Client>();
         public ObservableCollection<Article> Articles { get; set; } = new ObservableCollection<Article>();
         public ObservableCollection<ArticleGroup> ArticleGroups { get; set; } = new ObservableCollection<ArticleGroup>();
         public ObservableCollection<Order> Orders { get; set; } = new ObservableCollection<Order>();
@@ -39,14 +40,14 @@ namespace BusinessLayer
 
         public ICustomerRepository CustomerRepository { get; }
 
-        public IExportRepository ExportRepository { get; }
+        public IExportClientRepository ExportRepository { get; }
         public IArticleRepository ArticleRepository { get; }
         public IArticleGroupRepository ArticleGroupRepository { get; }
         public IOrderRepository OrderRepository { get; }
         public IOrderPositionRepository OrderPositionRepository { get; }
         public IInvoiceRepository InvoiceRepository { get; }
 
-        public BusinessManager(ICustomerRepository customerRepository, IExportRepository exportRepository, IArticleRepository articleRepository, 
+        public BusinessManager(ICustomerRepository customerRepository, IExportClientRepository exportRepository, IArticleRepository articleRepository, 
             IArticleGroupRepository articleGroupRepository, IOrderRepository orderRepository, 
             IOrderPositionRepository orderPositionRepository, IInvoiceRepository invoiceRepository)
         {
@@ -778,8 +779,17 @@ namespace BusinessLayer
             string fileName = @"c:/temp/Customer.json";
 
             using FileStream createStream = File.Create(fileName);
-            var exportJsonCustomer = ExportRepository.GetAllCustomersByValidDate(startDate);
-            await JsonSerializer.SerializeAsync(createStream, exportJsonCustomer);
+            var exportRepositoryDTO = ExportRepository.GetAllCustomersByValidDate(startDate);
+
+            ExportClients.Clear();
+
+            foreach (var exportDTO in exportRepositoryDTO)
+            {
+                var client = new Client(exportDTO);
+                ExportClients.Add(client);
+            }
+
+            await JsonSerializer.SerializeAsync(createStream, ExportClients);
             await createStream.DisposeAsync();
         }
 
@@ -787,8 +797,9 @@ namespace BusinessLayer
         {
             string fileName = @"c:/temp/ImportCustomer.json";
             string jsonString = File.ReadAllText(fileName);
-            ObservableCollection <Customer> importJsonCustomers = JsonSerializer.Deserialize<ObservableCollection<Customer>>(jsonString)!;
+            ObservableCollection <Export> importJsonCustomers = JsonSerializer.Deserialize<ObservableCollection<Export>>(jsonString)!;
 
+            /*
             foreach (var importCustomer in importJsonCustomers)
             {
                     String validMassage = IsValidCustomer(importCustomer);
@@ -811,17 +822,29 @@ namespace BusinessLayer
                     }
 
                     LoadAllCustomersFromDb();
-            }
+            }*/
         }
 
-        public  void SerialzationXML()
+        public void SerialzationXML(DateTime startDate)
         {
             string fileName = @"c:/temp/Customer.xml";
 
-            var serializer = new XmlSerializer(typeof(ObservableCollection<Customer>));
+            var serializer = new XmlSerializer(typeof(Export));
             var writer = new StringWriter();
 
-            serializer.Serialize(writer, Customers);
+            var exportRepositoryDTO = ExportRepository.GetAllCustomersByValidDate(startDate);
+
+            ExportClients.Clear();
+
+            foreach (var exportDTO in exportRepositoryDTO)
+            {
+                var client = new Client(exportDTO);
+                ExportClients.Add(client);
+            }
+
+            Export xmlExport = new Export(ExportClients);
+
+            serializer.Serialize(writer, xmlExport);
             var serializedXml = writer.ToString();
             File.WriteAllText(fileName, serializedXml);
         }

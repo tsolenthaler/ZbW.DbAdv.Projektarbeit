@@ -23,7 +23,7 @@ namespace BusinessLayer
             containerBuilder.RegisterType<ArticleRepository>().As<IArticleRepository>();
             containerBuilder.RegisterType<ArticleGroupRepository>().As<IArticleGroupRepository>();
             containerBuilder.RegisterType<CustomerRepository>().As<ICustomerRepository>();
-            containerBuilder.RegisterType<ExportRepository>().As<IExportRepository>();
+            containerBuilder.RegisterType<ExportClientRepository>().As<IExportClientRepository>();
             containerBuilder.RegisterType<InvoiceRepository>().As<IInvoiceRepository>();
             containerBuilder.RegisterType<OrderRepository>().As<IOrderRepository>();
             containerBuilder.RegisterType<OrderPositionRepository>().As<IOrderPositionRepository>();

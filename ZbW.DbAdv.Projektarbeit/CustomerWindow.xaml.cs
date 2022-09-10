@@ -243,30 +243,47 @@ namespace PresentationLayer
 
         private void Cmd_ExportJson_Click(object sender, RoutedEventArgs e)
         {
+
             DateTime? startDate = DatePickerDate.SelectedDate;
-            try
+            if (startDate.HasValue)
             {
-                BusinessManager.SerialzationJSON((DateTime)startDate);
-                MessageBox.Show("Export JSON erfolgreich!");
+                try
+                {
+                    BusinessManager.SerialzationJSON((DateTime)startDate);
+                    MessageBox.Show("Export JSON erfolgreich!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                    return;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-                return;
+                MessageBox.Show("Bitte Datum wählen!");
             }
+            
         }
 
         private void Cmd_ExportXml_Click(object sender, RoutedEventArgs e)
         {
-            try
+            DateTime? startDate = DatePickerDate.SelectedDate;
+            if (startDate.HasValue)
             {
-                BusinessManager.SerialzationXML();
-                MessageBox.Show("Export XML erfolgreich!");
+                try
+                {
+                    BusinessManager.SerialzationXML((DateTime)startDate);
+                    MessageBox.Show("Export XML erfolgreich!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
+                    return;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
-                return;
+                MessageBox.Show("Bitte Datum wählen!");
             }
         }
 

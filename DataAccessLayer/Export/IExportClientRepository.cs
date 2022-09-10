@@ -9,8 +9,8 @@ using DataAccessLayer.RepositoryBase;
 
 namespace DataAccessLayer.Export
 {
-    public interface IExportRepository
+    public interface IExportClientRepository
     {
-        public ExportDTO[] GetAllCustomersByValidDate(DateTime date);
+        public ExportClientDTO[] GetAllCustomersByValidDate(DateTime date);
     }
 }
