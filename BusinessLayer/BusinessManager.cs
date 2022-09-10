@@ -19,6 +19,7 @@ using DataAccessLayer;
 using DataAccessLayer.Article;
 using DataAccessLayer.ArticleGroup;
 using DataAccessLayer.Customer;
+using DataAccessLayer.Export;
 using DataAccessLayer.Invoice;
 using DataAccessLayer.Order;
 using DataAccessLayer.OrderPosition;
@@ -37,17 +38,20 @@ namespace BusinessLayer
         public ObservableCollection<YearEndData> YearEndDataCollection { get; set; } = new ObservableCollection<YearEndData>();
 
         public ICustomerRepository CustomerRepository { get; }
+
+        public IExportRepository ExportRepository { get; }
         public IArticleRepository ArticleRepository { get; }
         public IArticleGroupRepository ArticleGroupRepository { get; }
         public IOrderRepository OrderRepository { get; }
         public IOrderPositionRepository OrderPositionRepository { get; }
         public IInvoiceRepository InvoiceRepository { get; }
 
-        public BusinessManager(ICustomerRepository customerRepository, IArticleRepository articleRepository, 
+        public BusinessManager(ICustomerRepository customerRepository, IExportRepository exportRepository, IArticleRepository articleRepository, 
             IArticleGroupRepository articleGroupRepository, IOrderRepository orderRepository, 
             IOrderPositionRepository orderPositionRepository, IInvoiceRepository invoiceRepository)
         {
             CustomerRepository = customerRepository;
+            ExportRepository = exportRepository;
             ArticleRepository = articleRepository;
             ArticleGroupRepository = articleGroupRepository;
             OrderRepository = orderRepository;
@@ -773,14 +777,9 @@ namespace BusinessLayer
         {
             string fileName = @"c:/temp/Customer.json";
 
-            JsonSerializerOptions options = new()
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
-            };
-
             using FileStream createStream = File.Create(fileName);
-            var exportJsonCustomer = CustomerRepository.GetAllCustomersByValidDate(startDate);
-            await JsonSerializer.SerializeAsync(createStream, Customers, options);
+            var exportJsonCustomer = ExportRepository.GetAllCustomersByValidDate(startDate);
+            await JsonSerializer.SerializeAsync(createStream, exportJsonCustomer);
             await createStream.DisposeAsync();
         }
 
