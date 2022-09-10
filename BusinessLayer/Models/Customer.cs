@@ -63,7 +63,7 @@ namespace BusinessLayer.Models
         public string Password 
         {
             get => password;
-            set => Set(ref password, HashString(value));
+            set => Set(ref password, value);
         }
 
         public Customer()
