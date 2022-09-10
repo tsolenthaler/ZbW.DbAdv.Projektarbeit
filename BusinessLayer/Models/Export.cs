@@ -1,5 +1,6 @@
 ﻿using DataAccessLayer.Export;
 using DataAccessLayer.RepositoryBase;
+using DataAccessLayer.Customer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -57,6 +58,25 @@ namespace BusinessLayer.Models
             this.email = export.email;
             this.website = export.website;
             this.password = HashString(export.password);
+        }
+
+        public CustomerDTO ClienttoCustomer()
+        {
+            CustomerDTO customer = new CustomerDTO();
+            customer.Clientnr = this.customerNr;
+            customer.Firstname = this.name;
+            customer.Lastname = this.name;
+            customer.EMail = this.email;
+            customer.Website = this.website;
+            customer.Password = this.password;
+            customer.Company = "Test AG";
+            AddressDTO address = new AddressDTO();
+            address.Street = this.address.street;
+            address.StreetNo = this.address.street;
+            address.Plz = this.address.postalCode;
+            customer.Address = address;
+
+            return customer;
         }
 
         static string HashString(string text, string salt = "")

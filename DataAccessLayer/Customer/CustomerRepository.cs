@@ -33,5 +33,12 @@ namespace DataAccessLayer.Customer
 
             return customer[0];
         }
+
+        public CustomerDTO GetByCustomerNr(string Customernr)
+        {
+            using var context = new SetupDB();
+            var customer = context.Customers.Where(c => c.Clientnr == Customernr).FirstOrDefault();
+            return customer;
+        }
     }
 }

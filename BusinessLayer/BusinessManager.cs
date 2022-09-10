@@ -774,6 +774,37 @@ namespace BusinessLayer
             return validMessage;
         }
 
+        public String IsValidImport(Client customer)
+        {
+            string cliennrPattern = @"^CU\d{5}$";
+            string emailPattern = @"^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)'|'(?=$|\.|@)|(?<='.*)[ .](?=.*')|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$";
+            string urlPattern = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
+            string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!”#$%&'()*+,-./:;<=>?]).{8,12}$";
+
+            string validMessage = null;
+
+            if (!Regex.IsMatch(customer.customerNr, cliennrPattern))
+            {
+                validMessage += "Clientnr ist nicht gültig!";
+            }
+
+            if (!Regex.IsMatch(customer.email, emailPattern))
+            {
+                validMessage += "\r\n E-Mailadresse ist nicht gültig!";
+            }
+
+            if (!Regex.IsMatch(customer.website, urlPattern))
+            {
+                validMessage += "\r\n Webseite ist nicht gültig!";
+            }
+            if (!Regex.IsMatch(customer.password, passwordPattern))
+            {
+                validMessage += "\r\n Passwort ist nicht gültig!";
+            }
+
+            return validMessage;
+        }
+
         public async void SerialzationJSON(DateTime startDate)
         {
             string fileName = @"c:/temp/Customer.json";
@@ -797,23 +828,24 @@ namespace BusinessLayer
         {
             string fileName = @"c:/temp/ImportCustomer.json";
             string jsonString = File.ReadAllText(fileName);
-            ObservableCollection <Export> importJsonCustomers = JsonSerializer.Deserialize<ObservableCollection<Export>>(jsonString)!;
+            ObservableCollection <Client> importJsonCustomers = JsonSerializer.Deserialize<ObservableCollection<Client>>(jsonString)!;
 
-            /*
             foreach (var importCustomer in importJsonCustomers)
             {
-                    String validMassage = IsValidCustomer(importCustomer);
+                    String validMassage = IsValidImport(importCustomer);
                     if (validMassage == null)
                     {
-                        if (importCustomer.Id == 0)
+                        var customer = CustomerRepository.GetByCustomerNr(importCustomer.customerNr);
+                        if (customer == null)
                         {
                             //not known by database yet
-                            CustomerRepository.Add(importCustomer.ToCustomerDto());
+                            CustomerRepository.Add(importCustomer.ClienttoCustomer());
                         }
                         else
                         {
+                            //TODO
                             //known by database
-                            CustomerRepository.Update(importCustomer.ToCustomerDto());
+                            CustomerRepository.Update(importCustomer.ClienttoCustomer());
                         }
                     }
                     else
@@ -822,7 +854,7 @@ namespace BusinessLayer
                     }
 
                     LoadAllCustomersFromDb();
-            }*/
+            }
         }
 
         public void SerialzationXML(DateTime startDate)
@@ -847,6 +879,11 @@ namespace BusinessLayer
             serializer.Serialize(writer, xmlExport);
             var serializedXml = writer.ToString();
             File.WriteAllText(fileName, serializedXml);
+        }
+
+        public void DeserialzationXML()
+        {
+            //TODO
         }
     }
 }
