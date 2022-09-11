@@ -63,19 +63,24 @@ namespace BusinessLayer.Models
             this.password = HashString(export.password);
         }
 
-        public CustomerDTO ClienttoCustomer()
+        public CustomerDTO ClienttoCustomer(CustomerDTO customer)
         {
-            CustomerDTO customer = new CustomerDTO();
+            if(customer == null)
+            {
+                customer = new CustomerDTO();
+            }
             customer.Clientnr = this.customerNr;
-            customer.Firstname = this.name;
-            customer.Lastname = this.name;
+            string[] name = this.name.Split(' ');
+            customer.Firstname = name[0];
+            customer.Lastname = name[1];
             customer.EMail = this.email;
             customer.Website = this.website;
             customer.Password = this.password;
-            customer.Company = "Test AG";
+            customer.Company = this.company;
             AddressDTO address = new AddressDTO();
-            address.Street = this.address.street;
-            address.StreetNo = this.address.street;
+            string[] street = this.address.street.Split(' ');
+            address.Street = street[0];
+            address.StreetNo = street[1];
             address.Plz = this.address.postalCode;
             address.City = this.address.city;
             customer.Address = address;

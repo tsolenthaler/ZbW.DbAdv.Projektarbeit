@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -12,6 +14,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 using BusinessLayer.Models;
 using Castle.Core.Resource;
@@ -835,17 +838,16 @@ namespace BusinessLayer
                     String validMassage = IsValidImport(importCustomer);
                     if (validMassage == null)
                     {
-                        var customer = CustomerRepository.GetByCustomerNr(importCustomer.customerNr);
+                        CustomerDTO customer = CustomerRepository.GetByCustomerNr(importCustomer.customerNr);
                         if (customer == null)
                         {
                             //not known by database yet
-                            CustomerRepository.Add(importCustomer.ClienttoCustomer());
+                            CustomerRepository.Add(importCustomer.ClienttoCustomer(customer));
                         }
                         else
                         {
-                            //TODO
                             //known by database
-                            CustomerRepository.Update(importCustomer.ClienttoCustomer());
+                            CustomerRepository.Update(importCustomer.ClienttoCustomer(customer));
                         }
                     }
                     else
@@ -885,13 +887,15 @@ namespace BusinessLayer
         {
             string fileName = @"c:/temp/ImportCustomer.xml";
 
-            var serializer = new XmlSerializer(typeof(Export));
-            var writer = new StringWriter();
+            var mySerializer = new XmlSerializer(typeof(Export));
             using var myFileStream = new FileStream(fileName, FileMode.Open);
-            var importXML = (Export)serializer.Deserialize(myFileStream);
+            var importXML = (Export)mySerializer.Deserialize(myFileStream);
+
+            Debug.WriteLine("TEST");
+            Debug.WriteLine(importXML);
 
             //TODO
-            /*foreach (var importCustomer in importXML)
+            foreach (var importCustomer in importXML.Clients)
             {
                 String validMassage = IsValidImport(importCustomer);
                 if (validMassage == null)
@@ -900,13 +904,13 @@ namespace BusinessLayer
                     if (customer == null)
                     {
                         //not known by database yet
-                        CustomerRepository.Add(importCustomer.ClienttoCustomer());
+                        CustomerRepository.Add(importCustomer.ClienttoCustomer(customer));
                     }
                     else
                     {
                         //TODO
                         //known by database
-                        CustomerRepository.Update(importCustomer.ClienttoCustomer());
+                        CustomerRepository.Update(importCustomer.ClienttoCustomer(customer));
                     }
                 }
                 else
@@ -915,7 +919,7 @@ namespace BusinessLayer
                 }
 
                 LoadAllCustomersFromDb();
-            }*/
+            }
         }
     }
 }
