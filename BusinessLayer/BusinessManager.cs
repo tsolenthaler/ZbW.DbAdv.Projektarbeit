@@ -891,7 +891,7 @@ namespace BusinessLayer
             var importXML = (Export)serializer.Deserialize(myFileStream);
 
             //TODO
-            foreach (var importCustomer in importXML)
+            /*foreach (var importCustomer in importXML)
             {
                 String validMassage = IsValidImport(importCustomer);
                 if (validMassage == null)
@@ -915,7 +915,7 @@ namespace BusinessLayer
                 }
 
                 LoadAllCustomersFromDb();
-            }
+            }*/
         }
     }
 }
