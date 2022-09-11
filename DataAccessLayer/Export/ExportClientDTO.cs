@@ -6,6 +6,7 @@ namespace DataAccessLayer.Export
     public class ExportClientDTO : TEntity
     {
         public string customerNr { get; set; }
+        public string company { get; set; }
         public string firstname { get; set; }
         public string lastname { get; set; }
 
@@ -20,5 +21,6 @@ namespace DataAccessLayer.Export
         public string street { get; set; }
         public string streetno { get; set; }
         public string postalCode { get; set; }
+        public string city { get; set; }
     }
 }

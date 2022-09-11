@@ -35,6 +35,8 @@ namespace BusinessLayer.Models
     {
         [XmlAttribute("CustomerNr")]
         public string customerNr { get; set; }
+        [XmlElement("Company")]
+        public string company { get; set; }
         [XmlElement("Name")]
         public string name { get; set; }
         [XmlElement("Address")]
@@ -53,6 +55,7 @@ namespace BusinessLayer.Models
         public Client(ExportClientDTO export)
         {
             this.customerNr = export.customerNr;
+            this.company = export.company;
             this.name = export.firstname + " " + export.lastname;
             this.address = new ClientAddress(export.address);
             this.email = export.email;
@@ -74,6 +77,7 @@ namespace BusinessLayer.Models
             address.Street = this.address.street;
             address.StreetNo = this.address.street;
             address.Plz = this.address.postalCode;
+            address.City = this.address.city;
             customer.Address = address;
 
             return customer;
@@ -109,6 +113,8 @@ namespace BusinessLayer.Models
         public string street { get; set; }
         [XmlElement("PostalCode")]
         public string postalCode { get; set; }
+        [XmlElement("City")]
+        public string city { get; set; }
 
         public ClientAddress()
         {
@@ -119,6 +125,7 @@ namespace BusinessLayer.Models
         {
             this.street = address.street + " " + address.streetno;
             this.postalCode = address.postalCode;
+            this.city = address.city;
         }
     }
 }

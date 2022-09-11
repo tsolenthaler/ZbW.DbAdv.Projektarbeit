@@ -883,7 +883,39 @@ namespace BusinessLayer
 
         public void DeserialzationXML()
         {
+            string fileName = @"c:/temp/ImportCustomer.xml";
+
+            var serializer = new XmlSerializer(typeof(Export));
+            var writer = new StringWriter();
+            using var myFileStream = new FileStream(fileName, FileMode.Open);
+            var importXML = (Export)serializer.Deserialize(myFileStream);
+
             //TODO
+            foreach (var importCustomer in importXML)
+            {
+                String validMassage = IsValidImport(importCustomer);
+                if (validMassage == null)
+                {
+                    var customer = CustomerRepository.GetByCustomerNr(importCustomer.customerNr);
+                    if (customer == null)
+                    {
+                        //not known by database yet
+                        CustomerRepository.Add(importCustomer.ClienttoCustomer());
+                    }
+                    else
+                    {
+                        //TODO
+                        //known by database
+                        CustomerRepository.Update(importCustomer.ClienttoCustomer());
+                    }
+                }
+                else
+                {
+                    throw new Exception("Not Valid \r\n " + validMassage);
+                }
+
+                LoadAllCustomersFromDb();
+            }
         }
     }
 }
