@@ -122,7 +122,7 @@
 
         <!--DataGrid Customer-->
         <DataGrid Grid.Row="5" 
-                  Grid.RowSpan="10"
+                  Grid.RowSpan="20"
                   Grid.Column="1" 
                   Grid.ColumnSpan="7"
                   x:Name="CustomerDataGrid" 

@@ -768,11 +768,11 @@ namespace BusinessLayer
             {
                 validMessage += "\r\n Webseite ist nicht gültig!";
             }
-            /*
+            
             if (!Regex.IsMatch(customer.Password, passwordPattern))
             {
                 validMessage += "\r\n Passwort ist nicht gültig!";
-            }*/
+            }
 
             return validMessage;
         }
@@ -895,6 +895,8 @@ namespace BusinessLayer
             Debug.WriteLine(importXML);
 
             //TODO
+            // Alternative XDocument
+            // https://docs.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument?view=net-6.0
             foreach (var importCustomer in importXML.Clients)
             {
                 String validMassage = IsValidImport(importCustomer);
