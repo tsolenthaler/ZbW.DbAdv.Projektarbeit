@@ -303,8 +303,7 @@ namespace PresentationLayer
 
         private void Cmd_ImportXml_Click(object sender, RoutedEventArgs e)
         {
-            BusinessManager.DeserialzationXML();
-            /*try
+            try
             {
                 BusinessManager.DeserialzationXML();
                 MessageBox.Show("Import XML erfolgreich!");
@@ -313,7 +312,7 @@ namespace PresentationLayer
             {
                 MessageBox.Show(ex.Message + "\r\n\r\n Inner Exception: " + ex.InnerException?.Message);
                 return;
-            }*/
+            }
         }
 
         private void Cmd_SelectedDate(object sender, SelectionChangedEventArgs e)

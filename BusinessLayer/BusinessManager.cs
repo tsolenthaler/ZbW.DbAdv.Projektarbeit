@@ -15,6 +15,7 @@ using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using BusinessLayer.Models;
 using Castle.Core.Resource;
@@ -889,16 +890,25 @@ namespace BusinessLayer
 
             var mySerializer = new XmlSerializer(typeof(Export));
             using var myFileStream = new FileStream(fileName, FileMode.Open);
-            var importXML = (Export)mySerializer.Deserialize(myFileStream);
+            //var importXML = (Export)mySerializer.Deserialize(myFileStream);
 
-            Debug.WriteLine("TEST");
+            XDocument importXML = XDocument.Load(myFileStream);
+
             Debug.WriteLine(importXML);
 
+            ExportClients.Clear();
+
+            ExportClients = ClientXmlToCustomer(importXML);
+
+            Debug.WriteLine(ExportClients);
+
+            Debug.WriteLine("Foreach Start");
             //TODO
             // Alternative XDocument
             // https://docs.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument?view=net-6.0
-            foreach (var importCustomer in importXML.Clients)
+            foreach (var importCustomer in ExportClients)
             {
+                Debug.WriteLine("Iteration Start");
                 String validMassage = IsValidImport(importCustomer);
                 if (validMassage == null)
                 {
@@ -922,6 +932,31 @@ namespace BusinessLayer
 
                 LoadAllCustomersFromDb();
             }
+        }
+
+        public ObservableCollection<Client> ClientXmlToCustomer(XDocument xmlDoc)
+        {
+            Debug.WriteLine("Start convertion");
+            var customers = new ObservableCollection<Client>();
+            foreach (var client in xmlDoc.Descendants("Kunde"))
+            {
+                Debug.WriteLine("Loop convertion");
+                var customer = new Client();
+                customer.customerNr = client.Attribute("CustomerNr").Value;
+                customer.name = client.Element("Name").Value;
+                customer.email = client.Element("EMail").Value;
+                customer.website = client.Element("Website").Value;
+                customer.password = client.Element("Password").Value;
+                customer.company = client.Element("Company").Value;
+                ClientAddress address = new ClientAddress();
+                Debug.WriteLine(client.Element("Address").Element("Street").Value);
+                address.street = client.Element("Address").Element("Street").Value;
+                address.postalCode = client.Element("Address").Element("PostalCode").Value;
+                //address.city = client.Element("Address").Element("City").Value;
+                customer.address = address;
+                customers.Add(customer);
+            };
+            return customers;
         }
     }
 }

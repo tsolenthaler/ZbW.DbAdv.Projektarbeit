@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.Xml.Linq;
+using System.Diagnostics;
 
 namespace BusinessLayer.Models
 {
@@ -27,7 +29,7 @@ namespace BusinessLayer.Models
             this.clients = clients;
         }
         [XmlElement("Kunde")]
-        public ObservableCollection<Client> Clients { get { return clients; } } 
+        public ObservableCollection<Client> Clients { get { return clients; } }
     }
 
     [XmlRoot("Kunde")]
