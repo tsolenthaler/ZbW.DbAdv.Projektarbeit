@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -245,6 +246,7 @@ namespace PresentationLayer
         {
 
             DateTime? startDate = DatePickerDate.SelectedDate;
+            Debug.WriteLine(startDate);
             if (startDate.HasValue)
             {
                 try

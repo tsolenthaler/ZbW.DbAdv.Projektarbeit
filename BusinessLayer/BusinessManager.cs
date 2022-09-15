@@ -755,24 +755,42 @@ namespace BusinessLayer
 
             string validMessage = null;
 
-            if (!Regex.IsMatch(customer.Clientnr, cliennrPattern))
-            {
-                validMessage += "Clientnr ist nicht gültig!";
-            }
+            if (customer.Clientnr != null || customer.EMail != null || customer.Website != null || customer.Password != null || customer.Company != null) {
+                if (customer.Clientnr != null)
+                {
+                    if (!Regex.IsMatch(customer.Clientnr, cliennrPattern))
+                    {
+                        validMessage += "Clientnr ist nicht gültig!";
+                    }
+                }
 
-            if (!Regex.IsMatch(customer.EMail, emailPattern))
-            {
-                validMessage += "\r\n E-Mailadresse ist nicht gültig!";
-            }
+                if(customer.EMail != null)
+                {
+                    if (!Regex.IsMatch(customer.EMail, emailPattern))
+                    {
+                        validMessage += "\r\n E-Mailadresse ist nicht gültig!";
+                    }
+                }
 
-            if (!Regex.IsMatch(customer.Website, urlPattern))
-            {
-                validMessage += "\r\n Webseite ist nicht gültig!";
+                if (customer.Website != null)
+                {
+                    if (!Regex.IsMatch(customer.Website, urlPattern))
+                    {
+                        validMessage += "\r\n Webseite ist nicht gültig!";
+                    }
+                }
+
+                if (customer.Password != null)
+                {
+                    if (!Regex.IsMatch(customer.Password, passwordPattern))
+                    {
+                        validMessage += "\r\n Passwort ist nicht gültig!";
+                    }
+                }
             }
-            
-            if (!Regex.IsMatch(customer.Password, passwordPattern))
+            else
             {
-                validMessage += "\r\n Passwort ist nicht gültig!";
+                validMessage += "\r\n Bitte füll alle Felder aus!";
             }
 
             return validMessage;
