@@ -291,7 +291,7 @@
 
         <DatePicker Grid.Column="9" 
                     Grid.Row="15"
-                    HorizontalAlignment="Left" Name="DatePickerDate" SelectedDateChanged="Cmd_SelectedDate"/>
+                    HorizontalAlignment="Left" Name="DatePickerDate" SelectedDateChanged="Cmd_SelectedDate" SelectedDateFormat="Short"/>
 
         <!--Button Export JSON -->
         <Button Grid.Row="17" 
