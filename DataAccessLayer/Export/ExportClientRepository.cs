@@ -23,7 +23,7 @@ namespace DataAccessLayer.Export
 
             using var context = new SetupDB();
             using var command = context.Database.GetDbConnection().CreateCommand();
-            command.CommandText = $"SELECT c.clientnr as customerNr, c.email as email, c.password as password, c.website as website, c.Firstname as Firstname, c.Lastname as Lastname, a.Street as Street, a.StreetNo as StreetNo, a.Plz as Plz FROM [AuftragsverwaltungHistory].[dbo].[Customer] FOR SYSTEM_TIME ALL as c LEFT JOIN [AuftragsverwaltungHistory].[dbo].[Addresses] FOR SYSTEM_TIME ALL as a on c.addressid = a.id WHERE c.ValidFrom <= '{startDateFormat}' and c.ValidTo >= '{startDateFormat}' AND a.ValidFrom <= '{startDateFormat}' and a.ValidTo >= '{startDateFormat}'";
+            command.CommandText = $"SELECT c.clientnr as customerNr, c.email as email, c.password as password, c.website as website, c.company as company, c.Firstname as Firstname, c.Lastname as Lastname, a.Street as Street, a.StreetNo as StreetNo, a.Plz as Plz FROM [AuftragsverwaltungHistory].[dbo].[Customer] FOR SYSTEM_TIME ALL as c LEFT JOIN [AuftragsverwaltungHistory].[dbo].[Addresses] FOR SYSTEM_TIME ALL as a on c.addressid = a.id WHERE c.ValidFrom <= '{startDateFormat}' and c.ValidTo >= '{startDateFormat}' AND a.ValidFrom <= '{startDateFormat}' and a.ValidTo >= '{startDateFormat}'";
 
             context.Database.OpenConnection();
             using var reader = command.ExecuteReader();
@@ -34,6 +34,7 @@ namespace DataAccessLayer.Export
                     customerNr = Convert.ToString(reader["customerNr"]),
                     firstname = Convert.ToString(reader["Firstname"]),
                     lastname = Convert.ToString(reader["Lastname"]),
+                    company = Convert.ToString(reader["company"]),
                     address = new ExportClientDTOAddress()
                     {
                         street = Convert.ToString(reader["Street"]),
