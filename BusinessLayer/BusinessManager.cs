@@ -912,21 +912,13 @@ namespace BusinessLayer
 
             XDocument importXML = XDocument.Load(myFileStream);
 
-            Debug.WriteLine(importXML);
-
             ExportClients.Clear();
 
             ExportClients = ClientXmlToCustomer(importXML);
-
-            Debug.WriteLine(ExportClients);
-
-            Debug.WriteLine("Foreach Start");
-            //TODO
             // Alternative XDocument
             // https://docs.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument?view=net-6.0
             foreach (var importCustomer in ExportClients)
             {
-                Debug.WriteLine("Iteration Start");
                 String validMassage = IsValidImport(importCustomer);
                 if (validMassage == null)
                 {

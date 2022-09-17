@@ -252,7 +252,7 @@ namespace PresentationLayer
                 try
                 {
                     BusinessManager.SerialzationJSON((DateTime)startDate);
-                    MessageBox.Show("Export JSON erfolgreich!");
+                    MessageBox.Show(@"Export JSON erfolgreich von C:\tmp\Customer.json");
                 }
                 catch (Exception ex)
                 {
@@ -275,7 +275,7 @@ namespace PresentationLayer
                 try
                 {
                     BusinessManager.SerialzationXML((DateTime)startDate);
-                    MessageBox.Show("Export XML erfolgreich!");
+                    MessageBox.Show(@"Export XML erfolgreich von C:\tmp\Customer.xml");
                 }
                 catch (Exception ex)
                 {
@@ -294,7 +294,7 @@ namespace PresentationLayer
             try
             {
                 BusinessManager.DeserialzationJSON();
-                MessageBox.Show("Import Json erfolgreich!");
+                MessageBox.Show(@"Import Json erfolgreich von C:\tmp\importCustomer.json!");
             }
             catch (Exception ex)
             {
@@ -308,7 +308,7 @@ namespace PresentationLayer
             try
             {
                 BusinessManager.DeserialzationXML();
-                MessageBox.Show("Import XML erfolgreich!");
+                MessageBox.Show(@"Import XML erfolgreich von C:\tmp\importCustomer.xml!");
             }
             catch (Exception ex)
             {

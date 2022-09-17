@@ -16,10 +16,10 @@ namespace DataAccessLayer.Export
     {
         public ExportClientDTO[] GetAllCustomersByValidDate(DateTime date)
         {
-            //DateTime startDate2 = new DateTime(date.Year, date.Month, date.Day);
-            DateTime startDate2 = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second);
+            DateTime now = DateTime.Now;
+            DateTime startDate2 = new DateTime(date.Year, date.Month, date.Day, now.Hour, now.Minute, now.Second);
 
-            string startDateFormat = date.ToString("s");
+            string startDateFormat = startDate2.ToString("s");
             Debug.Write(startDateFormat);
 
             List<ExportClientDTO> result = new List<ExportClientDTO>();
