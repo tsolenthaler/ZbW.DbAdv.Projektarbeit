@@ -796,35 +796,87 @@ namespace BusinessLayer
             return validMessage;
         }
 
-        public String IsValidImport(Client customer)
+        public string IsValidImport(Client customer)
         {
             string cliennrPattern = @"^CU\d{5}$";
             string emailPattern = @"^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)'|'(?=$|\.|@)|(?<='.*)[ .](?=.*')|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$";
             string urlPattern = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
             string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!”#$%&'()*+,-./:;<=>?]).{8,12}$";
 
-            string validMessage = null;
+            string validMessage = String.Empty;
 
-            if (!Regex.IsMatch(customer.customerNr, cliennrPattern))
+            if (!IsValidCustomerNr(customer.customerNr))
             {
                 validMessage += "Clientnr ist nicht gültig!";
             }
 
-            if (!Regex.IsMatch(customer.email, emailPattern))
+            if (!IsValidEmail(customer.email))
             {
                 validMessage += "\r\n E-Mailadresse ist nicht gültig!";
             }
 
-            if (!Regex.IsMatch(customer.website, urlPattern))
+            if (!IsValidWebsite(customer.website))
             {
                 validMessage += "\r\n Webseite ist nicht gültig!";
             }
-            if (!Regex.IsMatch(customer.password, passwordPattern))
+            if (!IsValidPassword(customer.password))
             {
                 validMessage += "\r\n Passwort ist nicht gültig!";
             }
 
             return validMessage;
+        }
+
+        public bool IsValidCustomerNr(string customerNr)
+        {
+            string cliennrPattern = @"^CU\d{5}$";
+            if(Regex.IsMatch(customerNr, cliennrPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsValidEmail(string email)
+        {
+            string emailPattern = @"^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)'|'(?=$|\.|@)|(?<='.*)[ .](?=.*')|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$";
+            if (Regex.IsMatch(email, emailPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsValidWebsite(string website)
+        {
+            string urlPattern = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
+            if (Regex.IsMatch(website, urlPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool IsValidPassword(string password)
+        {
+            string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!”#$%&'()*+,-./:;<=>?]).{8,12}$";
+            if (Regex.IsMatch(password, passwordPattern))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async void SerialzationJSON(DateTime startDate)
