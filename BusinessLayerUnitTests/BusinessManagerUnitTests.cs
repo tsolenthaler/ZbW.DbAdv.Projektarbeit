@@ -284,6 +284,106 @@ namespace BusinessLayerUnitTests
             A.CallTo(() => businessManager.OrderPositionRepository.GetSingle(1)).MustHaveHappened();
         }
 
+        [Fact]
+        public void LoadAllOrdersFromDb_ClearsListAndCallsDb()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            businessManager.Orders = new ObservableCollection<Order>();
+            businessManager.Orders.Add(new Order()
+            {
+                ReadOnly = false,
+                Id = 1
+            });
+
+            //Act
+            businessManager.LoadAllOrdersFromDb();
+
+            //Assert
+            Assert.Empty(businessManager.Orders);
+            A.CallTo(() => businessManager.OrderRepository.GetAll()).MustHaveHappened();
+        }
+
+        [Fact]
+        public void LoadAllCustomersFromDb_ClearsListAndCallsDb()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            businessManager.Customers = new ObservableCollection<Customer>();
+            businessManager.Customers.Add(new Customer()
+            {
+                ReadOnly = false,
+                Id = 1
+            });
+
+            //Act
+            businessManager.LoadAllCustomersFromDb();
+
+            //Assert
+            Assert.Empty(businessManager.Customers);
+            A.CallTo(() => businessManager.CustomerRepository.GetAll()).MustHaveHappened();
+        }
+
+        [Fact]
+        public void LoadAllArticlesFromDb_ClearsListAndCallsDb()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            businessManager.Articles = new ObservableCollection<Article>();
+            businessManager.Articles.Add(new Article()
+            {
+                ReadOnly = false,
+                Id = 1
+            });
+
+            //Act
+            businessManager.LoadAllArticlesFromDb();
+
+            //Assert
+            Assert.Empty(businessManager.Articles);
+            A.CallTo(() => businessManager.ArticleRepository.GetAll()).MustHaveHappened();
+        }
+
+        [Fact]
+        public void LoadAllArticleGroupsFromDb_ClearsListAndCallsDb()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            businessManager.ArticleGroups = new ObservableCollection<ArticleGroup>();
+            businessManager.ArticleGroups.Add(new ArticleGroup()
+            {
+                ReadOnly = false,
+                Id = 1
+            });
+
+            //Act
+            businessManager.LoadAllArticleGroupsFromDb();
+
+            //Assert
+            Assert.Empty(businessManager.ArticleGroups);
+            A.CallTo(() => businessManager.ArticleGroupRepository.GetAll()).MustHaveHappened();
+        }
+
+        [Fact]
+        public void LoadAllOrderPositionFromDb_ClearsListAndCallsDb()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            businessManager.OrderPositions = new ObservableCollection<OrderPosition>();
+            businessManager.OrderPositions.Add(new OrderPosition()
+            {
+                ReadOnly = false,
+                Id = 1,
+                OrderId = 1
+            });
+
+            //Act
+            businessManager.LoadOrderPositionsForSpecificOrder(1);
+
+            //Assert
+            Assert.Empty(businessManager.OrderPositions);
+            A.CallTo(() => businessManager.OrderPositionRepository.GetAllByOrderId(1)).MustHaveHappened();
+        }
 
         [Fact]
         public void IsValidCustomer_CallWithWrongCU_ReturnsString()
@@ -467,6 +567,8 @@ namespace BusinessLayerUnitTests
             Assert.True(result2);
             Assert.True(result3);
         }
+
+
 
         [Fact]
         public void IsValidCustomerNr_CallWithInvalidCustomerNr_ReturnsFalse()
