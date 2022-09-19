@@ -9,6 +9,15 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using FakeItEasy;
+using DataAccessLayer.Customer;
+using DataAccessLayer.Article;
+using DataAccessLayer.ArticleGroup;
+using DataAccessLayer.Export;
+using DataAccessLayer.Invoice;
+using DataAccessLayer.Order;
+using DataAccessLayer.OrderPosition;
+using System.Collections.ObjectModel;
 
 namespace BusinessLayerUnitTests
 {
@@ -30,6 +39,251 @@ namespace BusinessLayerUnitTests
             //Assert
             Assert.Null(result);
         }
+
+        private BusinessManager Helper_GetBusinessManagerWithFakeRepos()
+        {
+            var fakeCustomerRepo = A.Fake<ICustomerRepository>();
+            var fakeArticleRepo = A.Fake<IArticleRepository>();
+            var fakeArticleGroupRepo = A.Fake<IArticleGroupRepository>();
+            var fakeExportClientRepo = A.Fake<IExportClientRepository>();
+            var fakeInvoiceRepo = A.Fake<IInvoiceRepository>();
+            var fakeOrderRepo = A.Fake<IOrderRepository>();
+            var fakeOrderPosRepo = A.Fake<IOrderPositionRepository>();
+
+            return new BusinessManager(fakeCustomerRepo, fakeExportClientRepo, fakeArticleRepo, fakeArticleGroupRepo,
+                fakeOrderRepo, fakeOrderPosRepo, fakeInvoiceRepo);
+        }
+
+        [Fact]
+        public void ModifySelected_ProperIndex_SetsToReadOnly()
+        {
+            //Arrange
+            var businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<Customer>();
+            itemList.Add(new Customer()
+            {
+                ReadOnly = true,
+            });
+
+            //Act
+            businessManager.ModifySelected(itemList, 0);
+
+            //Assert
+            Assert.False(itemList[0].ReadOnly);
+        }
+
+        [Fact]
+        public void GetIndexOfModifiableDataGridChild_OneIsModifiable_ReturnsIndex()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<Customer>();
+            itemList.Add(new Customer()
+            {
+                ReadOnly = true,
+            });
+            itemList.Add(new Customer()
+            {
+                ReadOnly = false,
+            });
+
+            //Act
+            var result = businessManager.GetIndexOfModifiableDataGridChild(itemList);
+
+            //Assert
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public void CancelModificationCustomer_IdZero_RemovesFromItemList()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<Customer>();
+            itemList.Add(new Customer()
+            {
+                ReadOnly = false,
+                Id = 0
+            });
+
+            //Act
+            businessManager.CancelModificationCustomer(itemList);
+
+            //Assert
+            Assert.Empty(itemList);
+        }
+
+        [Fact]
+        public void CancelModificationCustomer_IdNotZero_LoadsFromDb()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<Customer>();
+            itemList.Add(new Customer()
+            {
+                ReadOnly = false,
+                Id = 1
+            });
+
+            //Act
+            businessManager.CancelModificationCustomer(itemList);
+
+            //Assert
+            A.CallTo(() => businessManager.CustomerRepository.GetSingle(1)).MustHaveHappened();
+        }
+
+        [Fact]
+        public void CancelModificationArticleGroup_IdZero_RemovesFromItemList()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<ArticleGroup>();
+            itemList.Add(new ArticleGroup()
+            {
+                ReadOnly = false,
+                Id = 0
+            });
+
+            //Act
+            businessManager.CancelModificationArticleGroup(itemList);
+
+            //Assert
+            Assert.Empty(itemList);
+        }
+
+        [Fact]
+        public void CancelModificationArticleGroup_IdNotZero_LoadsFromDb()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<ArticleGroup>();
+            itemList.Add(new ArticleGroup()
+            {
+                ReadOnly = false,
+                Id = 1
+            });
+
+            //Act
+            businessManager.CancelModificationArticleGroup(itemList);
+
+            //Assert
+            A.CallTo(() => businessManager.ArticleGroupRepository.GetSingle(1)).MustHaveHappened();
+        }
+
+        [Fact]
+        public void CancelModificationArticle_IdZero_RemovesFromItemList()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<Article>();
+            itemList.Add(new Article()
+            {
+                ReadOnly = false,
+                Id = 0
+            });
+
+            //Act
+            businessManager.CancelModificationArticle(itemList);
+
+            //Assert
+            Assert.Empty(itemList);
+        }
+
+        [Fact]
+        public void CancelModificationArticle_IdNotZero_LoadsFromDb()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<Article>();
+            itemList.Add(new Article()
+            {
+                ReadOnly = false,
+                Id = 1
+            });
+
+            //Act
+            businessManager.CancelModificationArticle(itemList);
+
+            //Assert
+            A.CallTo(() => businessManager.ArticleRepository.GetSingle(1)).MustHaveHappened();
+        }
+
+        [Fact]
+        public void CancelModificationOrder_IdZero_RemovesFromItemList()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<Order>();
+            itemList.Add(new Order()
+            {
+                ReadOnly = false,
+                Id = 0
+            });
+
+            //Act
+            businessManager.CancelModificationOrder(itemList);
+
+            //Assert
+            Assert.Empty(itemList);
+        }
+
+        [Fact]
+        public void CancelModificationOrder_IdNotZero_LoadsFromDb()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<Order>();
+            itemList.Add(new Order()
+            {
+                ReadOnly = false,
+                Id = 1
+            });
+
+            //Act
+            businessManager.CancelModificationOrder(itemList);
+
+            //Assert
+            A.CallTo(() => businessManager.OrderRepository.GetSingle(1)).MustHaveHappened();
+        }
+
+        [Fact]
+        public void CancelModificationOrderPosition_IdZero_RemovesFromItemList()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<OrderPosition>();
+            itemList.Add(new OrderPosition()
+            {
+                ReadOnly = false,
+                Id = 0
+            });
+
+            //Act
+            businessManager.CancelModificationOrderPosition(itemList);
+
+            //Assert
+            Assert.Empty(itemList);
+        }
+
+        [Fact]
+        public void CancelModificationOrderPosition_IdNotZero_LoadsFromDb()
+        {
+            //Arrange
+            BusinessManager businessManager = Helper_GetBusinessManagerWithFakeRepos();
+            var itemList = new ObservableCollection<OrderPosition>();
+            itemList.Add(new OrderPosition()
+            {
+                ReadOnly = false,
+                Id = 1
+            });
+
+            //Act
+            businessManager.CancelModificationOrderPosition(itemList);
+
+            //Assert
+            A.CallTo(() => businessManager.OrderPositionRepository.GetSingle(1)).MustHaveHappened();
+        }
+
 
         [Fact]
         public void IsValidCustomer_CallWithWrongCU_ReturnsString()
