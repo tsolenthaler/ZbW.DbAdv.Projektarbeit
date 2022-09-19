@@ -746,19 +746,14 @@ namespace BusinessLayer
             }
         }
 
-        public String IsValidCustomer(Customer customer)
+        public string IsValidCustomer(Customer customer)
         {
-            string cliennrPattern = @"^CU\d{5}$";
-            string emailPattern = @"^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)'|'(?=$|\.|@)|(?<='.*)[ .](?=.*')|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$";
-            string urlPattern = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
-            string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!”#$%&'()*+,-./:;<=>?]).{8,12}$";
-
             string validMessage = null;
 
             if (customer.Clientnr != null || customer.EMail != null || customer.Website != null || customer.Password != null || customer.Company != null) {
                 if (customer.Clientnr != null)
                 {
-                    if (!Regex.IsMatch(customer.Clientnr, cliennrPattern))
+                    if (!IsValidCustomerNr(customer.Clientnr))
                     {
                         validMessage += "Clientnr ist nicht gültig!";
                     }
@@ -766,7 +761,7 @@ namespace BusinessLayer
 
                 if(customer.EMail != null)
                 {
-                    if (!Regex.IsMatch(customer.EMail, emailPattern))
+                    if (!IsValidEmail(customer.EMail))
                     {
                         validMessage += "\r\n E-Mailadresse ist nicht gültig!";
                     }
@@ -774,7 +769,7 @@ namespace BusinessLayer
 
                 if (customer.Website != null)
                 {
-                    if (!Regex.IsMatch(customer.Website, urlPattern))
+                    if (!IsValidWebsite(customer.Website))
                     {
                         validMessage += "\r\n Webseite ist nicht gültig!";
                     }
@@ -782,7 +777,7 @@ namespace BusinessLayer
 
                 if (customer.Password != null)
                 {
-                    if (!Regex.IsMatch(customer.Password, passwordPattern))
+                    if (!IsValidPassword(customer.Password))
                     {
                         validMessage += "\r\n Passwort ist nicht gültig!";
                     }
@@ -798,12 +793,8 @@ namespace BusinessLayer
 
         public string IsValidImport(Client customer)
         {
-            string cliennrPattern = @"^CU\d{5}$";
-            string emailPattern = @"^((?:[A-Za-z0-9!#$%&'*+\-\/=?^_`{|}~]|(?<=^|\.)'|'(?=$|\.|@)|(?<='.*)[ .](?=.*')|(?<!\.)\.){1,64})(@)((?:[A-Za-z0-9.\-])*(?:[A-Za-z0-9])\.(?:[A-Za-z0-9]){2,})$";
-            string urlPattern = @"^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$";
-            string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!”#$%&'()*+,-./:;<=>?]).{8,12}$";
 
-            string validMessage = String.Empty;
+            string validMessage = null;
 
             if (!IsValidCustomerNr(customer.customerNr))
             {

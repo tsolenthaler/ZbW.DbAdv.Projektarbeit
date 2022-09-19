@@ -268,5 +268,49 @@ namespace BusinessLayerUnitTests
                 Password = "Aa123456!"
             };
         }
+
+        [Fact]
+        public void IsValidImport_CallWithValidCustomer_ReturnsNull()
+        {
+            //Arrange
+            var container = new IoCSetup().SetupContainer();
+            var businessManager = container.Resolve<BusinessManager>();
+
+            var client = Helper_GetValidClient();
+
+            //Act
+            var result = businessManager.IsValidImport(client);
+
+            //Assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void IsValidImport_CallWithWrongCU_ReturnsString()
+        {
+            //Arrange
+            var container = new IoCSetup().SetupContainer();
+            var businessManager = container.Resolve<BusinessManager>();
+
+            var customer1 = Helper_GetValidClient();
+            customer1.customerNr = "CX123";
+
+            //Act
+            var result1 = businessManager.IsValidImport(customer1);
+
+            //Assert
+            Assert.Equal("Clientnr ist nicht gültig!", result1);
+        }
+
+        private Client Helper_GetValidClient()
+        {
+            return new Client()
+            {
+                customerNr = "CU12345",
+                website = "www.google.com",
+                email = "hans.muster@gmail.com",
+                password = "Aa123456!"
+            };
+        }
     }
 }
