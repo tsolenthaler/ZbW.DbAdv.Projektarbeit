@@ -51,8 +51,8 @@ namespace BusinessLayer
         public IOrderPositionRepository OrderPositionRepository { get; }
         public IInvoiceRepository InvoiceRepository { get; }
 
-        public BusinessManager(ICustomerRepository customerRepository, IExportClientRepository exportRepository, IArticleRepository articleRepository, 
-            IArticleGroupRepository articleGroupRepository, IOrderRepository orderRepository, 
+        public BusinessManager(ICustomerRepository customerRepository, IExportClientRepository exportRepository, IArticleRepository articleRepository,
+            IArticleGroupRepository articleGroupRepository, IOrderRepository orderRepository,
             IOrderPositionRepository orderPositionRepository, IInvoiceRepository invoiceRepository)
         {
             CustomerRepository = customerRepository;
@@ -168,7 +168,7 @@ namespace BusinessLayer
                     throw new Exception("Not Valid \r\n " + validMassage);
                 }
 
-                    LoadAllCustomersFromDb();
+                LoadAllCustomersFromDb();
             }
         }
 
@@ -191,7 +191,7 @@ namespace BusinessLayer
             //Refresh list prior to filtering
             LoadAllCustomersFromDb();
 
-            for(int i= Customers.Count()-1; i>=0; i--)
+            for (int i = Customers.Count() - 1; i >= 0; i--)
             {
                 var customer = Customers[i];
 
@@ -295,7 +295,7 @@ namespace BusinessLayer
             }
             else
             {
-                
+
                 ArticleGroupRepository.Delete(ArticleGroups[index].ToArticleGroupDto());
                 LoadAllArticleGroupsFromDb();
             }
@@ -390,7 +390,7 @@ namespace BusinessLayer
             //Refresh list prior to filtering
             LoadAllArticlesFromDb();
 
-            for (int i = Articles.Count()-1; i>=0; i--)
+            for (int i = Articles.Count() - 1; i >= 0; i--)
             {
                 var article = Articles[i];
 
@@ -516,7 +516,7 @@ namespace BusinessLayer
             //Refresh list prior to filtering
             LoadAllOrdersFromDb();
 
-            for (int i = Orders.Count()-1; i>=0; i--)
+            for (int i = Orders.Count() - 1; i >= 0; i--)
             {
                 var order = Orders[i];
 
@@ -596,7 +596,7 @@ namespace BusinessLayer
                 else
                 {
                     //Item known by database
-                    itemList[index] = new OrderPosition(OrderPositionRepository.GetSingle(itemList[index].Id));                    
+                    itemList[index] = new OrderPosition(OrderPositionRepository.GetSingle(itemList[index].Id));
                 }
             }
         }
@@ -696,10 +696,10 @@ namespace BusinessLayer
             List<YearEndStatisticDTO> yearEndStatisticDTOs = InvoiceRepository.GetYearEndingData();
 
             //Convert YearEndStatisticDTO into YearEndData (basically pivot)
-            foreach(var yearEndStatisticDTO in yearEndStatisticDTOs)
+            foreach (var yearEndStatisticDTO in yearEndStatisticDTOs)
             {
                 //Make sure all fields are either filled or at least a "0"
-                if(yearEndStatisticDTO.TotalOrdersPerQuarter == null || yearEndStatisticDTO.TotalOrdersPerQuarter == String.Empty)
+                if (yearEndStatisticDTO.TotalOrdersPerQuarter == null || yearEndStatisticDTO.TotalOrdersPerQuarter == String.Empty)
                 {
                     YearEndDataCollection[0].QuarterData.Add("0");
                 }
@@ -759,7 +759,7 @@ namespace BusinessLayer
                     }
                 }
 
-                if(customer.EMail != null)
+                if (customer.EMail != null)
                 {
                     if (!IsValidEmail(customer.EMail))
                     {
@@ -821,7 +821,7 @@ namespace BusinessLayer
         public bool IsValidCustomerNr(string customerNr)
         {
             string cliennrPattern = @"^CU\d{5}$";
-            if(Regex.IsMatch(customerNr, cliennrPattern))
+            if (Regex.IsMatch(customerNr, cliennrPattern))
             {
                 return true;
             }
@@ -892,11 +892,13 @@ namespace BusinessLayer
         public void DeserialzationJSON()
         {
             string fileName = @"c:/temp/ImportCustomer.json";
-            string jsonString = File.ReadAllText(fileName);
-            ObservableCollection <Client> importJsonCustomers = JsonSerializer.Deserialize<ObservableCollection<Client>>(jsonString)!;
-
-            foreach (var importCustomer in importJsonCustomers)
+            if (File.Exists(fileName))
             {
+                string jsonString = File.ReadAllText(fileName);
+                ObservableCollection<Client> importJsonCustomers = JsonSerializer.Deserialize<ObservableCollection<Client>>(jsonString)!;
+
+                foreach (var importCustomer in importJsonCustomers)
+                {
                     String validMassage = IsValidImport(importCustomer);
                     if (validMassage == null)
                     {
@@ -918,6 +920,10 @@ namespace BusinessLayer
                     }
 
                     LoadAllCustomersFromDb();
+                }
+            } else
+            {
+                throw new Exception(fileName + " existiert nicht. Bitte erstellen!");
             }
         }
 
@@ -948,42 +954,46 @@ namespace BusinessLayer
         public void DeserialzationXML()
         {
             string fileName = @"c:/temp/ImportCustomer.xml";
-
-            var mySerializer = new XmlSerializer(typeof(Export));
-            using var myFileStream = new FileStream(fileName, FileMode.Open);
-            //var importXML = (Export)mySerializer.Deserialize(myFileStream);
-
-            XDocument importXML = XDocument.Load(myFileStream);
-
-            ExportClients.Clear();
-
-            ExportClients = ClientXmlToCustomer(importXML);
-            // Alternative XDocument
-            // https://docs.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument?view=net-6.0
-            foreach (var importCustomer in ExportClients)
+            if (File.Exists(fileName))
             {
-                String validMassage = IsValidImport(importCustomer);
-                if (validMassage == null)
+                var mySerializer = new XmlSerializer(typeof(Export));
+                using var myFileStream = new FileStream(fileName, FileMode.Open);
+                //var importXML = (Export)mySerializer.Deserialize(myFileStream);
+
+                XDocument importXML = XDocument.Load(myFileStream);
+
+                ExportClients.Clear();
+
+                ExportClients = ClientXmlToCustomer(importXML);
+                // Alternative XDocument
+                // https://docs.microsoft.com/en-us/dotnet/api/system.xml.linq.xdocument?view=net-6.0
+                foreach (var importCustomer in ExportClients)
                 {
-                    var customer = CustomerRepository.GetByCustomerNr(importCustomer.customerNr);
-                    if (customer == null)
+                    String validMassage = IsValidImport(importCustomer);
+                    if (validMassage == null)
                     {
-                        //not known by database yet
-                        CustomerRepository.Add(importCustomer.ClienttoCustomer(customer));
+                        var customer = CustomerRepository.GetByCustomerNr(importCustomer.customerNr);
+                        if (customer == null)
+                        {
+                            //not known by database yet
+                            CustomerRepository.Add(importCustomer.ClienttoCustomer(customer));
+                        }
+                        else
+                        {
+                            //TODO
+                            //known by database
+                            CustomerRepository.Update(importCustomer.ClienttoCustomer(customer));
+                        }
                     }
                     else
                     {
-                        //TODO
-                        //known by database
-                        CustomerRepository.Update(importCustomer.ClienttoCustomer(customer));
+                        throw new Exception("Not Valid \r\n " + validMassage);
                     }
-                }
-                else
-                {
-                    throw new Exception("Not Valid \r\n " + validMassage);
-                }
 
-                LoadAllCustomersFromDb();
+                    LoadAllCustomersFromDb();
+                }
+            } else { 
+                throw new Exception(fileName + " existiert nicht. Bitte erstellen!"); 
             }
         }
 
