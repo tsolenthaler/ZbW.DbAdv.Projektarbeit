@@ -29,7 +29,7 @@ namespace DataAccessLayer.Context
                 //string Corina: @"Server=.;Database=AuftragsverwaltungHistory;Trusted_Connection=True;";
 
                 //DATABASE MUSS ZWINGEND - AuftragsverwaltungHistory - HEISSEN!
-                string connection = @"Server=DESKTOP-RN6IFNN\ZBW;Database=AuftragsverwaltungHistory;Trusted_Connection=True;";
+                string connection = @"Server=.;Database=AuftragsverwaltungHistory;Trusted_Connection=True;";
 
                 optionsBuilder.UseSqlServer(connection);
                 optionsBuilder.LogTo(Console.WriteLine);

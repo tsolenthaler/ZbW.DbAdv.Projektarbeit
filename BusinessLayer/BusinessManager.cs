@@ -948,7 +948,7 @@ namespace BusinessLayer
 
             serializer.Serialize(writer, xmlExport);
             var serializedXml = writer.ToString();
-            File.WriteAllText(fileName, serializedXml);
+            File.WriteAllText(fileName, serializedXml, Encoding.UTF8);
         }
 
         public void DeserialzationXML()
