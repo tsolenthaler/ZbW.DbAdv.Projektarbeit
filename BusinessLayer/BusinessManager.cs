@@ -932,7 +932,7 @@ namespace BusinessLayer
             string fileName = @"c:/temp/Customer.xml";
 
             var serializer = new XmlSerializer(typeof(Export));
-            var writer = new StringWriter();
+            var writer = new Utf8StringWriter();
 
             var exportRepositoryDTO = ExportRepository.GetAllCustomersByValidDate(startDate);
 
@@ -948,7 +948,7 @@ namespace BusinessLayer
 
             serializer.Serialize(writer, xmlExport);
             var serializedXml = writer.ToString();
-            File.WriteAllText(fileName, serializedXml, Encoding.UTF8);
+            File.WriteAllText(fileName, serializedXml);
         }
 
         public void DeserialzationXML()
@@ -1022,4 +1022,9 @@ namespace BusinessLayer
             return customers;
         }
     }
+}
+
+public class Utf8StringWriter : StringWriter
+{
+    public override Encoding Encoding { get { return Encoding.UTF8; } }
 }
